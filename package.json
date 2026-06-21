@@ -1,0 +1,19 @@
+{
+  "name": "wgsl-introduction",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "WebGPU Fundamentals (webgpufundamentals.org) を進めるための学習リポジトリ",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "@webgpu/types": "^0.1.60",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
+  }
+}

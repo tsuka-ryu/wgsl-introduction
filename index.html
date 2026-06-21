@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WGSL Introduction</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 760px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        line-height: 1.8;
+        color: #222;
+      }
+      h2 {
+        margin-top: 2rem;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 0.2rem;
+      }
+      .done a {
+        font-weight: 600;
+      }
+      .todo {
+        color: #888;
+      }
+      .badge {
+        font-size: 0.7rem;
+        background: #1565c0;
+        color: #fff;
+        border-radius: 3px;
+        padding: 0.05em 0.4em;
+        margin-left: 0.4em;
+        vertical-align: middle;
+      }
+      a {
+        color: #1565c0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>WGSL Introduction</h1>
+    <p>WebGPU で 2D「うねうね」を描けるようになるための学習リポジトリ。</p>
+
+    <h2>WebGPU Fundamentals</h2>
+    <ul>
+      <li class="done">
+        <a href="/src/webgpu-fundamentals/01-fundamentals/index.html">01 基本</a>
+        <span class="badge">作成済</span>
+        — キャンバスを単色クリアする最小構成
+      </li>
+      <li class="todo">02 inter-stage 変数 — <code>@location</code> でデータを渡す</li>
+      <li class="todo">03 ユニフォーム — 「時間」を送り込む = 動きの源</li>
+      <li class="todo">04 大きなクリップ空間の三角形 — 画面いっぱいのキャンバス</li>
+      <li class="todo">— WGSL 関数リファレンス (辞書: sin / cos / fract)</li>
+      <li class="todo">応用: ポストプロセッシング (CRT エフェクト)</li>
+    </ul>
+
+    <h2>The Book of Shaders</h2>
+    <p class="todo">これから 1 つずつ追加していきます (01〜13)。</p>
+
+    <p style="margin-top:2rem;color:#888;font-size:0.9rem">
+      新しいレッスンは <code>src/&lt;track&gt;/&lt;番号&gt;-&lt;名前&gt;/</code> に
+      <code>index.html</code> と <code>main.ts</code> を置くだけで Vite が自動認識します。
+    </p>
+  </body>
+</html>
