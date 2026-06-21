@@ -24,38 +24,69 @@ async function main() {
     format: presentationFormat,
   });
 
-  // 3. シェーダモジュール (頂点とフラグメントを別モジュールに分割)
-  const vsModule = device.createShaderModule({
-    label: "hardcoded triangle",
+  // 3. シェーダモジュール
+  // 頂点シェーダは共通で 3 枚分の三角形を出力する。
+  //   頂点 0-2 : 中央上の三角形  -> 市松模様で塗る
+  //   頂点 3-5 : 左下の三角形    -> グラデーションで塗る
+  //   頂点 6-8 : 右下の三角形    -> グラデーションで塗る
+  // フラグメントシェーダを 2 つ用意し、パイプラインを分けて塗り分ける。
+  const module = device.createShaderModule({
+    label: "checkerboard + rgb triangles",
     code: /* wgsl */ `
       struct OurVertexShaderOutput {
         @builtin(position) position: vec4f,
+        @location(0) color: vec4f,
       };
 
       @vertex fn vs(
         @builtin(vertex_index) vertexIndex : u32
       ) -> OurVertexShaderOutput {
         let pos = array(
-          vec2f( 0.0,  0.5),  // top center
-          vec2f(-0.5, -0.5),  // bottom left
-          vec2f( 0.5, -0.5)   // bottom right
+          // 0-2: 中央上 (市松模様)
+          vec2f( 0.0,  0.9),
+          vec2f(-0.4,  0.1),
+          vec2f( 0.4,  0.1),
+          // 3-5: 左下 (グラデーション)
+          vec2f(-0.5, -0.1),
+          vec2f(-0.9, -0.9),
+          vec2f(-0.1, -0.9),
+          // 6-8: 右下 (グラデーション)
+          vec2f( 0.5, -0.1),
+          vec2f( 0.1, -0.9),
+          vec2f( 0.9, -0.9)
+        );
+        var color = array<vec4f, 9>(
+          // 市松模様の三角形では color は使わないのでダミー
+          vec4f(0, 0, 0, 1),
+          vec4f(0, 0, 0, 1),
+          vec4f(0, 0, 0, 1),
+          // 左下: 赤・緑・青
+          vec4f(1, 0, 0, 1),
+          vec4f(0, 1, 0, 1),
+          vec4f(0, 0, 1, 1),
+          // 右下: 黄・シアン・マゼンタ
+          vec4f(1, 1, 0, 1),
+          vec4f(0, 1, 1, 1),
+          vec4f(1, 0, 1, 1),
         );
 
         var vsOutput: OurVertexShaderOutput;
         vsOutput.position = vec4f(pos[vertexIndex], 0.0, 1.0);
+        vsOutput.color = color[vertexIndex];
         return vsOutput;
       }
-    `,
-  });
 
-  const fsModule = device.createShaderModule({
-    label: "checkerboard",
-    code: /* wgsl */ `
-      @fragment fn fs(@builtin(position) pixelPosition: vec4f) -> @location(0) vec4f {
+      // 補間された color をそのまま出力 -> グラデーション
+      @fragment fn fsGradient(fsInput: OurVertexShaderOutput) -> @location(0) vec4f {
+        return fsInput.color;
+      }
+
+      // ピクセル座標から市松模様を作る (color は使わない)
+      @fragment fn fsCheckerboard(fsInput: OurVertexShaderOutput) -> @location(0) vec4f {
         let red = vec4f(1, 0, 0, 1);
         let cyan = vec4f(0, 1, 1, 1);
 
-        let grid = vec2u(pixelPosition.xy) / 8;
+        let grid = vec2u(fsInput.position.xy) / 16;
         let checker = (grid.x + grid.y) % 2 == 1;
 
         return select(red, cyan, checker);
@@ -63,17 +94,25 @@ async function main() {
     `,
   });
 
-  // 4. パイプライン
-  const pipeline = device.createRenderPipeline({
-    label: "inter-stage variables pipeline",
+  // 4. パイプライン (頂点シェーダは共通、フラグメントシェーダだけ差し替える)
+  const gradientPipeline = device.createRenderPipeline({
+    label: "gradient pipeline",
     layout: "auto",
-    vertex: {
-      module: vsModule,
-      entryPoint: "vs",
-    },
+    vertex: { module, entryPoint: "vs" },
     fragment: {
-      module: fsModule,
-      entryPoint: "fs",
+      module,
+      entryPoint: "fsGradient",
+      targets: [{ format: presentationFormat }],
+    },
+  });
+
+  const checkerboardPipeline = device.createRenderPipeline({
+    label: "checkerboard pipeline",
+    layout: "auto",
+    vertex: { module, entryPoint: "vs" },
+    fragment: {
+      module,
+      entryPoint: "fsCheckerboard",
       targets: [{ format: presentationFormat }],
     },
   });
@@ -93,8 +132,15 @@ async function main() {
 
     const encoder = device.createCommandEncoder({ label: "our encoder" });
     const pass = encoder.beginRenderPass(renderPassDescriptor);
-    pass.setPipeline(pipeline);
-    pass.draw(3); // 頂点シェーダを 3 回呼び出す
+
+    // 中央上の三角形 (頂点 0-2) を市松模様で描く
+    pass.setPipeline(checkerboardPipeline);
+    pass.draw(3, 1, 0); // vertexCount=3, instanceCount=1, firstVertex=0
+
+    // 左下・右下の三角形 (頂点 3-8) をグラデーションで描く
+    pass.setPipeline(gradientPipeline);
+    pass.draw(6, 1, 3); // vertexCount=6, instanceCount=1, firstVertex=3
+
     pass.end();
 
     device.queue.submit([encoder.finish()]);
