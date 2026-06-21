@@ -26,9 +26,11 @@ pnpm preview        # ビルド結果をプレビュー
 ├── vite.config.ts                   src/**/index.html を自動でビルド対象に追加
 └── src/
     ├── webgpu-fundamentals/
-    │   └── 01-fundamentals/         各レッスン = 1 フォルダ
-    │       ├── index.html
-    │       └── main.ts
+    │   ├── 01-fundamentals/         各レッスン = 1 フォルダ
+    │   │   ├── index.html
+    │   │   └── main.ts
+    │   ├── 02-inter-stage-variables/
+    │   └── 03-uniforms/
     └── book-of-shaders/             これから 1 つずつ追加
 ```
 
@@ -44,8 +46,8 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 **STEP 1 ・ 土台をつくる（順番通りに）**
 
 - [x] [01 基本](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-fundamentals.html) — すべての出発点。まずこれから
-- [ ] [inter-stage 変数](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-inter-stage-variables.html) — `@location` の棚でデータを渡す
-- [ ] [ユニフォーム](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-uniforms.html) — 「時間」を送り込む = 動きの源
+- [x] [02 inter-stage 変数](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-inter-stage-variables.html) — `@location` の棚でデータを渡す
+- [x] [03 ユニフォーム](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-uniforms.html) — シェーダに渡すグローバル変数 (color / scale / offset)。バッファを static/changing に分割する最適化まで
 
 **STEP 2 ・ うねうねの舞台**
 
