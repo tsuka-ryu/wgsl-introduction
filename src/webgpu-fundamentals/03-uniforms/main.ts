@@ -2,10 +2,29 @@
 // https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-uniforms.html
 //
 // ユニフォーム = シェーダに渡す「グローバル変数」。1 回の draw の間ずっと同じ値になる。
-// ここでは color / scale / offset を 1 つのユニフォームバッファにまとめて渡し、
-// 同じシェーダで 1 つの三角形を描く。
+// ここでは color / scale / offset を 1 つのユニフォームバッファにまとめて渡す。
+//
+// 段階1: 三角形を 1 個ではなく 100 個描く。
+//   ユニフォームは「1 回の draw の間ずっと同じ値」なので、
+//   違う色・位置・大きさの三角形を出したいなら draw を 100 回呼び、
+//   それぞれに別のユニフォーム (バッファ + バインドグループ) を割り当てる。
 
 import { fail } from "../util";
+
+// min 以上 max 未満の乱数。引数の渡し方で 3 通りに使える。
+//   rand()        -> 0..1
+//   rand(max)     -> 0..max
+//   rand(min,max) -> min..max
+function rand(min?: number, max?: number): number {
+  if (min === undefined) {
+    min = 0;
+    max = 1;
+  } else if (max === undefined) {
+    max = min;
+    min = 0;
+  }
+  return min + Math.random() * (max - min);
+}
 
 async function main() {
   // 1. アダプタとデバイスの取得
@@ -69,43 +88,62 @@ async function main() {
     },
   });
 
-  // 5. ユニフォームバッファを用意する
+  // 5. オブジェクト (三角形) ごとにユニフォームバッファを用意する
   // struct のメモリレイアウト (各 f32 = 4 バイト):
   //   color  : vec4f -> オフセット 0  (4 個)
   //   scale  : vec2f -> オフセット 16 (2 個)
   //   offset : vec2f -> オフセット 24 (2 個)
   // 合計 32 バイト = f32 8 個分。
   const uniformBufferSize = 8 * 4; // 32 バイト
-  const uniformBuffer = device.createBuffer({
-    label: "uniforms for triangle",
-    size: uniformBufferSize,
-    usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
-  });
-
-  // CPU 側で値を組み立てるための TypedArray
-  const uniformValues = new Float32Array(uniformBufferSize / 4);
 
   // struct 内の各メンバの先頭インデックス (f32 単位)
   const kColorOffset = 0;
   const kScaleOffset = 4;
   const kOffsetOffset = 6;
 
-  uniformValues.set([0, 1, 0, 1], kColorOffset); // color = 緑
-  uniformValues.set([-0.5, -0.25], kOffsetOffset); // offset
+  // 三角形 1 個ぶんに必要な情報をまとめた型
+  type ObjectInfo = {
+    scale: number; // この三角形の基準スケール (アスペクト比補正前)
+    uniformBuffer: GPUBuffer; // この三角形専用の GPU 上のバッファ
+    uniformValues: Float32Array<ArrayBuffer>; // この三角形専用の CPU 側 下書き配列
+    bindGroup: GPUBindGroup; // バッファとシェーダを結ぶバインドグループ
+  };
 
-  // 6. バインドグループでバッファをシェーダに結びつける
-  const bindGroup = device.createBindGroup({
-    label: "bind group for triangle",
-    layout: pipeline.getBindGroupLayout(0),
-    entries: [{ binding: 0, resource: { buffer: uniformBuffer } }],
-  });
+  const kNumObjects = 100;
+  const objectInfos: ObjectInfo[] = [];
+
+  for (let i = 0; i < kNumObjects; ++i) {
+    // この三角形専用のバッファ (1 個版と同じものを 100 個作る)
+    const uniformBuffer = device.createBuffer({
+      label: `uniforms for obj ${i}`,
+      size: uniformBufferSize,
+      usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
+    });
+
+    // この三角形専用の下書き配列
+    const uniformValues = new Float32Array(uniformBufferSize / 4);
+
+    // color と offset は最初に決めたら変わらないので、ここで詰めておく
+    uniformValues.set([rand(), rand(), rand(), 1], kColorOffset); // ランダムな色
+    uniformValues.set([rand(-0.9, 0.9), rand(-0.9, 0.9)], kOffsetOffset); // ランダムな位置
+
+    // この三角形専用のバインドグループ
+    const bindGroup = device.createBindGroup({
+      label: `bind group for obj ${i}`,
+      layout: pipeline.getBindGroupLayout(0),
+      entries: [{ binding: 0, resource: { buffer: uniformBuffer } }],
+    });
+
+    // scale は毎フレーム計算し直すので、基準値だけ覚えておく
+    objectInfos.push({
+      scale: rand(0.2, 0.5),
+      uniformBuffer,
+      uniformValues,
+      bindGroup,
+    });
+  }
 
   function render(device: GPUDevice) {
-    // アスペクト比を打ち消して三角形を正方形に保つ
-    const aspect = canvas.width / canvas.height;
-    uniformValues.set([0.5 / aspect, 0.5], kScaleOffset); // scale
-    device.queue.writeBuffer(uniformBuffer, 0, uniformValues);
-
     const renderPassDescriptor: GPURenderPassDescriptor = {
       label: "our basic canvas renderPass",
       colorAttachments: [
@@ -121,10 +159,21 @@ async function main() {
     const encoder = device.createCommandEncoder({ label: "our encoder" });
     const pass = encoder.beginRenderPass(renderPassDescriptor);
     pass.setPipeline(pipeline);
-    pass.setBindGroup(0, bindGroup);
-    pass.draw(3); // 頂点 3 つ
-    pass.end();
 
+    // アスペクト比を打ち消して三角形の形を保つ
+    const aspect = canvas.width / canvas.height;
+
+    // 100 個ぶんループして、バインドグループを差し替えながら draw する
+    for (const { scale, bindGroup, uniformBuffer, uniformValues } of objectInfos) {
+      // scale だけ毎フレーム計算して詰める (アスペクト比が変わるから)
+      uniformValues.set([scale / aspect, scale], kScaleOffset);
+      device.queue.writeBuffer(uniformBuffer, 0, uniformValues);
+
+      pass.setBindGroup(0, bindGroup); // この三角形のバッファに切り替え
+      pass.draw(3); // 頂点 3 つ
+    }
+
+    pass.end();
     device.queue.submit([encoder.finish()]);
   }
 
