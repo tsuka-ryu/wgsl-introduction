@@ -81,7 +81,7 @@ async function main() {
     // レンダーパスのエンコーダを生成する。そこへコマンドを並べて、描画手順をエンコードする。
     const pass = encoder.beginRenderPass(renderPassDescriptor);
     pass.setPipeline(pipeline);
-    pass.draw(4); // 頂点シェーダを３回呼び出す
+    pass.draw(3); // 頂点シェーダを３回呼び出す
     pass.end();
 
     const commandBuffer = encoder.finish();
