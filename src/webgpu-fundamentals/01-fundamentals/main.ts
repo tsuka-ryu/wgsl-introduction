@@ -3,6 +3,8 @@
 //
 // すべての出発点。キャンバスを単色でクリアするだけの最小構成のレンダーパス。
 
+import { fail } from "../util";
+
 async function main() {
   // 1. アダプタとデバイスの取得 (デバイス = 特定の GPU の表現)
   const adapter = await navigator.gpu?.requestAdapter();
@@ -101,10 +103,6 @@ async function main() {
     }
   });
   observer.observe(canvas);
-}
-
-function fail(msg: string) {
-  document.body.innerHTML = `<p style="font-family:sans-serif;padding:1rem;color:#c00">${msg}</p>`;
 }
 
 main();

@@ -4,12 +4,14 @@
 // 描画ではなく「計算」。キャンバスは使わず、バッファに対して計算した結果を
 // CPU 側に読み戻す。レンダリングとの共通点は device 取得・encoder・submit のみ。
 
+import { fail } from "../util";
+
 async function computeMain() {
   // 1. アダプタとデバイスの取得 (描画と同じ。canvas/context は不要)
   const adapter = await navigator.gpu?.requestAdapter();
   const device = await adapter?.requestDevice();
   if (!device) {
-    fail2("このブラウザは WebGPU に対応していません (Chrome / Edge 113+ など)。");
+    fail("このブラウザは WebGPU に対応していません (Chrome / Edge 113+ など)。");
     return;
   }
 
@@ -103,10 +105,6 @@ async function computeMain() {
   console.log("result", result);
 
   resultBuffer.unmap();
-}
-
-function fail2(msg: string) {
-  document.body.innerHTML = `<p style="font-family:sans-serif;padding:1rem;color:#c00">${msg}</p>`;
 }
 
 computeMain();
