@@ -51,13 +51,10 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 
 - [ ] [大きなクリップ空間の三角形](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-large-triangle-to-cover-clip-space.html) — 画面いっぱいのキャンバスを用意する
 
-**STEP 3 ・ 動かす道具（辞書的に）**
-
-- [ ] [WGSL 関数リファレンス](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-wgsl-function-reference.html) — sin / cos / `fract` など
-
-**STEP 4 ・ 応用（やりたくなったら）**
-
-- [ ] [ポストプロセッシング（CRT エフェクト）](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-post-processing.html) — 既存の絵を歪ませる
+> **参考**（必要になったら見る。内容は The Book of Shaders でも扱う）
+>
+> - [WGSL 関数リファレンス](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-wgsl-function-reference.html) — sin / cos / `fract` など。辞書として引く
+> - [ポストプロセッシング（CRT エフェクト）](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-post-processing.html) — 既存の絵を歪ませる応用
 
 ### The Book of Shaders（読む順）
 
