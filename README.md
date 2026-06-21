@@ -30,7 +30,8 @@ pnpm preview        # ビルド結果をプレビュー
     │   │   ├── index.html
     │   │   └── main.ts
     │   ├── 02-inter-stage-variables/
-    │   └── 03-uniforms/
+    │   ├── 03-uniforms/
+    │   └── 04-large-triangle/
     └── book-of-shaders/             これから 1 つずつ追加
 ```
 
@@ -51,10 +52,11 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 
 **STEP 2 ・ うねうねの舞台**
 
-- [ ] [大きなクリップ空間の三角形](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-large-triangle-to-cover-clip-space.html) — 画面いっぱいのキャンバスを用意する
+- [x] [大きなクリップ空間の三角形](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-large-triangle-to-cover-clip-space.html) — 3 頂点 1 枚で画面いっぱいを覆う。フラグメントシェーダで絵を描く「うねうねの舞台」
 
 > **参考**（必要になったら見る。内容は The Book of Shaders でも扱う）
 >
+> - [WebGPU の仕組み](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-how-it-works.html) — 頂点/フラグメントシェーダを `Array.map` に例えて、GPU がどう三角形を描くか・なぜ並列で速いかを説明。土台の理解に◎
 > - [WGSL 関数リファレンス](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-wgsl-function-reference.html) — sin / cos / `fract` など。辞書として引く
 > - [ポストプロセッシング（CRT エフェクト）](https://webgpufundamentals.org/webgpu/lessons/ja/webgpu-post-processing.html) — 既存の絵を歪ませる応用
 
