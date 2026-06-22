@@ -64,14 +64,14 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 
 **初めの一歩（全部読む・土台）**
 
-- [ ] [01 シェーダーとは？](https://thebookofshaders.com/01/?lan=jp) — 復習。サラッと
-- [ ] [02 ハロー・ワールド！](https://thebookofshaders.com/02/?lan=jp) — 最初の一枚を出す
-- [ ] [03 ユニフォーム変数](https://thebookofshaders.com/03/?lan=jp) — 「時間」を送る
-- [ ] [04 シェーダーを使う](https://thebookofshaders.com/04/?lan=jp) — 実際の動かし方
+- [x] [01 シェーダーとは？](https://thebookofshaders.com/01/?lan=jp) — 復習。サラッと（ざっと読了）
+- [x] [02 ハロー・ワールド！](https://thebookofshaders.com/02/?lan=jp) — 最初の一枚を出す（ざっと読了）
+- [x] [03 ユニフォーム変数](https://thebookofshaders.com/03/?lan=jp) — 「時間」を送る（ざっと読了）
+- [x] [04 シェーダーを使う](https://thebookofshaders.com/04/?lan=jp) — 実際の動かし方（ざっと読了）
 
 **アルゴリズムで絵を描く（本丸）**
 
-- [ ] [05 シェイピング関数](https://thebookofshaders.com/05/?lan=jp) — sin で波 = うねうねの素。最重要。じっくり
+- [x] [05 シェイピング関数](https://thebookofshaders.com/05/?lan=jp) — sin で波 = うねうねの素。最重要。じっくり（01〜04 は Fundamentals の復習なのでざっと読んで通過）
 - [ ] [06 色について](https://thebookofshaders.com/06/?lan=jp) — 波を「色」に変換する
 - [ ] [07 形について](https://thebookofshaders.com/07/?lan=jp) — 円や四角を数式で描く
 - [ ] [08 二次元行列](https://thebookofshaders.com/08/?lan=jp) — 回す・ずらす・動かす
