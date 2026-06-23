@@ -10,8 +10,14 @@
 //       0.5 + 0.5 * sin(...) で -1〜1 を 0〜1 に変換 (リマップ) してから使う。
 //       (この変換をしないと波の下半分が画面外 = 黒に潰れて見えなくなる)
 //
-// plot は expo と同じ汎用版。アニメーションは付けず静止画。
-// (u_time を足して波を流すと「動くうねうね」になるが、それは別レッスンで)
+// plot は expo と同じ汎用版。
+//
+// 【演習】sin を計算する前に時間 (u_time) を x に足す:
+//   y = 0.5 + 0.5 * sin((st.x + u_time) * PI * 2.0)
+//   x に時間を足すと波の位相が毎フレームずれて、波が左→右へ流れて見える。
+//   (sin(x) のグラフを x 方向に -u_time だけ平行移動するのと同じ)
+//   これが「x 座標に沿った動き = スクロール」の基本。
+//   静止画ではなく requestAnimationFrame で毎フレーム u_time を更新して描き直す。
 //
 // 元の GLSL を WGSL に読み替えた対応:
 //   gl_FragCoord.xy        -> @builtin(position).xy
@@ -50,9 +56,13 @@ async function main() {
       // GLSL の #define PI 3.14159265359 に相当 (WGSL は const)
       const PI = 3.14159265359;
 
-      // 元の GLSL の u_resolution に相当。st を作るために幅・高さを渡す。
+      // 元の GLSL の u_resolution / u_time に相当。
+      //   resolution: st を作るための幅・高さ
+      //   time      : 経過秒。波を x 方向に流すために sin の中で x へ足す。
+      // メモリ配置: vec2f (8B) の後ろに f32 (4B) が続き、合計 12B → 16B に切り上げ。
       struct Uniforms {
         resolution: vec2f,
+        time: f32,
       };
       @group(0) @binding(0) var<uniform> u: Uniforms;
 
@@ -85,10 +95,12 @@ async function main() {
         st.y = 1.0 - st.y;
 
         // シェイピング関数: sin の波。
-        //   st.x * PI * 2.0 : 画面左→右で 0〜2π = sin がちょうど 1 周
+        //   u.time * 0.15  : 流れる速さ。小さいほどゆっくり (≒ 6.7 秒で 1 周)
+        //   (st.x + ...)    : x に時間を足すと位相がずれ、波が x 方向に流れる
+        //   * PI * 2.0      : 画面左→右で 0〜2π = sin がちょうど 1 周
         //   sin(...)        : -1〜+1 の波
         //   0.5 + 0.5 *     : それを 0〜1 にリマップ (中央 0.5 を基準に上下へ揺れる)
-        let y = 0.5 + 0.5 * sin(st.x * PI * 2.0);
+        let y = 0.5 + 0.5 * sin((st.x + u.time * 0.15) * PI * 2.0);
 
         // 背景は y を明るさにしたグラデーション
         var color = vec3f(y);
@@ -117,11 +129,12 @@ async function main() {
     },
   });
 
-  // 5. ユニフォームバッファ (resolution: vec2f)
-  //   vec2f は 8 バイトだが、struct は 16 バイト境界に揃うので 16 バイト確保する。
+  // 5. ユニフォームバッファ (resolution: vec2f, time: f32)
+  //   8B + 4B = 12B だが、struct は 16 バイト境界に揃うので 16 バイト確保する。
   const uniformBufferSize = 4 * 4; // 16 バイト
   const uniformValues = new Float32Array(uniformBufferSize / 4);
   const kResolutionOffset = 0; // [0],[1]
+  const kTimeOffset = 2; // [2] (resolution の直後)
 
   const uniformBuffer = device.createBuffer({
     label: "uniforms (resolution)",
@@ -135,9 +148,10 @@ async function main() {
     entries: [{ binding: 0, resource: { buffer: uniformBuffer } }],
   });
 
-  function render(device: GPUDevice) {
-    // 現在のキャンバスサイズを resolution として送る
+  function render(device: GPUDevice, time: number) {
+    // 現在のキャンバスサイズを resolution として、経過秒を time として送る
     uniformValues.set([canvas.width, canvas.height], kResolutionOffset);
+    uniformValues[kTimeOffset] = time;
     device.queue.writeBuffer(uniformBuffer, 0, uniformValues);
 
     const renderPassDescriptor: GPURenderPassDescriptor = {
@@ -161,7 +175,7 @@ async function main() {
     device.queue.submit([encoder.finish()]);
   }
 
-  // アニメーションしないので、リサイズ時だけ描き直せばよい。
+  // リサイズ時はキャンバスの解像度だけ更新する (描画はループ側が毎フレーム行う)。
   const observer = new ResizeObserver((entries) => {
     for (const entry of entries) {
       const c = entry.target as HTMLCanvasElement;
@@ -169,10 +183,17 @@ async function main() {
       const height = entry.contentBoxSize[0].blockSize;
       c.width = Math.max(1, Math.min(width, device.limits.maxTextureDimension2D));
       c.height = Math.max(1, Math.min(height, device.limits.maxTextureDimension2D));
-      render(device);
     }
   });
   observer.observe(canvas);
+
+  // 毎フレーム u_time を更新して描き直す = 波が x 方向に流れるアニメーション。
+  //   requestAnimationFrame の引数 (ms) を秒に直して time として渡す。
+  const frame = (timeMs: number) => {
+    render(device, timeMs * 0.001);
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
 }
 
 main();
