@@ -111,7 +111,37 @@
         <span class="badge">作成済</span>
         — <code>sin</code> で波＝うねうねの素。<code>-1〜1</code> を <code>0〜1</code> にリマップ
       </li>
-      <li class="todo">06 色 / 07 形 / 08 二次元行列 / 09 パターン … これから追加</li>
+      <li class="done">
+        <a href="/src/book-of-shaders/06-colors/index.html">06 色について</a>
+        <span class="badge">作成済</span>
+        — 05 の <code>sin</code> 波を「色」に変換。<code>mix</code> で 2 色補間／RGB を位相ずらしの sin 波にして虹
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/06-colors-channels/index.html">06 色について (チャンネル別の曲線)</a>
+        <span class="badge">作成済</span>
+        — 本家の作例。<code>mix(colorA, colorB, pct)</code> の <code>pct</code> を vec3 にして R/G/B を別カーブで補間、<code>plot</code> で線表示
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/06-flag-step/index.html">06 演習: step() の旗</a>
+        <span class="badge">作成済</span>
+        — <code>step(edge, x)</code> で境界をカクッと。三色旗 (縦縞)
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/06-sunset/index.html">06 演習: ターナーの夕日</a>
+        <span class="badge">作成済</span>
+        — <code>mix</code> を縦 (<code>st.y</code>) 方向に。<code>smoothstep</code> で霞んだ夕焼けグラデーション
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/06-sunrise-sunset/index.html">06 演習: 日の出→日の入り</a>
+        <span class="badge">作成済</span>
+        — 夕日に <code>u_time</code> を足し、太陽の高さで夜→昼→夕をアニメーション
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/06-hsb/index.html">06 HSB (色相 × 明るさ)</a>
+        <span class="badge">作成済</span>
+        — <code>hsb2rgb</code> でカラーピッカー。横=色相 / 縦=明るさ。RGB とは別の色の表し方
+      </li>
+      <li class="todo">07 形 / 08 二次元行列 / 09 パターン … これから追加</li>
     </ul>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">

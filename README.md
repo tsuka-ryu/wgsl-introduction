@@ -72,7 +72,8 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 **アルゴリズムで絵を描く（本丸）**
 
 - [x] [05 シェイピング関数](https://thebookofshaders.com/05/?lan=jp) — sin で波 = うねうねの素。最重要。じっくり（01〜04 は Fundamentals の復習なのでざっと読んで通過）
-- [ ] [06 色について](https://thebookofshaders.com/06/?lan=jp) — 波を「色」に変換する
+- [x] [06 色について](https://thebookofshaders.com/06/?lan=jp) — 波を「色」に変換する。`mix` で 2 色補間／RGB を位相ずらしの sin 波にして虹。本家の作例 (`pct` を vec3 にして R/G/B を別カーブで補間 + `plot`) も別フォルダで用意
+  - 演習: `step()` の三色旗 / ターナーの夕日グラデーション (`mix` を縦に) / それに `u_time` を足した日の出→日の入りアニメ / HSB カラーピッカー (`hsb2rgb`)
 - [ ] [07 形について](https://thebookofshaders.com/07/?lan=jp) — 円や四角を数式で描く
 - [ ] [08 二次元行列](https://thebookofshaders.com/08/?lan=jp) — 回す・ずらす・動かす
 - [ ] [09 パターン](https://thebookofshaders.com/09/?lan=jp) — 模様を繰り返す
