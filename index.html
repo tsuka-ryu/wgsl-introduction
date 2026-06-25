@@ -146,7 +146,42 @@
         <span class="badge">作成済</span>
         — <code>atan2</code> で角度=色相 / <code>length</code> で距離=彩度。HSB を極座標で並べて色相環に
       </li>
-      <li class="todo">07 形 / 08 二次元行列 / 09 パターン … これから追加</li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-rect-step/index.html">07 形について: step() の論理積</a>
+        <span class="badge">作成済</span>
+        — <code>step</code> を x/y に使い掛け算 (= AND) で角を切り出す。四角形を描く最初の一歩
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-rect/index.html">07 形について: step() で四角形</a>
+        <span class="badge">作成済</span>
+        — <code>1.0 - st</code> で右上 2 辺も削り、4 辺の <code>step</code> を掛けて中央に四角形を描く
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-rect-size/index.html">07 形について: 長方形のサイズと縦横比</a>
+        <span class="badge">作成済</span>
+        — 中心 + <code>size(幅,高さ)</code> で角の座標を計算。<code>size</code> で大きさ・縦横比を自由に
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-rect-smoothstep/index.html">07 形について: smoothstep() で縁をぼかす</a>
+        <span class="badge">作成済</span>
+        — <code>step</code> を <code>smoothstep</code> に差し替え。<code>blur</code> でくっきり↔ぼんやりを調整
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-floor-steps/index.html">07 形について: floor() で階段グラデ</a>
+        <span class="badge">作成済</span>
+        — <code>floor(x*N)/N</code> でグラデを N 段に区切る。<code>step</code> を並べた階段＝ポスタリゼーション
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-mondrian/index.html">07 形について: box() でモンドリアン風</a>
+        <span class="badge">作成済</span>
+        — 四角を <code>box()</code> 関数に切り出し、位置を変えて複数配置。<code>mix</code> で塗り重ねて絵に
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-mondrian-1942/index.html">07 形について: モンドリアン (1937-42 風)</a>
+        <span class="badge">作成済</span>
+        — 同じ <code>box()</code> で実在作に寄せて再現。大きさバラバラの長方形を非対称配置
+      </li>
+      <li class="todo">07 形 (続き: 円ほか) / 08 二次元行列 / 09 パターン … これから追加</li>
     </ul>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
