@@ -181,7 +181,47 @@
         <span class="badge">作成済</span>
         — 同じ <code>box()</code> で実在作に寄せて再現。大きさバラバラの長方形を非対称配置
       </li>
-      <li class="todo">07 形 (続き: 円ほか) / 08 二次元行列 / 09 パターン … これから追加</li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-circle-distance/index.html">07 形について: 中心からの距離 (距離フィールド)</a>
+        <span class="badge">作成済</span>
+        — <code>distance</code> で中心からの距離を色に。円の素＝<code>SDF: Point→Distance</code> の場
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-circle-step/index.html">07 形について: step() で円</a>
+        <span class="badge">作成済</span>
+        — 距離を <code>step(0.5, ...)</code> で 2 値化。しきい値=半径。0.5 以上を白にすると黒い円
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-circle-fill/index.html">07 形について: 反転して黒地に白い円</a>
+        <span class="badge">作成済</span>
+        — <code>1.0 - step(...)</code> でマスク反転 (or 引数入替)。中を白・外を黒に
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-circle-smoothstep/index.html">07 形について: smoothstep() で縁のなめらかな円</a>
+        <span class="badge">作成済</span>
+        — 距離を <code>smoothstep</code> で 2 値化。<code>blur</code> で縁をくっきり↔ふわっと (アンチエイリアス)
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-circle-function/index.html">07 形について: circle() 関数 + 色つき円</a>
+        <span class="badge">作成済</span>
+        — 円を <code>circle()</code> 関数化 (Point→被覆率)。<code>mix</code> で色を塗る。box() の円版
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-circle-heartbeat/index.html">07 形について: 鼓動する円 (u_time)</a>
+        <span class="badge">作成済</span>
+        — <code>circle()</code> の半径を <code>sin(time)</code> で脈動。形は固定、radius だけ動かす
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-circles-move/index.html">07 形について: 円を動かす + もう 1 つ描く</a>
+        <span class="badge">作成済</span>
+        — <code>center</code> を <code>time</code> の関数に (cos/sin で円軌道)。<code>circle()</code> を別中心で再呼出し
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/07-fields-combine/index.html">07 形について: 距離フィールドを演算で組合せ</a>
+        <span class="badge">作成済</span>
+        — <code>+ * min max pow</code> をコメント切替。和=楕円 / 積=∞字 / min=合体 / max=レンズ。アニメ
+      </li>
+      <li class="todo">07 形 (続き) / 08 二次元行列 / 09 パターン … これから追加</li>
     </ul>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
