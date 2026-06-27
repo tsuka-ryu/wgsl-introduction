@@ -256,7 +256,32 @@
         <span class="badge">作成済</span>
         — 円と四角の SDF を <code>min</code>=和集合 / <code>max</code>=積集合 / <code>max(d1,-d2)</code>=差。動く合成 (コメント切替)
       </li>
-      <li class="todo">07 形 (完) / 08 二次元行列 / 09 パターン … これから追加</li>
+      <li class="done">
+        <a href="/src/book-of-shaders/08-translate/index.html">08 二次元行列: 空間を平行移動して形を動かす</a>
+        <span class="badge">作成済</span>
+        — 形ではなく空間を動かす。<code>st - offset</code> で十字を円軌道に。引き算が +offset への移動になる
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/08-rotate/index.html">08 二次元行列: 回転行列で空間を回す</a>
+        <span class="badge">作成済</span>
+        — <code>mat2x2f</code> の回転行列で空間を回す。<code>0.5</code> を引いて中心へ→回転→戻す。十字が首振り
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/08-scale/index.html">08 二次元行列: スケール行列で空間を伸縮</a>
+        <span class="badge">作成済</span>
+        — 対角行列 <code>S(k)</code> で空間を伸縮。<code>k</code> 倍すると形は <code>1/k</code>。<code>k=sin(t)+1</code> で十字が呼吸 (本家と同じ)
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/08-rotate-scale/index.html">08 二次元行列: 回転 × 拡大縮小の合成</a>
+        <span class="badge">作成済</span>
+        — <code>R(a)*S(k)</code> で 2 変形を 1 行列に合成。掛ける順序で結果が変わる (非可換) のを切替で体感
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/08-yuv-color/index.html">08 二次元行列: mat3 で色空間変換 (YUV→RGB)</a>
+        <span class="badge">作成済</span>
+        — 行列は幾何だけでない。<code>mat3x3f</code> で色 (Y,U,V)→(R,G,B) を変換。列優先の罠 (転置) もコメントで解説
+      </li>
+      <li class="todo">09 パターン … これから追加</li>
     </ul>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
