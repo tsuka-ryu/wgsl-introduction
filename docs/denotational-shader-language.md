@@ -37,6 +37,48 @@ denotational design の本体は「対象を表す数学的な意味領域を決
 | 合成 | レイヤーのモノイド（`mix` / over 合成） | 07-mondrian |
 | パターン | 座標変換の合成（タイル化など） | 09 パターン（予定） |
 
+## 距離フィールド / SDF（07 章で腹落ちした中核の意味領域）
+
+距離フィールドとは「各点に**最寄りの形までの距離**を入れた場（= 標高の地図）」。
+SDF (Signed Distance Field/Function) はそれに**符号**を付けたもの:
+
+```
+SDF = Point -> Distance     -- 外=正(+) / 縁=0 / 中=負(-)
+```
+
+ポイントは「形を 0/1 のマスクで持つ」のではなく「**距離で持つ**」こと。情報が豊かになり、
+地図への操作がそのまま形の操作になる:
+
+```
+Mask = Point -> Bool        -- 中か外か (情報が少ない・捨てられない)
+SDF  = Point -> Distance    -- 距離 (Mask へはいつでも step で落とせるが逆は不可)
+```
+
+### SDF の代数（これが言語の合成演算になる）
+
+| 演算 | 式 | 意味 |
+|---|---|---|
+| 和集合 union | `min(a, b)` | くっつける |
+| 共通部分 intersect | `max(a, b)` | 重なり |
+| 差 subtract | `max(a, -b)` | a から b をくり抜く（`-b` で内外反転＝符号のおかげ）|
+| 太らせ/丸角 offset | `a - r` | 全体を r 膨らます |
+| 縁取り outline | `abs(a) - w` | 輪郭リング |
+| 鏡映 / 繰り返し | 座標を `abs` / `mod` してから測る | 対称・タイル化 |
+
+→ ほぼ**半環的な代数**（`min`/`max` が和/積、`-` が補集合）。これが SDF が宣言的設計と
+相性抜群な理由。プリミティブ（`circle`/`box`）＋合成（上表）＋描画（`smoothstep` で
+`SDF -> Mask`、`mix` で配色）に分解でき、Conal Elliott の画像代数や IQ のレイマーチングも同じ構造。
+
+### 設計メモ
+
+- プリミティブ例: `circle p = length p - r`, `box p = length(max(|p|-b,0)) + min(max(p.x,p.y),0)`
+- 「中を負にする項」が "Signed" の正体（07-distance-field の min/max 分解で確認）。
+- `circle` の distance 版 / dot 版（sqrt 省略）は**意味は同じ・実装違い** →「意味は 1 つ、
+  実装はコンパイラが最適化で選ぶ」の好例（07-circle-dot）。
+- 関連作例: [07-distance-field](../src/book-of-shaders/07-distance-field/main.ts)（abs/min/max/fract）、
+  [07-fields-combine](../src/book-of-shaders/07-fields-combine/main.ts)（min=union / max=intersect）、
+  [07-circle-dot](../src/book-of-shaders/07-circle-dot/main.ts)（dot で sqrt 省略）。
+
 ## 参考（denotational design / compiling to GPU）
 
 - **Conal Elliott** — この構想のほぼ先駆。
