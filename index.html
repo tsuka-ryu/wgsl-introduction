@@ -291,7 +291,37 @@
         <span class="badge">作成済</span>
         — <code>floor</code> でマスの番地 (行・列) を得て分岐し ◯/×/空白 を描き分け。<code>fract</code>=形の位置 / <code>floor</code>=何を描くか
       </li>
-      <li class="todo">09 パターン (続き) / 10 ランダム … これから追加</li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-tile-rotate/index.html">09 パターン: タイルごとに回転</a>
+        <span class="badge">作成済</span>
+        — <code>tile</code> で 4x4 に畳んでから <code>rotate2d</code>。マス内ローカル座標を 45° 回し、傾いた四角を一斉に複製
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-anim-pinwheel/index.html">09 パターン: 逆回転する風車タイル (アニメ)</a>
+        <span class="badge">作成済</span>
+        — 番地の偶奇で回転方向を反転し隣どうし逆回り。回転角を色相にして虹色。動き＋色
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-anim-wave/index.html">09 パターン: 斜めに伝わるサイズの波 (アニメ)</a>
+        <span class="badge">作成済</span>
+        — 四角のサイズ脈動の位相を番地でずらし、膨張が対角線に沿って進むさざ波。形＋動き
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-anim-morph/index.html">09 パターン: 四角⇄円モーフ + 回転 + 虹 (アニメ)</a>
+        <span class="badge">作成済</span>
+        — <code>mix(box, circle, t)</code> で形を補間しつつ回転、色相をスクロール。色＋形＋動き
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-diamond-tiles/index.html">09 パターン: ダイヤモンドタイル</a>
+        <span class="badge">作成済</span>
+        — 半マスずらし (<code>fract(st+0.5)</code>) と 45° 回転の 2 座標に box を足し引き。入れ子の菱形模様
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-tartan/index.html">09 パターン: オリジナル タータンチェック</a>
+        <span class="badge">作成済</span>
+        — 縦糸/横糸の縞 (同じ sett) + 2/2 綾織りでどちらが上か切替 + 陰影、の4層を重ねた格子
+      </li>
+      <li class="todo">10 ランダム … これから追加</li>
     </ul>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
