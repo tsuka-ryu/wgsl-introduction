@@ -76,7 +76,7 @@ Vite が自動認識します（トップページの一覧リンクは手動で
   - 演習: `step()` の三色旗 / ターナーの夕日グラデーション (`mix` を縦に) / それに `u_time` を足した日の出→日の入りアニメ / HSB カラーピッカー (`hsb2rgb`) / HSB と極座標のカラーホイール (`atan2` で角度=色相・`length` で距離=彩度)
 - [x] [07 形について](https://thebookofshaders.com/07/?lan=jp) — `step`/`smoothstep` で四角・円を描き、距離フィールド (SDF) と極座標で形を作る。四角 (モンドリアン)／円 (アニメ)／距離フィールドの `min`/`max` 合成／極座標の花・雪の結晶／正N角形SDF まで作例多数
 - [x] [08 二次元行列](https://thebookofshaders.com/08/?lan=jp) — 形でなく「空間」を変形すると形が逆向きに動く。`mat2x2f` で平行移動 (引き算)／回転／拡大縮小、回転×スケールの合成 (掛ける順序で変わる非可換)、`mat3x3f` で色空間変換 (YUV→RGB)。列優先・転置の罠も解説
-- [ ] [09 パターン](https://thebookofshaders.com/09/?lan=jp) — 模様を繰り返す
+- [x] [09 パターン](https://thebookofshaders.com/09/?lan=jp) — 形でなく「座標の畳み方」を変えて模様にする。`fract` でタイリング／`floor` でマス番地→分岐、パターンをずらす (レンガ・スライド)、マスごとに回転 (番地/floor+hash で向きをバラバラ)、形の差し替え (三角→半円・トルシェ円弧)。`image = 形 ∘ 座標変換` の合成として読む
 
 **Generative designs（化ける）**
 
