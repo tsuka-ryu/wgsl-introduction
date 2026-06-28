@@ -321,6 +321,16 @@
         <span class="badge">作成済</span>
         — 縦糸/横糸の縞 (同じ sett) + 2/2 綾織りでどちらが上か切替 + 陰影、の4層を重ねた格子
       </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-brick/index.html">09 パターン: レンガ積み (パターンをずらす)</a>
+        <span class="badge">作成済</span>
+        — <code>fract</code> で畳む前に奇数段だけ <code>st.x</code> を半マスずらす。<code>step(1.0, mod(st.y,2.0))</code> で段の偶奇を取り目地をずらしてレンガに
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-moving-tiles/index.html">09 パターン: スライドするタイル (アニメ)</a>
+        <span class="badge">作成済</span>
+        — ずらし量を <code>fract(time)*2</code> の時間関数に。<code>fract(time)</code> の前半/後半で縦/横フェーズを切替、列(段)の偶奇で逆向きに滑らせる
+      </li>
       <li class="todo">10 ランダム … これから追加</li>
     </ul>
 
