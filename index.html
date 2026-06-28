@@ -381,7 +381,16 @@
         <span class="badge">作成済</span>
         — 10章の集大成。<code>random(floor)</code>でマスの種→種で<code>fract</code>を4向きに変換→対角線を引く。辺の中点で必ず繋がり迷路に。乱数は"向きの選択"だけに使う
       </li>
-      <li class="todo">10 ランダム … 続き (ノイズへ) これから追加</li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-noise-1d/index.html">11 ノイズ: 自分の noise(x) を作る (1D)</a>
+        <span class="badge">作成済</span>
+        — <code>noise(x)=mix(random(floor x), random(floor x+1), 補間)</code>。整数点は乱数そのもの、すきまを埋める。補間なし=階段→直線=折れ線→<code>smoothstep</code>=なめらかな波。3段を重ねて比較
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-noise-2d/index.html">11 ノイズ: 2D value noise の場</a>
+        <span class="badge">作成済</span>
+        — 本のお手本を移植。<code>floor</code>でマスの4隅の乱数を取り、<code>smoothstep</code>重みで双線形補間。<code>st*5</code>で拡大して雲のような濃淡。1Dの補間をxy両方向にしただけ
+      </li>
     </ul>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">

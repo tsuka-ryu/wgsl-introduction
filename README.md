@@ -81,7 +81,7 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 **Generative designs（化ける）**
 
 - [x] [10 ランダム](https://thebookofshaders.com/10/?lan=jp) — ノイズの前段。GPU に乱数生成器はないので `fract(sin(dot(st,k))*43758.5)` ハッシュで代用 (dotで1次元→sin→巨大倍→fractで折り畳み、隣の相関が壊れて砂嵐)。時間アニメは「乱数を位置で凍結し動きは連続関数 (sin) に任せる」で明滅 ※ノイズはこれから
-- [ ] [11 ノイズ](https://thebookofshaders.com/11/?lan=jp) — 自然なゆらぎの正体。水・煙・雲っぽいうねうね
+- [ ] [11 ノイズ](https://thebookofshaders.com/11/?lan=jp) — 自然なゆらぎの正体。水・煙・雲っぽいうねうね。1D 着手: `noise(x)=mix(random(floor x), random(floor x+1), smoothstep(fract x))` で「整数点は乱数・すきまをなめらかに補間」。補間なし=階段→直線=折れ線→smoothstep=波の3段で比較 ※2D はこれから
 - [ ] [12 セルラーノイズ](https://thebookofshaders.com/12/?lan=jp) — 細胞っぽい模様
 - [ ] [13 Fractional Brownian Motion](https://thebookofshaders.com/13/) — ノイズを重ねて本格化
 
