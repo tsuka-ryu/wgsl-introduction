@@ -371,6 +371,16 @@
         <span class="badge">作成済</span>
         — <code>random(floor(st))</code> でマス固有の種を凍結し、明るさ=<code>sin(time*速度 + 種*2π)</code>。位相がバラバラで散って明滅。乱数は位置で固定・動きは連続関数に任せる
       </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/10-mosaic/index.html">10 ランダム: モザイク</a>
+        <span class="badge">作成済</span>
+        — <code>random(floor(st))</code>。floorで格子に丸めるとマス内は同じ番地=同じ乱数で1マス1色に。砂嵐との違いは引数だけ。「乱数は格子点で引く」=ノイズへの橋渡し
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/10-truchet/index.html">10 ランダム: Truchet「10 PRINT」迷路</a>
+        <span class="badge">作成済</span>
+        — 10章の集大成。<code>random(floor)</code>でマスの種→種で<code>fract</code>を4向きに変換→対角線を引く。辺の中点で必ず繋がり迷路に。乱数は"向きの選択"だけに使う
+      </li>
       <li class="todo">10 ランダム … 続き (ノイズへ) これから追加</li>
     </ul>
 
