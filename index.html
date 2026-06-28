@@ -331,6 +331,36 @@
         <span class="badge">作成済</span>
         — ずらし量を <code>fract(time)*2</code> の時間関数に。<code>fract(time)</code> の前半/後半で縦/横フェーズを切替、列(段)の偶奇で逆向きに滑らせる
       </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-rotate-tile-pattern/index.html">09 パターン: マスの番地で回転を変える</a>
+        <span class="badge">作成済</span>
+        — マスを 2x2 に割り <code>step(1,mod(x,2))+step(1,mod(y,2))*2</code> で番地 0〜3 を作り、番地ごとに 90/-90/180° 回転。三角形の向きが散って模様に
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-rotate-tile-anim/index.html">09 パターン: 番地回転を入れ子＋アニメに (アニメ)</a>
+        <span class="badge">作成済</span>
+        — 座標変換チェーンを延長。逆向き <code>rotate2D</code> で番地回転を挟むと打ち消されず (非可換) ねじれ↔ほどけ。細分化の合成で入れ子模様
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-tile-halfcircle-anim/index.html">09 パターン: 半円タイル (アニメ)</a>
+        <span class="badge">作成済</span>
+        — 形を <code>step</code>(三角形) → 半円に差し替え。座標チェーンは不変、<code>image = 形 ∘ 座標変換</code> の "形" だけ交換。番地回転でつながり円・葉模様に
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-truchet-moving/index.html">09 パターン: 動くトルシェタイル (アニメ)</a>
+        <span class="badge">作成済</span>
+        — 対角の隅を結ぶ1/4円弧2本のトルシェタイルを <code>movingTiles</code> の上下左右スライドで動かす。番地の偶奇で円弧を鏡映し、ほどけ↔つながりを繰り返す
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-iching/index.html">09 パターン: 易経の卦 (I Ching) (アニメ)</a>
+        <span class="badge">作成済</span>
+        — 各マスに整数 <code>N</code> を割り当て、<code>N mod 64</code> を6bitに分解 → 各bitが爻(陽=つながった棒/陰=切れた棒)。<code>image = step ∘ (整数→6本の爻)</code>。<code>+t</code> で64通りを巡回
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/09-rotate-tile-moving/index.html">09 パターン: 番地回転の三角タイルをスライド (アニメ)</a>
+        <span class="badge">作成済</span>
+        — 静止の rotate-tile-pattern を <code>movingTiles</code> の上下左右スライドで動かす。回す版 (rotate-tile-anim) に対し平行移動版。番地が変わり三角の向きが組み変わる
+      </li>
       <li class="todo">10 ランダム … これから追加</li>
     </ul>
 
