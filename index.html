@@ -361,7 +361,17 @@
         <span class="badge">作成済</span>
         — 静止の rotate-tile-pattern を <code>movingTiles</code> の上下左右スライドで動かす。回す版 (rotate-tile-anim) に対し平行移動版。番地が変わり三角の向きが組み変わる
       </li>
-      <li class="todo">10 ランダム … これから追加</li>
+      <li class="done">
+        <a href="/src/book-of-shaders/10-random/index.html">10 ランダム: 擬似乱数ハッシュ</a>
+        <span class="badge">作成済</span>
+        — <code>fract(sin(dot(st,k))*43758.5)</code>。dotで1次元に潰す→sinの波→巨大倍→fractで折り畳む。③×④で隣の相関が壊れ砂嵐に。決定的だが乱数っぽい
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/10-random-anim/index.html">10 ランダム: 時間で明滅するマス (アニメ)</a>
+        <span class="badge">作成済</span>
+        — <code>random(floor(st))</code> でマス固有の種を凍結し、明るさ=<code>sin(time*速度 + 種*2π)</code>。位相がバラバラで散って明滅。乱数は位置で固定・動きは連続関数に任せる
+      </li>
+      <li class="todo">10 ランダム … 続き (ノイズへ) これから追加</li>
     </ul>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
