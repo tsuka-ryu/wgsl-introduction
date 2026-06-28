@@ -391,6 +391,16 @@
         <span class="badge">作成済</span>
         — 本のお手本を移植。<code>floor</code>でマスの4隅の乱数を取り、<code>smoothstep</code>重みで双線形補間。<code>st*5</code>で拡大して雲のような濃淡。1Dの補間をxy両方向にしただけ
       </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-noise-contour/index.html">11 ノイズ: 等高線マップ (noise を距離場として)</a>
+        <span class="badge">作成済</span>
+        — 練習「ノイズを距離場として扱う」。noise値を高さとみなし等しい高さに線を引く=等高線。<code>floor(n*N)/N</code>で標高色、<code>fract(n*N)</code>でレベルからの距離→線、<code>fwidth</code>で線幅を一定に。時間で地形がうねる
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-rothko/index.html">11 ノイズ: ロスコ風カラーフィールド</a>
+        <span class="badge">作成済</span>
+        — 練習「四角形+色+ノイズで複雑な表情」。柔らかい矩形(<code>smoothstep</code>)を奥→手前に<code>mix</code>で塗り重ね。縁は座標をノイズで歪めてにじませ(domain warp)、面の中は<code>fbm</code>で光のムラ。平塗りに見えない色面絵画
+      </li>
     </ul>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
