@@ -401,6 +401,36 @@
         <span class="badge">作成済</span>
         — 練習「四角形+色+ノイズで複雑な表情」。柔らかい矩形(<code>smoothstep</code>)を奥→手前に<code>mix</code>で塗り重ね。縁は座標をノイズで歪めてにじませ(domain warp)、面の中は<code>fbm</code>で光のムラ。平塗りに見えない色面絵画
       </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-gradient-noise/index.html">11 ノイズ: 勾配ノイズ (gradient / Perlin)</a>
+        <span class="badge">作成済</span>
+        — iqの勾配ノイズを移植。value noiseとの違いは「格子点に置くのが値か勾配(向き)か」。各隅で<code>dot(勾配, 隅→自分の変位)</code>を双線形補間。格子点では必ず0、軸沿いの癖が消えて有機的
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-wood/index.html">11 ノイズ: 木目 (noise で線をゆがめる)</a>
+        <span class="badge">作成済</span>
+        — 練習「noiseを使う」。等間隔の縞(<code>lines</code>)を場所ごとに<code>rotate2d</code>で回し、その回転角を<code>noise</code>で決める。隣と相関したなめらかな乱数だから縞が千切れずうねる=木目。純randomで回すとバラバラに崩れる
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-splatter/index.html">11 ノイズ: インク飛沫 (ロールシャッハ)</a>
+        <span class="badge">作成済</span>
+        — 勾配ノイズの応用。新しい数学はなく「座標をノイズで歪める(<code>domain warp</code>)」+「<code>smoothstep</code>で二値化」の組合せ。大きな染み・細かい飛沫・穴あけを塗り重ね、最後に白黒反転して紙に滲んだインクに
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-circle-wave/index.html">11 ノイズ: Circle wave (勾配ノイズの応用)</a>
+        <span class="badge">作成済</span>
+        — patriciogvの円アウトラインを移植。極座標で距離rと角度aに変換し、縁の半径fを<code>sin(a*n)</code>と<code>noise</code>でうねらせる。<code>shape(大)-shape(小)</code>で太さ一定のリング。脈打つ細胞のような輪
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-noise-move/index.html">11 ノイズ: 動きに使う (random は跳ね / noise は滑る)</a>
+        <span class="badge">作成済</span>
+        — 08の十字平行移動を土台に、中心offsetを時間の関数にする。同じ十字を2つ並べ、片方を<code>random(floor(time))</code>で駆動（無相関にジャンプ＝テレポート）、もう片方を<code>noise(time)</code>で駆動（連続関数なので滑らかにさまよう）。乱数を"動き"に流すと質感がまるごと変わる対比
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-pollock/index.html">11 ノイズ: アルゴリズム版ポロック (drip painting)</a>
+        <span class="badge">作成済</span>
+        — 11章の道具の総まとめ。ドリップ線=「domain warpで歪めた<code>fbm</code>場の等高線」を別シードで何枚も重ねて絡ませ、線幅を別<code>noise</code>で揺らして太り・かすれ・途切れを出す。飛沫=格子の一部セルに乱数半径の円。生成りの紙に黒エナメル、で抽象表現主義の一枚に
+      </li>
     </ul>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
