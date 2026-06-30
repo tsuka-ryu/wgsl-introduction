@@ -82,7 +82,7 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 
 - [x] [10 ランダム](https://thebookofshaders.com/10/?lan=jp) — ノイズの前段。GPU に乱数生成器はないので `fract(sin(dot(st,k))*43758.5)` ハッシュで代用 (dotで1次元→sin→巨大倍→fractで折り畳み、隣の相関が壊れて砂嵐)。時間アニメは「乱数を位置で凍結し動きは連続関数 (sin) に任せる」で明滅 ※ノイズはこれから
 - [x] [11 ノイズ](https://thebookofshaders.com/11/?lan=jp) — 自然なゆらぎの正体。水・煙・雲っぽいうねうね。**value noise**: `noise(x)=mix(random(floor x), random(floor x+1), smoothstep(fract x))` で「整数点は乱数・すきまをなめらかに補間」(1D/2D)。応用に等高線マップ・ロスコ風・木目・インク飛沫・ポロック風。**simplex noise** は gradient noise の正統進化: 値でなく勾配を格子点に置き `勾配·変位` の内積で作る (格子点で必ず0)。正方格子(4隅)を`skew`で三角格子に変え 3頂点を `max(0.5-d²,0)⁴` の丸い窓で重み付け→軸の癖が消え高次元でも軽い。応用に電光掲示板morph・`domain warp`(座標を別noiseの向き`(cos a,sin a)`へずらして大理石/流体)
-- [ ] [12 セルラーノイズ](https://thebookofshaders.com/12/?lan=jp) — 細胞っぽい模様
+- [x] [12 セルラーノイズ](https://thebookofshaders.com/12/?lan=jp) — 細胞っぽい模様。特徴点までの**距離場** (`min` で最短だけ残す) が出発点。全点総当たりは重いので空間をタイルに切り `floor`=セル番地/`fract`=セル内座標、番地を種に各セルへ点1個。最短点は必ず自分+隣接8マスにあるので **3×3近傍** だけ走査=点が無限でも `O(9)` 定数コスト (Worley noise)。距離だけでなく勝者点も覚える **argmin** にすると平面が縄張りに分かれる **ボロノイ**、境界は2点の垂直二等分線。応用に F2−F1 のひび割れ・距離を掛けて融合させるメタボール・点描 (stippling)・セル境界線までの距離 (`dot(中点, normalize(r−mr))`) で細胞組織・格子を捨て100点ばらまく総当たり Voronoi (Unicorn Puke)。production 版は `permute=mod((34x+1)x,289)` 多項式ハッシュ + 2×2窓を `vec4` 並列で分岐なし計算 (cellular2x2)
 - [ ] [13 Fractional Brownian Motion](https://thebookofshaders.com/13/) — ノイズを重ねて本格化
 
 ### 次にやりたい
