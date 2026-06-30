@@ -451,6 +451,11 @@
         <span class="badge">作成済</span>
         — simplex noiseの応用。主役は<code>domain warp</code>(定義域ゆがめ): 2枚目のnoiseに座標を渡す前に「別のnoiseが決めた向き<code>(cos a,sin a)</code>」へずらす。まっすぐ足すと同心円的な縞が、向きを場所ごとに変えるとうねって流体・大理石に。<code>fract</code>で縞にし<code>smoothstep(.7,.75)</code>で細い輪郭線だけ拾って反転、白地に黒線が流れる
       </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/12-cells-df/index.html">12 セルラーノイズ: 4 cells DF (距離場)</a>
+        <span class="badge">作成済</span>
+        — セルラーノイズの第一歩。画面にバラまいた特徴点5個との距離を各ピクセルで測り<code>min</code>で最短だけ残す=距離場(distance field)。点に近いほど暗い窪み。5個目は初配線の<code>u_mouse</code>で追従。等高線<code>step(.7,abs(sin(50*d)))</code>はコメントアウトで残し、外すと距離場に縞が乗る
+      </li>
     </ul>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
