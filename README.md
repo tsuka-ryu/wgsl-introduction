@@ -88,3 +88,4 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 ### 次にやりたい
 
 - [ ] [楽しい！Unityシェーダーお絵描き入門！](https://docs.google.com/presentation/d/1NMhx4HWuNZsjNRRlaFOu2ysjo04NgcpFlEhzodE8Rlg/edit) — The Book of Shaders を読み終わったら
+- [ ] フラクタル（Mandelbrot / Julia） — BoS 未収録の腕試し。エスケープ時間 `escape(c)=min{n:|zₙ|>2}, zₙ₊₁=zₙ²+c` を1ピクセルで反復するだけの純関数（型1）。複素2乗 `z²=(x²−y², 2xy)` のみで新しい道具ゼロ、Julia は c を定数化する1行差。縞消しは連続反復数 `n−log₂(log|z|)`（IQ msetsmooth）。chaos-game な IFS/アトラクタは点蓄積（型4）なので後回し
