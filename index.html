@@ -456,6 +456,61 @@
         <span class="badge">作成済</span>
         — セルラーノイズの第一歩。画面にバラまいた特徴点5個との距離を各ピクセルで測り<code>min</code>で最短だけ残す=距離場(distance field)。点に近いほど暗い窪み。5個目は初配線の<code>u_mouse</code>で追従。等高線<code>step(.7,abs(sin(50*d)))</code>はコメントアウトで残し、外すと距離場に縞が乗る
       </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/12-cells-tile/index.html">12 セルラーノイズ: 空間をタイル分割 (各セルに1点)</a>
+        <span class="badge">作成済</span>
+        — 点を増やすと「全ピクセル×全点」で重い。定番の手で画面を格子(タイル)に切り、<code>floor(st)</code>=セル番地 / <code>fract(st)</code>=セル内座標 の二段構え。番地を種に<code>random2</code>で各セルに点を1個だけ置き、自セルの点までの距離だけ測る。中心ドット<code>1-step(.02,dist)</code>と境界線<code>step(.98,f_st)</code>で構造を可視化。次のボロノイへの土台
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/12-cellular-noise/index.html">12 セルラーノイズ: タイル化の完成形 (3×3近傍 + アニメ)</a>
+        <span class="badge">作成済</span>
+        — 前回は自セルの点しか見ず境界で距離が不連続だった。最短点は必ず自分+隣接8マスの3×3内にあるので<code>for x,y∈{-1,0,1}</code>で全部見て本当の最短に。<code>diff=neighbor+point-f_st</code>で隣マスの点も同座標系へ並べ直すのが肝。点を<code>0.5+0.5*sin(t+2π·p)</code>で動かすと境界がなめらかに繋がり生きたWorley noiseに。点が無限でも3×3=定数コスト
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/12-voronoi/index.html">12 ボロノイ: 4 cells voronoi (最近傍点で平面を分割)</a>
+        <span class="badge">作成済</span>
+        — 距離場(<code>min</code>)に一歩足してボロノイへ。距離だけでなく「どの点が最短だったか」=勝者点も覚える<code>argmin</code>(<code>if dist&lt;m_dist</code>で距離と<code>m_point</code>を同時更新)。各ピクセルを勝者の座標<code>color.rg=m_point</code>で塗ると平面が「この点の縄張り」領域に分割され、境界は2点の垂直二等分線=直線に。等高線<code>abs(sin(80·d))</code>を今回は常時ON、中心ドットも重ねる。5個目は<code>u_mouse</code>追従
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/12-voronoi-tile/index.html">12 ボロノイ: タイル化した Simple Voronoi (3×3近傍 + アニメ)</a>
+        <span class="badge">作成済</span>
+        — タイル化(セルラーノイズ)とボロノイの合流点。同じ3×3畳み込みで<code>min</code>ではなく<code>argmin</code>にし、最短距離<code>m_dist</code>と「勝った点<code>m_point</code>」を同時更新。<code>color+=dot(m_point,(.3,.6))</code>で勝者点の位置を色に焼くと、同じ点に属するピクセルが同色ベタ塗りになり縄張り分割(ボロノイ)が出現。距離場は<code>abs(sin(40*d))*0.07</code>の薄い等高線で凹凸に。点が無限でも3×3=定数コストのまま
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/12-cellular-orbit/index.html">12 セルラーノイズ: 点を円軌道で動かす (animation別解)</a>
+        <span class="badge">作成済</span>
+        — 「点の動かし方」だけ差し替えた実験。<code>0.5+0.5*sin(t+2π·p)</code>のx/y独立振動(リサジュー)を、角度θ=t+φ連動の<code>0.5+r*(cos θ,sin θ)</code>=円軌道に。位相φと半径rをセル乱数からもらい点ごとに軌道を変える。動きの質感がかっちりした定速回転に。★点は必ずセル内<code>[0,1]²</code>に収める(<code>r≤0.45</code>)=「最短点は3×3内」の保証を壊さない不変条件
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/12-cellular-f2/index.html">12 セルラーノイズ: F2−F1 のひび割れ (accumulatorを組に)</a>
+        <span class="badge">作成済</span>
+        — 距離場の作り方を替える実験。<code>min</code>のスカラー1個でなく最短<code>f1</code>と次点<code>f2</code>の組を保ち、更新を「上位2件の挿入」に(<code>dist&lt;f1</code>なら繰り下げ)。<code>F2−F1</code>は2セルが拮抗する境界で0=暗い線、内側で大=明るい→結晶質のひび割れ模様に。F1単体(<code>12-cellular-noise</code>)の丸い窪みとは別物。「型を1→2に広げると新しい柄が解禁」の最小例
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/12-metaballs/index.html">12 メタボール (距離を掛けて塊を融合)</a>
+        <span class="badge">作成済</span>
+        — 土台はセルラーノイズと同じ(5×5タイル+3×3近傍+点をアニメ)。違いはたった1行、距離の合成。<code>min(m_dist,dist)</code>(最短だけ残す)ではなく<code>min(m_dist,m_dist*dist)</code>と<strong>掛けて</strong>いく。点の近くは<code>dist&lt;1</code>なので掛けるほど谷が深まり、点が2個近いと<code>d1·d2</code>と二重に沈んで隣の谷と地続きに=「2球が近づくと表面が繋がる」メタボールの等値面。<code>step(0.06,m_dist)</code>でしきい値を切り、黒いブヨブヨした塊を切り出す
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/12-stippling/index.html">12 セルラーノイズ: 点描 (Stippling)</a>
+        <span class="badge">作成済</span>
+        — 濃淡を「点の粗密」で描く点描。Worley を高速版<code>cellular2x2</code>(Stefan Gustavson作のMIT実装をWGSL移植。<code>permute</code>多項式ハッシュ+2×2窓でF1/F2を<code>vec4</code>並列に一発計算)で取得し<code>F.x</code>=最寄り点までの距離を得る。中心からの距離²<code>dot(pos,pos)</code>を時間で外へ流して<code>abs(sin(a·π·5))</code>=同心円の縞しきい値を作り、<code>step(ring, F.x*2)</code>で距離場により切る。滑らかなリング縞をランダムな距離場で割ると縞が点の集合に砕け、黒点が同心円バンド状に粗密を作る=ハーフトーンの最小原理
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/12-voronoi-edges/index.html">12 ボロノイ: セルの境界線までの距離 (Tissue / iq voronoi edges)</a>
+        <span class="badge">作成済</span>
+        — これまでは「最近点までの距離」か「縄張りの主」を見ていた。今回測る第三の量は「最近セル境界線までの距離」。2点A,Bの境界=ABの垂直二等分線なので、ピクセルから境界までの距離は<code>dot(0.5*(mr+r), normalize(r-mr))</code>(中点をAB方向の単位ベクトルに射影)で出る。これを全隣接点で<code>min</code>すると壁までの距離=細い網目線に。2パス構成:パス1(3×3)で最近点Aと<code>mr</code>を<code>argmin</code>確定→パス2(5×5)でAと各Bの二等分線までを<code>min</code>(自分自身は<code>|mr-r|²&gt;eps</code>で除外、5×5は斜め2マス先の取りこぼし防止)。<code>smoothstep(.01,.02,c.x)</code>で境界だけ白線、<code>1-smoothstep(0,.1,|mr|)</code>でセル中心に白ドット。<code>pow(d,.4)</code>で外周ほど乱れる細胞組織風
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/12-unicorn-puke/index.html">12 セルラーノイズ: Unicorn Puke (グローバル Voronoi / 非タイル)</a>
+        <span class="badge">作成済</span>
+        — N.Barradeau のGLSL移植。これまでのタイル方式(格子に切り各セル1点+近傍3×3だけ走査=<code>O(9)</code>・点は<code>[0,1]²</code>に拘束)と真逆。格子を使わず平面に種点を<strong>100個ばらまき</strong>、各ピクセルから全点への距離を総当たりして最短1点を選ぶ<code>O(100)</code>の力技Voronoi。制約から解放される代わり点が増えるほど重い。勝った<strong>種点座標そのものを色に流用</strong>するので隣接セルの色がランダムにバラけ毒々しい虹(=ユニコーンのゲロ)に。<code>color(xy)=seed(argmin_i dist(xy,seed_i))+shade</code>という「平面→色」の純関数で、ループはargminの実装手段
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/12-cellular-permute/index.html">12 セルラーノイズ: production版 cellular2x2 (permute整数ハッシュ)</a>
+        <span class="badge">作成済</span>
+        — patriciogvの"Cell"。これまでの素朴版(<code>fract(sin)</code>ハッシュ+近傍forループ)を実戦版に。①ハッシュを<code>permute=mod((34x+1)x,289)</code>の多項式に替え整数格子で均一に散らす。②3×3(9)ループをやめ2×2(4)を<code>vec4</code>1本で分岐なし並列評価(速いが<code>F1/F2</code>がたまに不正確→<code>jitter=0.8</code>で誤魔化す取引)。③出力は<code>F1</code>でなく<code>facets=F2−F1</code>(壁)×<code>dots=smoothstep(F1)</code>(穴)を<code>step</code>で固めひび割れた石畳に。<code>warp=1.1−5·dot(st,st)</code>の放射ゆがめでセルが外周で潰れ裏返る。★WGSLは複数成分スウィズル代入不可なので三項スワップ<code>d.xy=(d.x&lt;d.y)?d.xy:d.yx</code>は1成分ずつの<code>if</code>に展開
+      </li>
     </ul>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
