@@ -431,6 +431,26 @@
         <span class="badge">作成済</span>
         — 11章の道具の総まとめ。ドリップ線=「domain warpで歪めた<code>fbm</code>場の等高線」を別シードで何枚も重ねて絡ませ、線幅を別<code>noise</code>で揺らして太り・かすれ・途切れを出す。飛沫=格子の一部セルに乱数半径の円。生成りの紙に黒エナメル、で抽象表現主義の一枚に
       </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-simplex-grid/index.html">11 ノイズ: シンプレックスグリッド (simplex grid)</a>
+        <span class="badge">作成済</span>
+        — simplex noiseの下ごしらえ。正方格子(4隅)の代わりに<code>skew</code>で三角格子を作り、1マスを対角線で2つの正三角形に分割。三角の3頂点への近さをRGBで可視化。次元が上がっても頂点がN+1個で済み軸の癖も減る、という土台だけを見る回
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-simplex-noise/index.html">11 ノイズ: シンプレックスノイズ (simplex noise)</a>
+        <span class="badge">作成済</span>
+        — 11章ノイズの完成形。Ashima/McEwanの2D simplex noiseを移植。三角格子の3頂点で「勾配·変位」を出し、距離で減衰する丸い窓<code>max(0.5-d²,0)⁴</code>で重み付けして合計。gradient noiseの正統進化で軸の癖が消え軽い
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-digital/index.html">11 ノイズ: デジタル表示 (morphing hex glyph)</a>
+        <span class="badge">作成済</span>
+        — patriciogvの集大成デモを移植。2列×6段の枡目(<code>box</code>=正方<code>shape</code>)でデジタル文字を1つ描き、点灯/消灯を太枡/細枡で表現。下位6bitを<code>floor(t)</code>と<code>+1</code>で取り出し<code>mix</code>でクロスフェード=なめらかなmorph。上から3D simplex noiseの粒を薄く足し<code>step(0.7)</code>で白黒に焼く=明滅する電光掲示板
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/11-simplex-flow/index.html">11 ノイズ: simplex noise で流れる模様 (domain warp)</a>
+        <span class="badge">作成済</span>
+        — simplex noiseの応用。主役は<code>domain warp</code>(定義域ゆがめ): 2枚目のnoiseに座標を渡す前に「別のnoiseが決めた向き<code>(cos a,sin a)</code>」へずらす。まっすぐ足すと同心円的な縞が、向きを場所ごとに変えるとうねって流体・大理石に。<code>fract</code>で縞にし<code>smoothstep(.7,.75)</code>で細い輪郭線だけ拾って反転、白地に黒線が流れる
+      </li>
     </ul>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">

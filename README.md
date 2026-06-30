@@ -81,7 +81,7 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 **Generative designs（化ける）**
 
 - [x] [10 ランダム](https://thebookofshaders.com/10/?lan=jp) — ノイズの前段。GPU に乱数生成器はないので `fract(sin(dot(st,k))*43758.5)` ハッシュで代用 (dotで1次元→sin→巨大倍→fractで折り畳み、隣の相関が壊れて砂嵐)。時間アニメは「乱数を位置で凍結し動きは連続関数 (sin) に任せる」で明滅 ※ノイズはこれから
-- [ ] [11 ノイズ](https://thebookofshaders.com/11/?lan=jp) — 自然なゆらぎの正体。水・煙・雲っぽいうねうね。1D 着手: `noise(x)=mix(random(floor x), random(floor x+1), smoothstep(fract x))` で「整数点は乱数・すきまをなめらかに補間」。補間なし=階段→直線=折れ線→smoothstep=波の3段で比較 ※2D はこれから
+- [x] [11 ノイズ](https://thebookofshaders.com/11/?lan=jp) — 自然なゆらぎの正体。水・煙・雲っぽいうねうね。**value noise**: `noise(x)=mix(random(floor x), random(floor x+1), smoothstep(fract x))` で「整数点は乱数・すきまをなめらかに補間」(1D/2D)。応用に等高線マップ・ロスコ風・木目・インク飛沫・ポロック風。**simplex noise** は gradient noise の正統進化: 値でなく勾配を格子点に置き `勾配·変位` の内積で作る (格子点で必ず0)。正方格子(4隅)を`skew`で三角格子に変え 3頂点を `max(0.5-d²,0)⁴` の丸い窓で重み付け→軸の癖が消え高次元でも軽い。応用に電光掲示板morph・`domain warp`(座標を別noiseの向き`(cos a,sin a)`へずらして大理石/流体)
 - [ ] [12 セルラーノイズ](https://thebookofshaders.com/12/?lan=jp) — 細胞っぽい模様
 - [ ] [13 Fractional Brownian Motion](https://thebookofshaders.com/13/) — ノイズを重ねて本格化
 
