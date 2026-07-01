@@ -511,6 +511,26 @@
         <span class="badge">作成済</span>
         — patriciogvの"Cell"。これまでの素朴版(<code>fract(sin)</code>ハッシュ+近傍forループ)を実戦版に。①ハッシュを<code>permute=mod((34x+1)x,289)</code>の多項式に替え整数格子で均一に散らす。②3×3(9)ループをやめ2×2(4)を<code>vec4</code>1本で分岐なし並列評価(速いが<code>F1/F2</code>がたまに不正確→<code>jitter=0.8</code>で誤魔化す取引)。③出力は<code>F1</code>でなく<code>facets=F2−F1</code>(壁)×<code>dots=smoothstep(F1)</code>(穴)を<code>step</code>で固めひび割れた石畳に。<code>warp=1.1−5·dot(st,st)</code>の放射ゆがめでセルが外周で潰れ裏返る。★WGSLは複数成分スウィズル代入不可なので三項スワップ<code>d.xy=(d.x&lt;d.y)?d.xy:d.yx</code>は1成分ずつの<code>if</code>に展開
       </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/13-fbm/index.html">13 fBm: フラクタルブラウン運動 (octave を積む)</a>
+        <span class="badge">作成済</span>
+        — 土台は11章の value noise。それを「周波数×2・振幅×0.5」しながら重ねるだけ:<code>fbm(x)=Σ gⁱ·noise(lⁱ·x)</code> (g=0.5, l=2)。forの中身が<code>value+=amp*noise(st); st*=2; amp*=.5;</code>とこの和そのもの。★自己相似の正体:和のi=0を外に出すと<code>fbm(x)=noise(x)+g·fbm(l·x)</code>=「自分をl倍ズームしg倍に縮めたコピーを内側に含む」不動点的な再帰式。だから拡大しても同じ手触りが続く。このループは無限再帰をOCTAVES=6段でunfoldした有限近似(g&lt;1で等比級数収束するが lᴺ より細かいディテールは無い=なんちゃってフラクタル、N→∞が本物)。大うねりの上に細かなザラつきが乗った雲/山肌の濃淡に
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/13-turbulence/index.html">13 fBm: 乱流 (Turbulence / abs ノイズを積む)</a>
+        <span class="badge">作成済</span>
+        — patriciogv "Turbulence" 移植。fBm との違いは<strong>たった1箇所 abs()</strong>だけ:<code>value+=amp*noise(st)</code> を <code>value+=amp*abs(snoise(st))</code> に替える。ノイズ本体は11章の 2D simplex noise(-1〜1)。★<code>abs()</code>の効果:0を挟んで正負に振れるノイズを折り返すと、<code>snoise=0</code>の等高線(谷筋)が「値0の鋭い谷」になり、そこにV字の微分不連続な<strong>折れ目(ridge)</strong>が生まれる。これを<code>turbulence(x)=Σ gⁱ·|snoise(lⁱ·x)|</code> (g=0.5,l=2,OCTAVES=3) と周波数を上げて積むと折れ目の上に細かい折れ目が乗り、なめらかな雲だった fBm が煙・炎・大理石の脈のような<strong>渦筋(乱流)</strong>に化ける。abs で常に非負を足すので0.5中心に上下せず、谷(=0)から明るく盛り上がる濃淡
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/13-ridge/index.html">13 Ridged multifractal: 稜線を立てる fBm</a>
+        <span class="badge">作成済</span>
+        — turbulence の <code>abs()</code> をさらに造り込む patriciogv "Ridge" 移植。各層に純関数<code>ridge = square∘(offset−)∘abs</code>を噛ませる:<code>abs</code>で谷(負)を折り返し0に鋭い折れ目→<code>offset−</code>で反転し折れ目を<strong>山の頂上</strong>へ→<code>²</code>で尖らせ裾を寝かせる。turbulence が「谷を0の折れ目に」したのに対し ridge は「折れ目を尖った尾根の頂に」立ち上げる。★もう一つの肝は積み方:単なる和でなく<strong>一つ粗い層の値<code>prev</code>で変調</strong>して足す<code>sum+=n·amp; sum+=n·amp·prev; prev=n;</code>。粗い尾根がある所ほど細部を盛る掛け算の絡みで、場所ごとに粗さが変わる<strong>multi-fractal</strong>に(谷は滑らか・尾根はひび割れる侵食地形)。素材は11章 snoise、<code>lacunarity=2, gain=0.5, offset=0.9, OCTAVES=4</code>。白い地形図のような山塊の稜線。★<code>prev</code>初期値1.0で第0層だけ変調ぶんが素の寄与と同量になるのはお手本のまま
+      </li>
+      <li class="done">
+        <a href="/src/book-of-shaders/13-fbm-warp/index.html">13 fBm: domain warping (座標を fBm で歪める / 雲・大理石)</a>
+        <span class="badge">作成済</span>
+        — <code>fbm(st)</code>を1回測るのでなく<strong>fBmの出力をfBmの入力座標に注ぎ込む</strong>=domain warping。<code>f=fbm(st+fbm(st+fbm(st)))</code>と3段ネスト:noiseのスカラーを2本束ねてベクトル場<code>q,r</code>を作り座標の"ずらし"に使う。一様移動なら絵が平行移動するだけだが、ずらし量を場所ごと変える(=場でずらす)と空間がぐにゃり伸び渦巻く雲/大理石の縞に。fbm本体も強化:octaveごとに<code>st=rot*st*2+shift</code>と2倍拡大に0.5rad回転を足しvalue noiseの格子由来の軸バイアス(方眼っぽさ)を消し、<code>shift=(100,100)</code>で各層を無相関な遠方領域へ飛ばす。3つの中間場<code>f,q,r</code>を別々の色にmixで焼き<code>(f³+.6f²+.5f)</code>で明暗付け。<code>t</code>をr側だけに入れ雲を流す
+      </li>
     </ul>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
