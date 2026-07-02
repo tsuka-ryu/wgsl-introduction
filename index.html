@@ -45,6 +45,13 @@
         margin-left: 0.4em;
         vertical-align: middle;
       }
+      .slug {
+        font-size: 0.72rem;
+        color: #999;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        margin-left: 0.35em;
+        vertical-align: middle;
+      }
       a {
         color: #1565c0;
       }
@@ -57,26 +64,26 @@
     <h2>WebGPU Fundamentals</h2>
     <ul>
       <li class="done">
-        <a href="/src/webgpu-fundamentals/01-fundamentals/index.html">01 基本</a>
+        <a href="/src/webgpu-fundamentals/01-fundamentals/index.html">01 基本</a> <code class="slug">01-fundamentals</code>
         <span class="badge">作成済</span>
         — キャンバスを単色クリアする最小構成
       </li>
       <li class="done">
         <a href="/src/webgpu-fundamentals/02-inter-stage-variables/index.html"
           >02 inter-stage 変数</a
-        >
+        > <code class="slug">02-inter-stage-variables</code>
         <span class="badge">作成済</span>
         — <code>@location</code> でデータを渡す
       </li>
       <li class="done">
-        <a href="/src/webgpu-fundamentals/03-uniforms/index.html">03 ユニフォーム</a>
+        <a href="/src/webgpu-fundamentals/03-uniforms/index.html">03 ユニフォーム</a> <code class="slug">03-uniforms</code>
         <span class="badge">作成済</span>
         — シェーダに渡すグローバル変数 (color / scale / offset)
       </li>
       <li class="done">
         <a href="/src/webgpu-fundamentals/04-large-triangle/index.html"
           >04 大きなクリップ空間の三角形</a
-        >
+        > <code class="slug">04-large-triangle</code>
         <span class="badge">作成済</span>
         — 3 頂点 1 枚で画面いっぱいを覆う「うねうねの舞台」
       </li>
@@ -93,441 +100,441 @@
       <li class="done">
         <a href="/src/book-of-shaders/05-shaping-functions-basic/index.html"
           >05 シェイピング関数</a
-        >
+        > <code class="slug">05-shaping-functions-basic</code>
         <span class="badge">作成済</span>
         — 本の最初の例そのまま。<code>y = st.x</code> の直線を <code>plot</code> で緑に描く
       </li>
       <li class="done">
         <a href="/src/book-of-shaders/05-shaping-functions-expo/index.html"
           >05 シェイピング関数 (pow 曲線)</a
-        >
+        > <code class="slug">05-shaping-functions-expo</code>
         <span class="badge">作成済</span>
         — <code>y = pow(st.x, 5.0)</code> で直線を曲線に。汎用 <code>plot(st, y)</code> 版
       </li>
       <li class="done">
         <a href="/src/book-of-shaders/05-shaping-functions-sin/index.html"
           >05 シェイピング関数 (sin 波)</a
-        >
+        > <code class="slug">05-shaping-functions-sin</code>
         <span class="badge">作成済</span>
         — <code>sin</code> で波＝うねうねの素。<code>-1〜1</code> を <code>0〜1</code> にリマップ
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/06-colors/index.html">06 色について</a>
+        <a href="/src/book-of-shaders/06-colors/index.html">06 色について</a> <code class="slug">06-colors</code>
         <span class="badge">作成済</span>
         — 05 の <code>sin</code> 波を「色」に変換。<code>mix</code> で 2 色補間／RGB を位相ずらしの sin 波にして虹
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/06-colors-channels/index.html">06 色について (チャンネル別の曲線)</a>
+        <a href="/src/book-of-shaders/06-colors-channels/index.html">06 色について (チャンネル別の曲線)</a> <code class="slug">06-colors-channels</code>
         <span class="badge">作成済</span>
         — 本家の作例。<code>mix(colorA, colorB, pct)</code> の <code>pct</code> を vec3 にして R/G/B を別カーブで補間、<code>plot</code> で線表示
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/06-flag-step/index.html">06 演習: step() の旗</a>
+        <a href="/src/book-of-shaders/06-flag-step/index.html">06 演習: step() の旗</a> <code class="slug">06-flag-step</code>
         <span class="badge">作成済</span>
         — <code>step(edge, x)</code> で境界をカクッと。三色旗 (縦縞)
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/06-sunset/index.html">06 演習: ターナーの夕日</a>
+        <a href="/src/book-of-shaders/06-sunset/index.html">06 演習: ターナーの夕日</a> <code class="slug">06-sunset</code>
         <span class="badge">作成済</span>
         — <code>mix</code> を縦 (<code>st.y</code>) 方向に。<code>smoothstep</code> で霞んだ夕焼けグラデーション
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/06-sunrise-sunset/index.html">06 演習: 日の出→日の入り</a>
+        <a href="/src/book-of-shaders/06-sunrise-sunset/index.html">06 演習: 日の出→日の入り</a> <code class="slug">06-sunrise-sunset</code>
         <span class="badge">作成済</span>
         — 夕日に <code>u_time</code> を足し、太陽の高さで夜→昼→夕をアニメーション
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/06-hsb/index.html">06 HSB (色相 × 明るさ)</a>
+        <a href="/src/book-of-shaders/06-hsb/index.html">06 HSB (色相 × 明るさ)</a> <code class="slug">06-hsb</code>
         <span class="badge">作成済</span>
         — <code>hsb2rgb</code> でカラーピッカー。横=色相 / 縦=明るさ。RGB とは別の色の表し方
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/06-hsb-polar/index.html">06 HSB と極座標 (カラーホイール)</a>
+        <a href="/src/book-of-shaders/06-hsb-polar/index.html">06 HSB と極座標 (カラーホイール)</a> <code class="slug">06-hsb-polar</code>
         <span class="badge">作成済</span>
         — <code>atan2</code> で角度=色相 / <code>length</code> で距離=彩度。HSB を極座標で並べて色相環に
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-rect-step/index.html">07 形について: step() の論理積</a>
+        <a href="/src/book-of-shaders/07-rect-step/index.html">07 形について: step() の論理積</a> <code class="slug">07-rect-step</code>
         <span class="badge">作成済</span>
         — <code>step</code> を x/y に使い掛け算 (= AND) で角を切り出す。四角形を描く最初の一歩
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-rect/index.html">07 形について: step() で四角形</a>
+        <a href="/src/book-of-shaders/07-rect/index.html">07 形について: step() で四角形</a> <code class="slug">07-rect</code>
         <span class="badge">作成済</span>
         — <code>1.0 - st</code> で右上 2 辺も削り、4 辺の <code>step</code> を掛けて中央に四角形を描く
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-rect-size/index.html">07 形について: 長方形のサイズと縦横比</a>
+        <a href="/src/book-of-shaders/07-rect-size/index.html">07 形について: 長方形のサイズと縦横比</a> <code class="slug">07-rect-size</code>
         <span class="badge">作成済</span>
         — 中心 + <code>size(幅,高さ)</code> で角の座標を計算。<code>size</code> で大きさ・縦横比を自由に
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-rect-smoothstep/index.html">07 形について: smoothstep() で縁をぼかす</a>
+        <a href="/src/book-of-shaders/07-rect-smoothstep/index.html">07 形について: smoothstep() で縁をぼかす</a> <code class="slug">07-rect-smoothstep</code>
         <span class="badge">作成済</span>
         — <code>step</code> を <code>smoothstep</code> に差し替え。<code>blur</code> でくっきり↔ぼんやりを調整
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-floor-steps/index.html">07 形について: floor() で階段グラデ</a>
+        <a href="/src/book-of-shaders/07-floor-steps/index.html">07 形について: floor() で階段グラデ</a> <code class="slug">07-floor-steps</code>
         <span class="badge">作成済</span>
         — <code>floor(x*N)/N</code> でグラデを N 段に区切る。<code>step</code> を並べた階段＝ポスタリゼーション
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-mondrian/index.html">07 形について: box() でモンドリアン風</a>
+        <a href="/src/book-of-shaders/07-mondrian/index.html">07 形について: box() でモンドリアン風</a> <code class="slug">07-mondrian</code>
         <span class="badge">作成済</span>
         — 四角を <code>box()</code> 関数に切り出し、位置を変えて複数配置。<code>mix</code> で塗り重ねて絵に
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-mondrian-1942/index.html">07 形について: モンドリアン (1937-42 風)</a>
+        <a href="/src/book-of-shaders/07-mondrian-1942/index.html">07 形について: モンドリアン (1937-42 風)</a> <code class="slug">07-mondrian-1942</code>
         <span class="badge">作成済</span>
         — 同じ <code>box()</code> で実在作に寄せて再現。大きさバラバラの長方形を非対称配置
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-circle-distance/index.html">07 形について: 中心からの距離 (距離フィールド)</a>
+        <a href="/src/book-of-shaders/07-circle-distance/index.html">07 形について: 中心からの距離 (距離フィールド)</a> <code class="slug">07-circle-distance</code>
         <span class="badge">作成済</span>
         — <code>distance</code> で中心からの距離を色に。円の素＝<code>SDF: Point→Distance</code> の場
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-circle-step/index.html">07 形について: step() で円</a>
+        <a href="/src/book-of-shaders/07-circle-step/index.html">07 形について: step() で円</a> <code class="slug">07-circle-step</code>
         <span class="badge">作成済</span>
         — 距離を <code>step(0.5, ...)</code> で 2 値化。しきい値=半径。0.5 以上を白にすると黒い円
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-circle-fill/index.html">07 形について: 反転して黒地に白い円</a>
+        <a href="/src/book-of-shaders/07-circle-fill/index.html">07 形について: 反転して黒地に白い円</a> <code class="slug">07-circle-fill</code>
         <span class="badge">作成済</span>
         — <code>1.0 - step(...)</code> でマスク反転 (or 引数入替)。中を白・外を黒に
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-circle-smoothstep/index.html">07 形について: smoothstep() で縁のなめらかな円</a>
+        <a href="/src/book-of-shaders/07-circle-smoothstep/index.html">07 形について: smoothstep() で縁のなめらかな円</a> <code class="slug">07-circle-smoothstep</code>
         <span class="badge">作成済</span>
         — 距離を <code>smoothstep</code> で 2 値化。<code>blur</code> で縁をくっきり↔ふわっと (アンチエイリアス)
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-circle-function/index.html">07 形について: circle() 関数 + 色つき円</a>
+        <a href="/src/book-of-shaders/07-circle-function/index.html">07 形について: circle() 関数 + 色つき円</a> <code class="slug">07-circle-function</code>
         <span class="badge">作成済</span>
         — 円を <code>circle()</code> 関数化 (Point→被覆率)。<code>mix</code> で色を塗る。box() の円版
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-circle-heartbeat/index.html">07 形について: 鼓動する円 (u_time)</a>
+        <a href="/src/book-of-shaders/07-circle-heartbeat/index.html">07 形について: 鼓動する円 (u_time)</a> <code class="slug">07-circle-heartbeat</code>
         <span class="badge">作成済</span>
         — <code>circle()</code> の半径を <code>sin(time)</code> で脈動。形は固定、radius だけ動かす
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-circles-move/index.html">07 形について: 円を動かす + もう 1 つ描く</a>
+        <a href="/src/book-of-shaders/07-circles-move/index.html">07 形について: 円を動かす + もう 1 つ描く</a> <code class="slug">07-circles-move</code>
         <span class="badge">作成済</span>
         — <code>center</code> を <code>time</code> の関数に (cos/sin で円軌道)。<code>circle()</code> を別中心で再呼出し
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-fields-combine/index.html">07 形について: 距離フィールドを演算で組合せ</a>
+        <a href="/src/book-of-shaders/07-fields-combine/index.html">07 形について: 距離フィールドを演算で組合せ</a> <code class="slug">07-fields-combine</code>
         <span class="badge">作成済</span>
         — <code>+ * min max pow</code> をコメント切替。和=楕円 / 積=∞字 / min=合体 / max=レンズ。アニメ
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-circle-dot/index.html">07 形について: dot() で円 (距離の2乗)</a>
+        <a href="/src/book-of-shaders/07-circle-dot/index.html">07 形について: dot() で円 (距離の2乗)</a> <code class="slug">07-circle-dot</code>
         <span class="badge">作成済</span>
         — <code>dot(d,d)</code>=距離の2乗で sqrt を省く。ぼかし幅を半径比例に (本家の circle 関数)
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-distance-field/index.html">07 形について: 距離フィールドの便利な性質</a>
+        <a href="/src/book-of-shaders/07-distance-field/index.html">07 形について: 距離フィールドの便利な性質</a> <code class="slug">07-distance-field</code>
         <span class="badge">作成済</span>
         — <code>abs</code> で空間を折り <code>min/max</code> で角丸四角の SDF。<code>fract</code>で可視化/<code>step</code>で描画 (コメント切替)
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-polar-shapes/index.html">07 形について: 極座標の形 (花・星)</a>
+        <a href="/src/book-of-shaders/07-polar-shapes/index.html">07 形について: 極座標の形 (花・星)</a> <code class="slug">07-polar-shapes</code>
         <span class="badge">作成済</span>
         — <code>atan2</code> で角度、しきい半径 <code>f=cos(a*N)</code> を角度で変化させ花/星/歯車 (コメント切替)
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-polar-anim/index.html">07 形について: 極座標の花アニメ</a>
+        <a href="/src/book-of-shaders/07-polar-anim/index.html">07 形について: 極座標の花アニメ</a> <code class="slug">07-polar-anim</code>
         <span class="badge">作成済</span>
         — 角度に <code>time</code> を足して回転、<code>f</code> を <code>sin</code> で脈動。咲く花
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-polar-hole/index.html">07 形について: 穴を開けた形 (雪の結晶)</a>
+        <a href="/src/book-of-shaders/07-polar-hole/index.html">07 形について: 穴を開けた形 (雪の結晶)</a> <code class="slug">07-polar-hole</code>
         <span class="badge">作成済</span>
         — 外マスク × <code>(1-内マスク)</code> でくり抜き (subtract)。放射スポークも重ねて結晶風
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-polygon-sdf/index.html">07 形について: 正N角形の距離フィールド</a>
+        <a href="/src/book-of-shaders/07-polygon-sdf/index.html">07 形について: 正N角形の距離フィールド</a> <code class="slug">07-polygon-sdf</code>
         <span class="badge">作成済</span>
         — 角度を <code>floor</code> で N 等分のくさびに畳み、最寄りの辺までの距離を測る。N で角数可変
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/07-sdf-combine/index.html">07 形について: SDF を min/max で合成</a>
+        <a href="/src/book-of-shaders/07-sdf-combine/index.html">07 形について: SDF を min/max で合成</a> <code class="slug">07-sdf-combine</code>
         <span class="badge">作成済</span>
         — 円と四角の SDF を <code>min</code>=和集合 / <code>max</code>=積集合 / <code>max(d1,-d2)</code>=差。動く合成 (コメント切替)
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/08-translate/index.html">08 二次元行列: 空間を平行移動して形を動かす</a>
+        <a href="/src/book-of-shaders/08-translate/index.html">08 二次元行列: 空間を平行移動して形を動かす</a> <code class="slug">08-translate</code>
         <span class="badge">作成済</span>
         — 形ではなく空間を動かす。<code>st - offset</code> で十字を円軌道に。引き算が +offset への移動になる
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/08-rotate/index.html">08 二次元行列: 回転行列で空間を回す</a>
+        <a href="/src/book-of-shaders/08-rotate/index.html">08 二次元行列: 回転行列で空間を回す</a> <code class="slug">08-rotate</code>
         <span class="badge">作成済</span>
         — <code>mat2x2f</code> の回転行列で空間を回す。<code>0.5</code> を引いて中心へ→回転→戻す。十字が首振り
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/08-scale/index.html">08 二次元行列: スケール行列で空間を伸縮</a>
+        <a href="/src/book-of-shaders/08-scale/index.html">08 二次元行列: スケール行列で空間を伸縮</a> <code class="slug">08-scale</code>
         <span class="badge">作成済</span>
         — 対角行列 <code>S(k)</code> で空間を伸縮。<code>k</code> 倍すると形は <code>1/k</code>。<code>k=sin(t)+1</code> で十字が呼吸 (本家と同じ)
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/08-rotate-scale/index.html">08 二次元行列: 回転 × 拡大縮小の合成</a>
+        <a href="/src/book-of-shaders/08-rotate-scale/index.html">08 二次元行列: 回転 × 拡大縮小の合成</a> <code class="slug">08-rotate-scale</code>
         <span class="badge">作成済</span>
         — <code>R(a)*S(k)</code> で 2 変形を 1 行列に合成。掛ける順序で結果が変わる (非可換) のを切替で体感
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/08-yuv-color/index.html">08 二次元行列: mat3 で色空間変換 (YUV→RGB)</a>
+        <a href="/src/book-of-shaders/08-yuv-color/index.html">08 二次元行列: mat3 で色空間変換 (YUV→RGB)</a> <code class="slug">08-yuv-color</code>
         <span class="badge">作成済</span>
         — 行列は幾何だけでない。<code>mat3x3f</code> で色 (Y,U,V)→(R,G,B) を変換。列優先の罠 (転置) もコメントで解説
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-tiling/index.html">09 パターン: fract でタイリング</a>
+        <a href="/src/book-of-shaders/09-tiling/index.html">09 パターン: fract でタイリング</a> <code class="slug">09-tiling</code>
         <span class="badge">作成済</span>
         — <code>st*3</code> 拡大→<code>fract</code> で 0〜1 を繰り返し 3x3 マスに。各マスのローカル座標に同じ円を描いて複製
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-tic-tac-toe/index.html">09 パターン: 練習 Tic-tac-toe</a>
+        <a href="/src/book-of-shaders/09-tic-tac-toe/index.html">09 パターン: 練習 Tic-tac-toe</a> <code class="slug">09-tic-tac-toe</code>
         <span class="badge">作成済</span>
         — <code>floor</code> でマスの番地 (行・列) を得て分岐し ◯/×/空白 を描き分け。<code>fract</code>=形の位置 / <code>floor</code>=何を描くか
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-tile-rotate/index.html">09 パターン: タイルごとに回転</a>
+        <a href="/src/book-of-shaders/09-tile-rotate/index.html">09 パターン: タイルごとに回転</a> <code class="slug">09-tile-rotate</code>
         <span class="badge">作成済</span>
         — <code>tile</code> で 4x4 に畳んでから <code>rotate2d</code>。マス内ローカル座標を 45° 回し、傾いた四角を一斉に複製
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-anim-pinwheel/index.html">09 パターン: 逆回転する風車タイル (アニメ)</a>
+        <a href="/src/book-of-shaders/09-anim-pinwheel/index.html">09 パターン: 逆回転する風車タイル (アニメ)</a> <code class="slug">09-anim-pinwheel</code>
         <span class="badge">作成済</span>
         — 番地の偶奇で回転方向を反転し隣どうし逆回り。回転角を色相にして虹色。動き＋色
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-anim-wave/index.html">09 パターン: 斜めに伝わるサイズの波 (アニメ)</a>
+        <a href="/src/book-of-shaders/09-anim-wave/index.html">09 パターン: 斜めに伝わるサイズの波 (アニメ)</a> <code class="slug">09-anim-wave</code>
         <span class="badge">作成済</span>
         — 四角のサイズ脈動の位相を番地でずらし、膨張が対角線に沿って進むさざ波。形＋動き
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-anim-morph/index.html">09 パターン: 四角⇄円モーフ + 回転 + 虹 (アニメ)</a>
+        <a href="/src/book-of-shaders/09-anim-morph/index.html">09 パターン: 四角⇄円モーフ + 回転 + 虹 (アニメ)</a> <code class="slug">09-anim-morph</code>
         <span class="badge">作成済</span>
         — <code>mix(box, circle, t)</code> で形を補間しつつ回転、色相をスクロール。色＋形＋動き
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-diamond-tiles/index.html">09 パターン: ダイヤモンドタイル</a>
+        <a href="/src/book-of-shaders/09-diamond-tiles/index.html">09 パターン: ダイヤモンドタイル</a> <code class="slug">09-diamond-tiles</code>
         <span class="badge">作成済</span>
         — 半マスずらし (<code>fract(st+0.5)</code>) と 45° 回転の 2 座標に box を足し引き。入れ子の菱形模様
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-tartan/index.html">09 パターン: オリジナル タータンチェック</a>
+        <a href="/src/book-of-shaders/09-tartan/index.html">09 パターン: オリジナル タータンチェック</a> <code class="slug">09-tartan</code>
         <span class="badge">作成済</span>
         — 縦糸/横糸の縞 (同じ sett) + 2/2 綾織りでどちらが上か切替 + 陰影、の4層を重ねた格子
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-brick/index.html">09 パターン: レンガ積み (パターンをずらす)</a>
+        <a href="/src/book-of-shaders/09-brick/index.html">09 パターン: レンガ積み (パターンをずらす)</a> <code class="slug">09-brick</code>
         <span class="badge">作成済</span>
         — <code>fract</code> で畳む前に奇数段だけ <code>st.x</code> を半マスずらす。<code>step(1.0, mod(st.y,2.0))</code> で段の偶奇を取り目地をずらしてレンガに
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-moving-tiles/index.html">09 パターン: スライドするタイル (アニメ)</a>
+        <a href="/src/book-of-shaders/09-moving-tiles/index.html">09 パターン: スライドするタイル (アニメ)</a> <code class="slug">09-moving-tiles</code>
         <span class="badge">作成済</span>
         — ずらし量を <code>fract(time)*2</code> の時間関数に。<code>fract(time)</code> の前半/後半で縦/横フェーズを切替、列(段)の偶奇で逆向きに滑らせる
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-rotate-tile-pattern/index.html">09 パターン: マスの番地で回転を変える</a>
+        <a href="/src/book-of-shaders/09-rotate-tile-pattern/index.html">09 パターン: マスの番地で回転を変える</a> <code class="slug">09-rotate-tile-pattern</code>
         <span class="badge">作成済</span>
         — マスを 2x2 に割り <code>step(1,mod(x,2))+step(1,mod(y,2))*2</code> で番地 0〜3 を作り、番地ごとに 90/-90/180° 回転。三角形の向きが散って模様に
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-rotate-tile-anim/index.html">09 パターン: 番地回転を入れ子＋アニメに (アニメ)</a>
+        <a href="/src/book-of-shaders/09-rotate-tile-anim/index.html">09 パターン: 番地回転を入れ子＋アニメに (アニメ)</a> <code class="slug">09-rotate-tile-anim</code>
         <span class="badge">作成済</span>
         — 座標変換チェーンを延長。逆向き <code>rotate2D</code> で番地回転を挟むと打ち消されず (非可換) ねじれ↔ほどけ。細分化の合成で入れ子模様
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-tile-halfcircle-anim/index.html">09 パターン: 半円タイル (アニメ)</a>
+        <a href="/src/book-of-shaders/09-tile-halfcircle-anim/index.html">09 パターン: 半円タイル (アニメ)</a> <code class="slug">09-tile-halfcircle-anim</code>
         <span class="badge">作成済</span>
         — 形を <code>step</code>(三角形) → 半円に差し替え。座標チェーンは不変、<code>image = 形 ∘ 座標変換</code> の "形" だけ交換。番地回転でつながり円・葉模様に
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-truchet-moving/index.html">09 パターン: 動くトルシェタイル (アニメ)</a>
+        <a href="/src/book-of-shaders/09-truchet-moving/index.html">09 パターン: 動くトルシェタイル (アニメ)</a> <code class="slug">09-truchet-moving</code>
         <span class="badge">作成済</span>
         — 対角の隅を結ぶ1/4円弧2本のトルシェタイルを <code>movingTiles</code> の上下左右スライドで動かす。番地の偶奇で円弧を鏡映し、ほどけ↔つながりを繰り返す
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-iching/index.html">09 パターン: 易経の卦 (I Ching) (アニメ)</a>
+        <a href="/src/book-of-shaders/09-iching/index.html">09 パターン: 易経の卦 (I Ching) (アニメ)</a> <code class="slug">09-iching</code>
         <span class="badge">作成済</span>
         — 各マスに整数 <code>N</code> を割り当て、<code>N mod 64</code> を6bitに分解 → 各bitが爻(陽=つながった棒/陰=切れた棒)。<code>image = step ∘ (整数→6本の爻)</code>。<code>+t</code> で64通りを巡回
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/09-rotate-tile-moving/index.html">09 パターン: 番地回転の三角タイルをスライド (アニメ)</a>
+        <a href="/src/book-of-shaders/09-rotate-tile-moving/index.html">09 パターン: 番地回転の三角タイルをスライド (アニメ)</a> <code class="slug">09-rotate-tile-moving</code>
         <span class="badge">作成済</span>
         — 静止の rotate-tile-pattern を <code>movingTiles</code> の上下左右スライドで動かす。回す版 (rotate-tile-anim) に対し平行移動版。番地が変わり三角の向きが組み変わる
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/10-random/index.html">10 ランダム: 擬似乱数ハッシュ</a>
+        <a href="/src/book-of-shaders/10-random/index.html">10 ランダム: 擬似乱数ハッシュ</a> <code class="slug">10-random</code>
         <span class="badge">作成済</span>
         — <code>fract(sin(dot(st,k))*43758.5)</code>。dotで1次元に潰す→sinの波→巨大倍→fractで折り畳む。③×④で隣の相関が壊れ砂嵐に。決定的だが乱数っぽい
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/10-random-anim/index.html">10 ランダム: 時間で明滅するマス (アニメ)</a>
+        <a href="/src/book-of-shaders/10-random-anim/index.html">10 ランダム: 時間で明滅するマス (アニメ)</a> <code class="slug">10-random-anim</code>
         <span class="badge">作成済</span>
         — <code>random(floor(st))</code> でマス固有の種を凍結し、明るさ=<code>sin(time*速度 + 種*2π)</code>。位相がバラバラで散って明滅。乱数は位置で固定・動きは連続関数に任せる
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/10-mosaic/index.html">10 ランダム: モザイク</a>
+        <a href="/src/book-of-shaders/10-mosaic/index.html">10 ランダム: モザイク</a> <code class="slug">10-mosaic</code>
         <span class="badge">作成済</span>
         — <code>random(floor(st))</code>。floorで格子に丸めるとマス内は同じ番地=同じ乱数で1マス1色に。砂嵐との違いは引数だけ。「乱数は格子点で引く」=ノイズへの橋渡し
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/10-truchet/index.html">10 ランダム: Truchet「10 PRINT」迷路</a>
+        <a href="/src/book-of-shaders/10-truchet/index.html">10 ランダム: Truchet「10 PRINT」迷路</a> <code class="slug">10-truchet</code>
         <span class="badge">作成済</span>
         — 10章の集大成。<code>random(floor)</code>でマスの種→種で<code>fract</code>を4向きに変換→対角線を引く。辺の中点で必ず繋がり迷路に。乱数は"向きの選択"だけに使う
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-noise-1d/index.html">11 ノイズ: 自分の noise(x) を作る (1D)</a>
+        <a href="/src/book-of-shaders/11-noise-1d/index.html">11 ノイズ: 自分の noise(x) を作る (1D)</a> <code class="slug">11-noise-1d</code>
         <span class="badge">作成済</span>
         — <code>noise(x)=mix(random(floor x), random(floor x+1), 補間)</code>。整数点は乱数そのもの、すきまを埋める。補間なし=階段→直線=折れ線→<code>smoothstep</code>=なめらかな波。3段を重ねて比較
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-noise-2d/index.html">11 ノイズ: 2D value noise の場</a>
+        <a href="/src/book-of-shaders/11-noise-2d/index.html">11 ノイズ: 2D value noise の場</a> <code class="slug">11-noise-2d</code>
         <span class="badge">作成済</span>
         — 本のお手本を移植。<code>floor</code>でマスの4隅の乱数を取り、<code>smoothstep</code>重みで双線形補間。<code>st*5</code>で拡大して雲のような濃淡。1Dの補間をxy両方向にしただけ
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-noise-contour/index.html">11 ノイズ: 等高線マップ (noise を距離場として)</a>
+        <a href="/src/book-of-shaders/11-noise-contour/index.html">11 ノイズ: 等高線マップ (noise を距離場として)</a> <code class="slug">11-noise-contour</code>
         <span class="badge">作成済</span>
         — 練習「ノイズを距離場として扱う」。noise値を高さとみなし等しい高さに線を引く=等高線。<code>floor(n*N)/N</code>で標高色、<code>fract(n*N)</code>でレベルからの距離→線、<code>fwidth</code>で線幅を一定に。時間で地形がうねる
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-rothko/index.html">11 ノイズ: ロスコ風カラーフィールド</a>
+        <a href="/src/book-of-shaders/11-rothko/index.html">11 ノイズ: ロスコ風カラーフィールド</a> <code class="slug">11-rothko</code>
         <span class="badge">作成済</span>
         — 練習「四角形+色+ノイズで複雑な表情」。柔らかい矩形(<code>smoothstep</code>)を奥→手前に<code>mix</code>で塗り重ね。縁は座標をノイズで歪めてにじませ(domain warp)、面の中は<code>fbm</code>で光のムラ。平塗りに見えない色面絵画
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-gradient-noise/index.html">11 ノイズ: 勾配ノイズ (gradient / Perlin)</a>
+        <a href="/src/book-of-shaders/11-gradient-noise/index.html">11 ノイズ: 勾配ノイズ (gradient / Perlin)</a> <code class="slug">11-gradient-noise</code>
         <span class="badge">作成済</span>
         — iqの勾配ノイズを移植。value noiseとの違いは「格子点に置くのが値か勾配(向き)か」。各隅で<code>dot(勾配, 隅→自分の変位)</code>を双線形補間。格子点では必ず0、軸沿いの癖が消えて有機的
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-wood/index.html">11 ノイズ: 木目 (noise で線をゆがめる)</a>
+        <a href="/src/book-of-shaders/11-wood/index.html">11 ノイズ: 木目 (noise で線をゆがめる)</a> <code class="slug">11-wood</code>
         <span class="badge">作成済</span>
         — 練習「noiseを使う」。等間隔の縞(<code>lines</code>)を場所ごとに<code>rotate2d</code>で回し、その回転角を<code>noise</code>で決める。隣と相関したなめらかな乱数だから縞が千切れずうねる=木目。純randomで回すとバラバラに崩れる
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-splatter/index.html">11 ノイズ: インク飛沫 (ロールシャッハ)</a>
+        <a href="/src/book-of-shaders/11-splatter/index.html">11 ノイズ: インク飛沫 (ロールシャッハ)</a> <code class="slug">11-splatter</code>
         <span class="badge">作成済</span>
         — 勾配ノイズの応用。新しい数学はなく「座標をノイズで歪める(<code>domain warp</code>)」+「<code>smoothstep</code>で二値化」の組合せ。大きな染み・細かい飛沫・穴あけを塗り重ね、最後に白黒反転して紙に滲んだインクに
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-circle-wave/index.html">11 ノイズ: Circle wave (勾配ノイズの応用)</a>
+        <a href="/src/book-of-shaders/11-circle-wave/index.html">11 ノイズ: Circle wave (勾配ノイズの応用)</a> <code class="slug">11-circle-wave</code>
         <span class="badge">作成済</span>
         — patriciogvの円アウトラインを移植。極座標で距離rと角度aに変換し、縁の半径fを<code>sin(a*n)</code>と<code>noise</code>でうねらせる。<code>shape(大)-shape(小)</code>で太さ一定のリング。脈打つ細胞のような輪
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-noise-move/index.html">11 ノイズ: 動きに使う (random は跳ね / noise は滑る)</a>
+        <a href="/src/book-of-shaders/11-noise-move/index.html">11 ノイズ: 動きに使う (random は跳ね / noise は滑る)</a> <code class="slug">11-noise-move</code>
         <span class="badge">作成済</span>
         — 08の十字平行移動を土台に、中心offsetを時間の関数にする。同じ十字を2つ並べ、片方を<code>random(floor(time))</code>で駆動（無相関にジャンプ＝テレポート）、もう片方を<code>noise(time)</code>で駆動（連続関数なので滑らかにさまよう）。乱数を"動き"に流すと質感がまるごと変わる対比
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-pollock/index.html">11 ノイズ: アルゴリズム版ポロック (drip painting)</a>
+        <a href="/src/book-of-shaders/11-pollock/index.html">11 ノイズ: アルゴリズム版ポロック (drip painting)</a> <code class="slug">11-pollock</code>
         <span class="badge">作成済</span>
         — 11章の道具の総まとめ。ドリップ線=「domain warpで歪めた<code>fbm</code>場の等高線」を別シードで何枚も重ねて絡ませ、線幅を別<code>noise</code>で揺らして太り・かすれ・途切れを出す。飛沫=格子の一部セルに乱数半径の円。生成りの紙に黒エナメル、で抽象表現主義の一枚に
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-simplex-grid/index.html">11 ノイズ: シンプレックスグリッド (simplex grid)</a>
+        <a href="/src/book-of-shaders/11-simplex-grid/index.html">11 ノイズ: シンプレックスグリッド (simplex grid)</a> <code class="slug">11-simplex-grid</code>
         <span class="badge">作成済</span>
         — simplex noiseの下ごしらえ。正方格子(4隅)の代わりに<code>skew</code>で三角格子を作り、1マスを対角線で2つの正三角形に分割。三角の3頂点への近さをRGBで可視化。次元が上がっても頂点がN+1個で済み軸の癖も減る、という土台だけを見る回
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-simplex-noise/index.html">11 ノイズ: シンプレックスノイズ (simplex noise)</a>
+        <a href="/src/book-of-shaders/11-simplex-noise/index.html">11 ノイズ: シンプレックスノイズ (simplex noise)</a> <code class="slug">11-simplex-noise</code>
         <span class="badge">作成済</span>
         — 11章ノイズの完成形。Ashima/McEwanの2D simplex noiseを移植。三角格子の3頂点で「勾配·変位」を出し、距離で減衰する丸い窓<code>max(0.5-d²,0)⁴</code>で重み付けして合計。gradient noiseの正統進化で軸の癖が消え軽い
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-digital/index.html">11 ノイズ: デジタル表示 (morphing hex glyph)</a>
+        <a href="/src/book-of-shaders/11-digital/index.html">11 ノイズ: デジタル表示 (morphing hex glyph)</a> <code class="slug">11-digital</code>
         <span class="badge">作成済</span>
         — patriciogvの集大成デモを移植。2列×6段の枡目(<code>box</code>=正方<code>shape</code>)でデジタル文字を1つ描き、点灯/消灯を太枡/細枡で表現。下位6bitを<code>floor(t)</code>と<code>+1</code>で取り出し<code>mix</code>でクロスフェード=なめらかなmorph。上から3D simplex noiseの粒を薄く足し<code>step(0.7)</code>で白黒に焼く=明滅する電光掲示板
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/11-simplex-flow/index.html">11 ノイズ: simplex noise で流れる模様 (domain warp)</a>
+        <a href="/src/book-of-shaders/11-simplex-flow/index.html">11 ノイズ: simplex noise で流れる模様 (domain warp)</a> <code class="slug">11-simplex-flow</code>
         <span class="badge">作成済</span>
         — simplex noiseの応用。主役は<code>domain warp</code>(定義域ゆがめ): 2枚目のnoiseに座標を渡す前に「別のnoiseが決めた向き<code>(cos a,sin a)</code>」へずらす。まっすぐ足すと同心円的な縞が、向きを場所ごとに変えるとうねって流体・大理石に。<code>fract</code>で縞にし<code>smoothstep(.7,.75)</code>で細い輪郭線だけ拾って反転、白地に黒線が流れる
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/12-cells-df/index.html">12 セルラーノイズ: 4 cells DF (距離場)</a>
+        <a href="/src/book-of-shaders/12-cells-df/index.html">12 セルラーノイズ: 4 cells DF (距離場)</a> <code class="slug">12-cells-df</code>
         <span class="badge">作成済</span>
         — セルラーノイズの第一歩。画面にバラまいた特徴点5個との距離を各ピクセルで測り<code>min</code>で最短だけ残す=距離場(distance field)。点に近いほど暗い窪み。5個目は初配線の<code>u_mouse</code>で追従。等高線<code>step(.7,abs(sin(50*d)))</code>はコメントアウトで残し、外すと距離場に縞が乗る
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/12-cells-tile/index.html">12 セルラーノイズ: 空間をタイル分割 (各セルに1点)</a>
+        <a href="/src/book-of-shaders/12-cells-tile/index.html">12 セルラーノイズ: 空間をタイル分割 (各セルに1点)</a> <code class="slug">12-cells-tile</code>
         <span class="badge">作成済</span>
         — 点を増やすと「全ピクセル×全点」で重い。定番の手で画面を格子(タイル)に切り、<code>floor(st)</code>=セル番地 / <code>fract(st)</code>=セル内座標 の二段構え。番地を種に<code>random2</code>で各セルに点を1個だけ置き、自セルの点までの距離だけ測る。中心ドット<code>1-step(.02,dist)</code>と境界線<code>step(.98,f_st)</code>で構造を可視化。次のボロノイへの土台
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/12-cellular-noise/index.html">12 セルラーノイズ: タイル化の完成形 (3×3近傍 + アニメ)</a>
+        <a href="/src/book-of-shaders/12-cellular-noise/index.html">12 セルラーノイズ: タイル化の完成形 (3×3近傍 + アニメ)</a> <code class="slug">12-cellular-noise</code>
         <span class="badge">作成済</span>
         — 前回は自セルの点しか見ず境界で距離が不連続だった。最短点は必ず自分+隣接8マスの3×3内にあるので<code>for x,y∈{-1,0,1}</code>で全部見て本当の最短に。<code>diff=neighbor+point-f_st</code>で隣マスの点も同座標系へ並べ直すのが肝。点を<code>0.5+0.5*sin(t+2π·p)</code>で動かすと境界がなめらかに繋がり生きたWorley noiseに。点が無限でも3×3=定数コスト
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/12-voronoi/index.html">12 ボロノイ: 4 cells voronoi (最近傍点で平面を分割)</a>
+        <a href="/src/book-of-shaders/12-voronoi/index.html">12 ボロノイ: 4 cells voronoi (最近傍点で平面を分割)</a> <code class="slug">12-voronoi</code>
         <span class="badge">作成済</span>
         — 距離場(<code>min</code>)に一歩足してボロノイへ。距離だけでなく「どの点が最短だったか」=勝者点も覚える<code>argmin</code>(<code>if dist&lt;m_dist</code>で距離と<code>m_point</code>を同時更新)。各ピクセルを勝者の座標<code>color.rg=m_point</code>で塗ると平面が「この点の縄張り」領域に分割され、境界は2点の垂直二等分線=直線に。等高線<code>abs(sin(80·d))</code>を今回は常時ON、中心ドットも重ねる。5個目は<code>u_mouse</code>追従
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/12-voronoi-tile/index.html">12 ボロノイ: タイル化した Simple Voronoi (3×3近傍 + アニメ)</a>
+        <a href="/src/book-of-shaders/12-voronoi-tile/index.html">12 ボロノイ: タイル化した Simple Voronoi (3×3近傍 + アニメ)</a> <code class="slug">12-voronoi-tile</code>
         <span class="badge">作成済</span>
         — タイル化(セルラーノイズ)とボロノイの合流点。同じ3×3畳み込みで<code>min</code>ではなく<code>argmin</code>にし、最短距離<code>m_dist</code>と「勝った点<code>m_point</code>」を同時更新。<code>color+=dot(m_point,(.3,.6))</code>で勝者点の位置を色に焼くと、同じ点に属するピクセルが同色ベタ塗りになり縄張り分割(ボロノイ)が出現。距離場は<code>abs(sin(40*d))*0.07</code>の薄い等高線で凹凸に。点が無限でも3×3=定数コストのまま
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/12-cellular-orbit/index.html">12 セルラーノイズ: 点を円軌道で動かす (animation別解)</a>
+        <a href="/src/book-of-shaders/12-cellular-orbit/index.html">12 セルラーノイズ: 点を円軌道で動かす (animation別解)</a> <code class="slug">12-cellular-orbit</code>
         <span class="badge">作成済</span>
         — 「点の動かし方」だけ差し替えた実験。<code>0.5+0.5*sin(t+2π·p)</code>のx/y独立振動(リサジュー)を、角度θ=t+φ連動の<code>0.5+r*(cos θ,sin θ)</code>=円軌道に。位相φと半径rをセル乱数からもらい点ごとに軌道を変える。動きの質感がかっちりした定速回転に。★点は必ずセル内<code>[0,1]²</code>に収める(<code>r≤0.45</code>)=「最短点は3×3内」の保証を壊さない不変条件
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/12-cellular-f2/index.html">12 セルラーノイズ: F2−F1 のひび割れ (accumulatorを組に)</a>
+        <a href="/src/book-of-shaders/12-cellular-f2/index.html">12 セルラーノイズ: F2−F1 のひび割れ (accumulatorを組に)</a> <code class="slug">12-cellular-f2</code>
         <span class="badge">作成済</span>
         — 距離場の作り方を替える実験。<code>min</code>のスカラー1個でなく最短<code>f1</code>と次点<code>f2</code>の組を保ち、更新を「上位2件の挿入」に(<code>dist&lt;f1</code>なら繰り下げ)。<code>F2−F1</code>は2セルが拮抗する境界で0=暗い線、内側で大=明るい→結晶質のひび割れ模様に。F1単体(<code>12-cellular-noise</code>)の丸い窪みとは別物。「型を1→2に広げると新しい柄が解禁」の最小例
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/12-metaballs/index.html">12 メタボール (距離を掛けて塊を融合)</a>
+        <a href="/src/book-of-shaders/12-metaballs/index.html">12 メタボール (距離を掛けて塊を融合)</a> <code class="slug">12-metaballs</code>
         <span class="badge">作成済</span>
         — 土台はセルラーノイズと同じ(5×5タイル+3×3近傍+点をアニメ)。違いはたった1行、距離の合成。<code>min(m_dist,dist)</code>(最短だけ残す)ではなく<code>min(m_dist,m_dist*dist)</code>と<strong>掛けて</strong>いく。点の近くは<code>dist&lt;1</code>なので掛けるほど谷が深まり、点が2個近いと<code>d1·d2</code>と二重に沈んで隣の谷と地続きに=「2球が近づくと表面が繋がる」メタボールの等値面。<code>step(0.06,m_dist)</code>でしきい値を切り、黒いブヨブヨした塊を切り出す
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/12-stippling/index.html">12 セルラーノイズ: 点描 (Stippling)</a>
+        <a href="/src/book-of-shaders/12-stippling/index.html">12 セルラーノイズ: 点描 (Stippling)</a> <code class="slug">12-stippling</code>
         <span class="badge">作成済</span>
         — 濃淡を「点の粗密」で描く点描。Worley を高速版<code>cellular2x2</code>(Stefan Gustavson作のMIT実装をWGSL移植。<code>permute</code>多項式ハッシュ+2×2窓でF1/F2を<code>vec4</code>並列に一発計算)で取得し<code>F.x</code>=最寄り点までの距離を得る。中心からの距離²<code>dot(pos,pos)</code>を時間で外へ流して<code>abs(sin(a·π·5))</code>=同心円の縞しきい値を作り、<code>step(ring, F.x*2)</code>で距離場により切る。滑らかなリング縞をランダムな距離場で割ると縞が点の集合に砕け、黒点が同心円バンド状に粗密を作る=ハーフトーンの最小原理
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/12-voronoi-edges/index.html">12 ボロノイ: セルの境界線までの距離 (Tissue / iq voronoi edges)</a>
+        <a href="/src/book-of-shaders/12-voronoi-edges/index.html">12 ボロノイ: セルの境界線までの距離 (Tissue / iq voronoi edges)</a> <code class="slug">12-voronoi-edges</code>
         <span class="badge">作成済</span>
         — これまでは「最近点までの距離」か「縄張りの主」を見ていた。今回測る第三の量は「最近セル境界線までの距離」。2点A,Bの境界=ABの垂直二等分線なので、ピクセルから境界までの距離は<code>dot(0.5*(mr+r), normalize(r-mr))</code>(中点をAB方向の単位ベクトルに射影)で出る。これを全隣接点で<code>min</code>すると壁までの距離=細い網目線に。2パス構成:パス1(3×3)で最近点Aと<code>mr</code>を<code>argmin</code>確定→パス2(5×5)でAと各Bの二等分線までを<code>min</code>(自分自身は<code>|mr-r|²&gt;eps</code>で除外、5×5は斜め2マス先の取りこぼし防止)。<code>smoothstep(.01,.02,c.x)</code>で境界だけ白線、<code>1-smoothstep(0,.1,|mr|)</code>でセル中心に白ドット。<code>pow(d,.4)</code>で外周ほど乱れる細胞組織風
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/12-unicorn-puke/index.html">12 セルラーノイズ: Unicorn Puke (グローバル Voronoi / 非タイル)</a>
+        <a href="/src/book-of-shaders/12-unicorn-puke/index.html">12 セルラーノイズ: Unicorn Puke (グローバル Voronoi / 非タイル)</a> <code class="slug">12-unicorn-puke</code>
         <span class="badge">作成済</span>
         — N.Barradeau のGLSL移植。これまでのタイル方式(格子に切り各セル1点+近傍3×3だけ走査=<code>O(9)</code>・点は<code>[0,1]²</code>に拘束)と真逆。格子を使わず平面に種点を<strong>100個ばらまき</strong>、各ピクセルから全点への距離を総当たりして最短1点を選ぶ<code>O(100)</code>の力技Voronoi。制約から解放される代わり点が増えるほど重い。勝った<strong>種点座標そのものを色に流用</strong>するので隣接セルの色がランダムにバラけ毒々しい虹(=ユニコーンのゲロ)に。<code>color(xy)=seed(argmin_i dist(xy,seed_i))+shade</code>という「平面→色」の純関数で、ループはargminの実装手段
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/12-cellular-permute/index.html">12 セルラーノイズ: production版 cellular2x2 (permute整数ハッシュ)</a>
+        <a href="/src/book-of-shaders/12-cellular-permute/index.html">12 セルラーノイズ: production版 cellular2x2 (permute整数ハッシュ)</a> <code class="slug">12-cellular-permute</code>
         <span class="badge">作成済</span>
         — patriciogvの"Cell"。これまでの素朴版(<code>fract(sin)</code>ハッシュ+近傍forループ)を実戦版に。①ハッシュを<code>permute=mod((34x+1)x,289)</code>の多項式に替え整数格子で均一に散らす。②3×3(9)ループをやめ2×2(4)を<code>vec4</code>1本で分岐なし並列評価(速いが<code>F1/F2</code>がたまに不正確→<code>jitter=0.8</code>で誤魔化す取引)。③出力は<code>F1</code>でなく<code>facets=F2−F1</code>(壁)×<code>dots=smoothstep(F1)</code>(穴)を<code>step</code>で固めひび割れた石畳に。<code>warp=1.1−5·dot(st,st)</code>の放射ゆがめでセルが外周で潰れ裏返る。★WGSLは複数成分スウィズル代入不可なので三項スワップ<code>d.xy=(d.x&lt;d.y)?d.xy:d.yx</code>は1成分ずつの<code>if</code>に展開
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/13-fbm/index.html">13 fBm: フラクタルブラウン運動 (octave を積む)</a>
+        <a href="/src/book-of-shaders/13-fbm/index.html">13 fBm: フラクタルブラウン運動 (octave を積む)</a> <code class="slug">13-fbm</code>
         <span class="badge">作成済</span>
         — 土台は11章の value noise。それを「周波数×2・振幅×0.5」しながら重ねるだけ:<code>fbm(x)=Σ gⁱ·noise(lⁱ·x)</code> (g=0.5, l=2)。forの中身が<code>value+=amp*noise(st); st*=2; amp*=.5;</code>とこの和そのもの。★自己相似の正体:和のi=0を外に出すと<code>fbm(x)=noise(x)+g·fbm(l·x)</code>=「自分をl倍ズームしg倍に縮めたコピーを内側に含む」不動点的な再帰式。だから拡大しても同じ手触りが続く。このループは無限再帰をOCTAVES=6段でunfoldした有限近似(g&lt;1で等比級数収束するが lᴺ より細かいディテールは無い=なんちゃってフラクタル、N→∞が本物)。大うねりの上に細かなザラつきが乗った雲/山肌の濃淡に
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/13-turbulence/index.html">13 fBm: 乱流 (Turbulence / abs ノイズを積む)</a>
+        <a href="/src/book-of-shaders/13-turbulence/index.html">13 fBm: 乱流 (Turbulence / abs ノイズを積む)</a> <code class="slug">13-turbulence</code>
         <span class="badge">作成済</span>
         — patriciogv "Turbulence" 移植。fBm との違いは<strong>たった1箇所 abs()</strong>だけ:<code>value+=amp*noise(st)</code> を <code>value+=amp*abs(snoise(st))</code> に替える。ノイズ本体は11章の 2D simplex noise(-1〜1)。★<code>abs()</code>の効果:0を挟んで正負に振れるノイズを折り返すと、<code>snoise=0</code>の等高線(谷筋)が「値0の鋭い谷」になり、そこにV字の微分不連続な<strong>折れ目(ridge)</strong>が生まれる。これを<code>turbulence(x)=Σ gⁱ·|snoise(lⁱ·x)|</code> (g=0.5,l=2,OCTAVES=3) と周波数を上げて積むと折れ目の上に細かい折れ目が乗り、なめらかな雲だった fBm が煙・炎・大理石の脈のような<strong>渦筋(乱流)</strong>に化ける。abs で常に非負を足すので0.5中心に上下せず、谷(=0)から明るく盛り上がる濃淡
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/13-ridge/index.html">13 Ridged multifractal: 稜線を立てる fBm</a>
+        <a href="/src/book-of-shaders/13-ridge/index.html">13 Ridged multifractal: 稜線を立てる fBm</a> <code class="slug">13-ridge</code>
         <span class="badge">作成済</span>
         — turbulence の <code>abs()</code> をさらに造り込む patriciogv "Ridge" 移植。各層に純関数<code>ridge = square∘(offset−)∘abs</code>を噛ませる:<code>abs</code>で谷(負)を折り返し0に鋭い折れ目→<code>offset−</code>で反転し折れ目を<strong>山の頂上</strong>へ→<code>²</code>で尖らせ裾を寝かせる。turbulence が「谷を0の折れ目に」したのに対し ridge は「折れ目を尖った尾根の頂に」立ち上げる。★もう一つの肝は積み方:単なる和でなく<strong>一つ粗い層の値<code>prev</code>で変調</strong>して足す<code>sum+=n·amp; sum+=n·amp·prev; prev=n;</code>。粗い尾根がある所ほど細部を盛る掛け算の絡みで、場所ごとに粗さが変わる<strong>multi-fractal</strong>に(谷は滑らか・尾根はひび割れる侵食地形)。素材は11章 snoise、<code>lacunarity=2, gain=0.5, offset=0.9, OCTAVES=4</code>。白い地形図のような山塊の稜線。★<code>prev</code>初期値1.0で第0層だけ変調ぶんが素の寄与と同量になるのはお手本のまま
       </li>
       <li class="done">
-        <a href="/src/book-of-shaders/13-fbm-warp/index.html">13 fBm: domain warping (座標を fBm で歪める / 雲・大理石)</a>
+        <a href="/src/book-of-shaders/13-fbm-warp/index.html">13 fBm: domain warping (座標を fBm で歪める / 雲・大理石)</a> <code class="slug">13-fbm-warp</code>
         <span class="badge">作成済</span>
         — <code>fbm(st)</code>を1回測るのでなく<strong>fBmの出力をfBmの入力座標に注ぎ込む</strong>=domain warping。<code>f=fbm(st+fbm(st+fbm(st)))</code>と3段ネスト:noiseのスカラーを2本束ねてベクトル場<code>q,r</code>を作り座標の"ずらし"に使う。一様移動なら絵が平行移動するだけだが、ずらし量を場所ごと変える(=場でずらす)と空間がぐにゃり伸び渦巻く雲/大理石の縞に。fbm本体も強化:octaveごとに<code>st=rot*st*2+shift</code>と2倍拡大に0.5rad回転を足しvalue noiseの格子由来の軸バイアス(方眼っぽさ)を消し、<code>shift=(100,100)</code>で各層を無相関な遠方領域へ飛ばす。3つの中間場<code>f,q,r</code>を別々の色にmixで焼き<code>(f³+.6f²+.5f)</code>で明暗付け。<code>t</code>をr側だけに入れ雲を流す
       </li>
