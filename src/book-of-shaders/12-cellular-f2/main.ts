@@ -85,8 +85,9 @@ async function main() {
         color.r += step(0.98, f_st.x) + step(0.98, f_st.y);
 
         // ↓コメントを外すと F1(min版)・F2 そのものも見比べられる:
-        // color = vec3f(f1);   // = 12-cellular-noise と同じ丸い窪み
-        // color = vec3f(f2);   // 次点までの距離の場
+        // color = vec3f(f1);        // = 12-cellular-noise と同じ丸い窪み
+        // color = vec3f(f2);        // 次点までの距離の場
+        // color = vec3f(f1 + f2);   // 最寄り2点の距離の「和」。局所的に楕円っぽく丸いセル (F2-F1 の逆・なだらか)
 
         return vec4f(color, 1.0);
       }
