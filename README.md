@@ -87,5 +87,5 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 
 ### 次にやりたい
 
-- [ ] [楽しい！Unityシェーダーお絵描き入門！](https://docs.google.com/presentation/d/1NMhx4HWuNZsjNRRlaFOu2ysjo04NgcpFlEhzodE8Rlg/edit) — The Book of Shaders を読み終わったら
+- [x] [楽しい！Unityシェーダーお絵描き入門！](https://docs.google.com/presentation/d/1NMhx4HWuNZsjNRRlaFOu2ysjo04NgcpFlEhzodE8Rlg/edit) — BoS の復習を兼ねて通読。内容は BoS(WGSL) と地続きなので、疑問をこのリポジトリのコードで再考しながら [`src/unity-shader-drawing/notes.md`](src/unity-shader-drawing/notes.md) にナレッジベース化。**得た全体像**: フラグメントシェーダの本質は `色 = 純関数(座標)`、それを `色 = 色付け ∘ 場 ∘ 座標変換` の3段で組む。デッキの5技法もここに畳まれる — **場**=ディスタンスフィールド(幾何の花形)/擬似乱数(ノイズ)、**座標変換**=極座標・歪み(domain warp)・繰り返し(frac/floor)、**色付け**=step/sin/mix・マスク合成。距離場からは `min`=セルラー / `argmin`=ボロノイ / `F2−F1`=ひび割れ / 境界=網目 / 掛け算=メタボール / ハーフトーン=点描 が枝分かれ。HLSL↔WGSL 方言(`frac`/`lerp`/`float2`)も対応表化。※3D レイマーチングでは距離場(SDF)が本質に昇格
 - [ ] フラクタル（Mandelbrot / Julia） — BoS 未収録の腕試し。エスケープ時間 `escape(c)=min{n:|zₙ|>2}, zₙ₊₁=zₙ²+c` を1ピクセルで反復するだけの純関数（型1）。複素2乗 `z²=(x²−y², 2xy)` のみで新しい道具ゼロ、Julia は c を定数化する1行差。縞消しは連続反復数 `n−log₂(log|z|)`（IQ msetsmooth）。chaos-game な IFS/アトラクタは点蓄積（型4）なので後回し
