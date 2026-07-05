@@ -24,6 +24,19 @@
         border-bottom: 2px solid #eee;
         padding-bottom: 0.2rem;
       }
+      details {
+        margin-top: 1.25rem;
+      }
+      summary {
+        font-size: 1.1rem;
+        font-weight: 700;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 0.2rem;
+        cursor: pointer;
+      }
+      summary:hover {
+        color: #1565c0;
+      }
       ul {
         padding-left: 1.2rem;
       }
@@ -61,8 +74,9 @@
     <h1>WGSL Introduction</h1>
     <p>WebGPU で 2D「うねうね」を描けるようになるための学習リポジトリ。</p>
 
-    <h2>WebGPU Fundamentals</h2>
-    <ul>
+    <details>
+      <summary>WebGPU Fundamentals</summary>
+      <ul>
       <li class="done">
         <a href="/src/webgpu-fundamentals/01-fundamentals/index.html">01 基本</a> <code class="slug">01-fundamentals</code>
         <span class="badge">作成済</span>
@@ -89,10 +103,12 @@
       </li>
       <li class="todo">— WGSL 関数リファレンス (辞書: sin / cos / fract)</li>
       <li class="todo">応用: ポストプロセッシング (CRT エフェクト)</li>
-    </ul>
+      </ul>
+    </details>
 
-    <h2>The Book of Shaders</h2>
-    <ul>
+    <details>
+      <summary>The Book of Shaders</summary>
+      <ul>
       <li class="todo">
         01〜04 (シェーダとは / hello world / ユニフォーム / 使い方) — Fundamentals
         の復習。ざっと読んで通過
@@ -538,7 +554,19 @@
         <span class="badge">作成済</span>
         — <code>fbm(st)</code>を1回測るのでなく<strong>fBmの出力をfBmの入力座標に注ぎ込む</strong>=domain warping。<code>f=fbm(st+fbm(st+fbm(st)))</code>と3段ネスト:noiseのスカラーを2本束ねてベクトル場<code>q,r</code>を作り座標の"ずらし"に使う。一様移動なら絵が平行移動するだけだが、ずらし量を場所ごと変える(=場でずらす)と空間がぐにゃり伸び渦巻く雲/大理石の縞に。fbm本体も強化:octaveごとに<code>st=rot*st*2+shift</code>と2倍拡大に0.5rad回転を足しvalue noiseの格子由来の軸バイアス(方眼っぽさ)を消し、<code>shift=(100,100)</code>で各層を無相関な遠方領域へ飛ばす。3つの中間場<code>f,q,r</code>を別々の色にmixで焼き<code>(f³+.6f²+.5f)</code>で明暗付け。<code>t</code>をr側だけに入れ雲を流す
       </li>
-    </ul>
+      </ul>
+    </details>
+
+    <details open>
+      <summary>jz examples</summary>
+      <ul>
+      <li class="done">
+        <a href="/src/jz-examples/01-interference/index.html">jz 01 interference: 2波源の干渉 (場の重ね合わせ)</a> <code class="slug">01-interference</code>
+        <span class="badge">作成済</span>
+        — jz examples 編の第1回。<code>image(p,t)=色付け(Σᵢ wave(|p−sᵢ(t)|))</code>、<code>wave(d)=sin(K·d−ωt)</code>:2波源からの同心円状の進行波を<strong>足すだけ</strong>の場の重ね合わせ。★積和公式で<code>sin+sin=2·sin(和/2)·cos(差/2)</code>と畳むと、時間で流れるのは搬送波(前半)だけで、明るさの上限は<strong>経路差|d1−d2|だけで決まる包絡(後半)</strong>と分かる:<code>|d1−d2|=nλ</code>で強め合い(明)・<code>(n+½)λ</code>で打ち消し(暗)。「2点からの距離差が一定」の曲線は双曲線なので、暗い縞=2波源を焦点とする双曲線の族。波源はリサージュ風軌道で泳ぎ、<code>−ωt</code>の位相で輪が外向きに流れ続ける
+      </li>
+      </ul>
+    </details>
 
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
       新しいレッスンは <code>src/&lt;track&gt;/&lt;番号&gt;-&lt;名前&gt;/</code> に
