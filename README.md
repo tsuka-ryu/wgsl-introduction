@@ -88,4 +88,22 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 ### 次にやりたい
 
 - [x] [楽しい！Unityシェーダーお絵描き入門！](https://docs.google.com/presentation/d/1NMhx4HWuNZsjNRRlaFOu2ysjo04NgcpFlEhzodE8Rlg/edit) — BoS の復習を兼ねて通読。内容は BoS(WGSL) と地続きなので、疑問をこのリポジトリのコードで再考しながら [`src/unity-shader-drawing/notes.md`](src/unity-shader-drawing/notes.md) にナレッジベース化。**得た全体像**: フラグメントシェーダの本質は `色 = 純関数(座標)`、それを `色 = 色付け ∘ 場 ∘ 座標変換` の3段で組む。デッキの5技法もここに畳まれる — **場**=ディスタンスフィールド(幾何の花形)/擬似乱数(ノイズ)、**座標変換**=極座標・歪み(domain warp)・繰り返し(frac/floor)、**色付け**=step/sin/mix・マスク合成。距離場からは `min`=セルラー / `argmin`=ボロノイ / `F2−F1`=ひび割れ / 境界=網目 / 掛け算=メタボール / ハーフトーン=点描 が枝分かれ。HLSL↔WGSL 方言(`frac`/`lerp`/`float2`)も対応表化。※3D レイマーチングでは距離場(SDF)が本質に昇格
-- [ ] フラクタル（Mandelbrot / Julia） — BoS 未収録の腕試し。エスケープ時間 `escape(c)=min{n:|zₙ|>2}, zₙ₊₁=zₙ²+c` を1ピクセルで反復するだけの純関数（型1）。複素2乗 `z²=(x²−y², 2xy)` のみで新しい道具ゼロ、Julia は c を定数化する1行差。縞消しは連続反復数 `n−log₂(log|z|)`（IQ msetsmooth）。chaos-game な IFS/アトラクタは点蓄積（型4）なので後回し
+- [ ] 単一パスのフラグメントシェーダーでそのまま書ける題材集（[dy/jz の examples](https://github.com/dy/jz/tree/main/examples) より。各ピクセルが `f(uv, time) → color` の純関数として独立に計算できるもの）
+  - [ ] interference — 2波源の干渉。距離2つの sin の和、数行で書ける入門向き
+  - [ ] plasma — FBM ドメインワープの定番。fBm 章の総復習
+  - [ ] voronoi — 最近傍サイト探索のブルートフォース版。セルラーノイズ章の復習
+  - [ ] truchet — セル分割 + ハッシュ + 弧の SDF。パターン章の復習
+  - [ ] mandelbrot / julia — エスケープ時間 `escape(c)=min{n:|zₙ|>2}, zₙ₊₁=zₙ²+c` を1ピクセルで反復するだけの純関数。複素2乗 `z²=(x²−y², 2xy)` のみで新しい道具ゼロ、Julia は c を定数化する1行差。縞消しは連続反復数 `n−log₂(log|z|)`（IQ msetsmooth）
+  - [ ] burningship / newton / lyapunov — escape-time 系の変奏。Newton は z³−1 の求根の収束先で塗り分け
+  - [ ] domain-color — 複素関数 f(z) の偏角=色相・絶対値=明度で塗る。uv を複素数とみなすだけで FP 的にも美しい
+  - [ ] chladni — 定在波のノード模様。sin 積の和をピクセルごとに評価
+  - [ ] metaballs — 逆二乗場の和 + しきい値。ボール数個なら uniform で渡してループ
+  - [ ] pascal-sierpinski — 二項係数 mod p。mod 2 なら `(x & y) == 0` の1行、ビット演算で遊べる
+  - [ ] raytrace — ピクセルごとのレイ・球交差。3D 風だが構造は完全に per-pixel
+  - [ ] raymarcher — SDF レイマーチ。距離場が本質に昇格する 3D 編への入口
+  - ※ Game of Life / reaction-diffusion 等は前フレーム参照（ping-pong 型）なので単一パスでは書けず後回し
+- [ ] 点蓄積（scatter 型）を compute shader で本当にやる — chaos-game な IFS/アトラクタは「ピクセルが値を集める (gather)」でなく「点がピクセルへ書き込む (scatter)」なので fragment shader 単体では書けない。FP 的には gather=関数の引き戻し (pullback)・scatter=測度の押し出し (pushforward) の双対。WGSL では storage buffer 上の `atomic<u32>` に `atomicAdd` でヒストグラムを蓄積し（u32 加算が可換モノイドなので書き込み順が不定でも結果は同じ）、fragment パスで log トーンマップして表示。新概念は **compute pipeline / storage buffer / atomics / 自作 RNG（PCG 系の状態付きハッシュ）** の4点セット。制約: atomic は整数のみ（`atomic<f32>` は無い）・storage texture に atomic は撃てないので蓄積先は必ず buffer・軌道の序盤はアトラクタ未収束なので burn-in で捨てる
+  - [ ] fern（Barnsley Fern）— 4つのアフィン写像から確率で選んで反復する chaos game。scatter 入門に最適
+  - [ ] attractors（de Jong map）— `(x,y) ← (sin(a·y)−cos(b·x), sin(c·x)−cos(d·y))` を数百万回。パラメータで表情が激変
+  - [ ] buddhabrot — Mandelbrot の脱出軌道の通過密度。「密度は点 x での閉じた式を持たない」= per-pixel 化が本質的に不可能な scatter の代表例
+  - ※ 蛇足: IFS の「形（集合）だけ」なら逆写像の反復で per-pixel 判定に落とせる場合がある（Sierpiński は `p=fract(p*2)` の反復、mod 2 のビット判定はその極限形）。密度を描くなら scatter 一択
