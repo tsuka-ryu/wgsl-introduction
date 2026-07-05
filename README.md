@@ -97,7 +97,7 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 
 数個のソースの場を足して色付けする `Σ field(p, sourceᵢ)` の型の3連発。
 
-- [ ] interference — 2波源の干渉。距離2つの sin の和、数行で書ける入門向き
+- [x] interference — 2波源の干渉。距離2つの sin の和、数行で書ける入門向き
 - [ ] chladni — 定在波のノード模様。sin 積の和。interference の「足すもの」が変わるだけ
 - [ ] metaballs — 逆二乗場の和 + しきい値。ボール数個なら uniform で渡してループ
 
