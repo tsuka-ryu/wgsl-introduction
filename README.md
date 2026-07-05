@@ -107,3 +107,20 @@ Vite が自動認識します（トップページの一覧リンクは手動で
   - [ ] attractors（de Jong map）— `(x,y) ← (sin(a·y)−cos(b·x), sin(c·x)−cos(d·y))` を数百万回。パラメータで表情が激変
   - [ ] buddhabrot — Mandelbrot の脱出軌道の通過密度。「密度は点 x での閉じた式を持たない」= per-pixel 化が本質的に不可能な scatter の代表例
   - ※ 蛇足: IFS の「形（集合）だけ」なら逆写像の反復で per-pixel 判定に落とせる場合がある（Sierpiński は `p=fract(p*2)` の反復、mod 2 のビット判定はその極限形）。密度を描くなら scatter 一択
+- [ ] Inigo Quilez の記事で通読する価値があるもの（SDF一覧などの辞書系は引くときに見ればよい。iquilezles.org/articles）
+  - 単一パス編と直結:
+    - [ ] Continuous iteration count — `n−log₂(log|z|)` の縞消しの導出。Mandelbrot 直前に必読
+    - [ ] Domain warping — `fbm(p+fbm(p+fbm(p)))` の記事そのもの。plasma 回の副読本
+    - [ ] Voronoi edges — F1−F2 の境界は歪む、正しくは垂直二等分線への距離。BoS 12章で写経した `dot(中点, normalize(r−mr))` の種明かし
+    - [ ] FBM — fBm を自己相似=再帰の不動点として捉え直す。Hurst 指数など BoS 13章より一段深い。FP 的な読み方と一番相性がいい（ご褒美枠）
+    - [ ] Smooth voronoi / Voronoise — voronoi 回の副読本。Voronoise は noise と voronoi が1つのパラメータ空間の両端だと示す短編
+    - [ ] Introduction to the Mandelbrot set — 数学側の背景。カージオイドや周期バルブの構造。急ぎでなければ
+  - scatter / compute 編で:
+    - [ ] Budhabrot fractals — 蓄積・トーンマップの実際。README の buddhabrot 回の副読本
+    - [ ] IFS fractals — fern 回の副読本。短い
+  - 3D（raymarcher）編で:
+    - [ ] Raymarching SDFs — レイマーチングの事実上の standard text。3D 編の最初に
+    - [ ] Smooth minimum for SDFs — `min` 合成をなめらかにする smin の導出。短くて美しく 2D の距離場合成にも効く
+    - [ ] Domain Repetition — `fract`/`floor` 繰り返しを正しくやる話。「境界セルで形が切れる」問題の解決策、2D タイリングにも応用可
+  - 優先度: 直近は Continuous iteration count → Domain warping → Voronoi edges の3本で十分。texturing/lighting/size coding 系は今のロードマップ外なので必要時に辞書扱い
+- [ ] 書籍「幾何学パターンづくりのすべて — ファッション、建築、デザインのためのリピートパターン制作ガイド」— 座標変換の柱の体系化として読む。3章「平面対称」の17節はおそらく**壁紙群が17種類**あることに対応（平面充填リピートの対称性は並進・回転・鏡映・映進の組合せで厳密に17通り）。シェーダー的には各対称群 = 平面を基本領域に折りたたむ純関数で、**17個の壁紙群 = 17個の座標変換コンビネータ** — シェーダー生成言語の長期目標的にも群論がそのままコンポジションの API になる構造。既習との対応: 並進=`fract` / 鏡映=`abs`・三角波折り返し / 回転対称=極座標の角度 `mod` 扇形折りたたみ / 映進=並進∘鏡映（未実装の道具）。デザイナー向けでコードは無いので、Unity デッキと同じく「この対称操作は WGSL でどう書くか」を都度このリポジトリで再実装しながら読む。5章シームレス/エッシャー型リピートは truchet・タイリング題材の直後が効果的
