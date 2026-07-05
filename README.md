@@ -85,42 +85,50 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 - [x] [12 セルラーノイズ](https://thebookofshaders.com/12/?lan=jp) — 細胞っぽい模様。特徴点までの**距離場** (`min` で最短だけ残す) が出発点。全点総当たりは重いので空間をタイルに切り `floor`=セル番地/`fract`=セル内座標、番地を種に各セルへ点1個。最短点は必ず自分+隣接8マスにあるので **3×3近傍** だけ走査=点が無限でも `O(9)` 定数コスト (Worley noise)。距離だけでなく勝者点も覚える **argmin** にすると平面が縄張りに分かれる **ボロノイ**、境界は2点の垂直二等分線。応用に F2−F1 のひび割れ・距離を掛けて融合させるメタボール・点描 (stippling)・セル境界線までの距離 (`dot(中点, normalize(r−mr))`) で細胞組織・格子を捨て100点ばらまく総当たり Voronoi (Unicorn Puke)。production 版は `permute=mod((34x+1)x,289)` 多項式ハッシュ + 2×2窓を `vec4` 並列で分岐なし計算 (cellular2x2)
 - [x] [13 Fractional Brownian Motion](https://thebookofshaders.com/13/) — ノイズを重ねて本格化。**fBm**: 同じ noise を「周波数×2・振幅×0.5」しながら足すだけ `fbm(x)=Σ gⁱ·noise(lⁱx)` (g=gain, l=lacunarity)。和の i=0 を外に出すと `fbm(x)=noise(x)+g·fbm(l·x)` = 自分をズームして縮めたコピーを内に含む不動点的な再帰式 → どのスケールでも同じ手触り = 自己相似。有限ループはこれを数段 unfold した近似 (g<1 で等比級数収束・lᴺ より細部は無い「なんちゃってフラクタル」)。応用: `abs()` で谷を折り返す **turbulence** (鋭い峰の乱流)、それを反転し²で尖らせ一つ粗い層 `prev` で変調して積む **ridged multifractal** (侵食地形風・場所ごとに粗さが変わる)、**domain warping** = fBm の出力を fBm の入力座標へ注ぎ込む `f=fbm(st+fbm(st+fbm(st)))` (空間がぐにゃり伸びる雲/大理石)。octave ごとに座標を回転させ value noise の軸バイアス (方眼) を消すのも定番
 
-### 次にやりたい
+### 楽しい！Unityシェーダーお絵描き入門！
 
 - [x] [楽しい！Unityシェーダーお絵描き入門！](https://docs.google.com/presentation/d/1NMhx4HWuNZsjNRRlaFOu2ysjo04NgcpFlEhzodE8Rlg/edit) — BoS の復習を兼ねて通読。内容は BoS(WGSL) と地続きなので、疑問をこのリポジトリのコードで再考しながら [`src/unity-shader-drawing/notes.md`](src/unity-shader-drawing/notes.md) にナレッジベース化。**得た全体像**: フラグメントシェーダの本質は `色 = 純関数(座標)`、それを `色 = 色付け ∘ 場 ∘ 座標変換` の3段で組む。デッキの5技法もここに畳まれる — **場**=ディスタンスフィールド(幾何の花形)/擬似乱数(ノイズ)、**座標変換**=極座標・歪み(domain warp)・繰り返し(frac/floor)、**色付け**=step/sin/mix・マスク合成。距離場からは `min`=セルラー / `argmin`=ボロノイ / `F2−F1`=ひび割れ / 境界=網目 / 掛け算=メタボール / ハーフトーン=点描 が枝分かれ。HLSL↔WGSL 方言(`frac`/`lerp`/`float2`)も対応表化。※3D レイマーチングでは距離場(SDF)が本質に昇格
-- [ ] 単一パスのフラグメントシェーダーでそのまま書ける題材集（[dy/jz の examples](https://github.com/dy/jz/tree/main/examples) より。各ピクセルが `f(uv, time) → color` の純関数として独立に計算できるもの）
-  - [ ] interference — 2波源の干渉。距離2つの sin の和、数行で書ける入門向き
-  - [ ] plasma — FBM ドメインワープの定番。fBm 章の総復習
-  - [ ] voronoi — 最近傍サイト探索のブルートフォース版。セルラーノイズ章の復習
-  - [ ] truchet — セル分割 + ハッシュ + 弧の SDF。パターン章の復習
-  - [ ] mandelbrot / julia — エスケープ時間 `escape(c)=min{n:|zₙ|>2}, zₙ₊₁=zₙ²+c` を1ピクセルで反復するだけの純関数。複素2乗 `z²=(x²−y², 2xy)` のみで新しい道具ゼロ、Julia は c を定数化する1行差。縞消しは連続反復数 `n−log₂(log|z|)`（IQ msetsmooth）
-  - [ ] burningship / newton / lyapunov — escape-time 系の変奏。Newton は z³−1 の求根の収束先で塗り分け
-  - [ ] domain-color — 複素関数 f(z) の偏角=色相・絶対値=明度で塗る。uv を複素数とみなすだけで FP 的にも美しい
-  - [ ] chladni — 定在波のノード模様。sin 積の和をピクセルごとに評価
-  - [ ] metaballs — 逆二乗場の和 + しきい値。ボール数個なら uniform で渡してループ
-  - [ ] pascal-sierpinski — 二項係数 mod p。mod 2 なら `(x & y) == 0` の1行、ビット演算で遊べる
-  - [ ] raytrace — ピクセルごとのレイ・球交差。3D 風だが構造は完全に per-pixel
-  - [ ] raymarcher — SDF レイマーチ。距離場が本質に昇格する 3D 編への入口
-  - ※ Game of Life / reaction-diffusion 等は前フレーム参照（ping-pong 型）なので単一パスでは書けず後回し
-- [ ] 点蓄積（scatter 型）を compute shader で本当にやる — chaos-game な IFS/アトラクタは「ピクセルが値を集める (gather)」でなく「点がピクセルへ書き込む (scatter)」なので fragment shader 単体では書けない。FP 的には gather=関数の引き戻し (pullback)・scatter=測度の押し出し (pushforward) の双対。WGSL では storage buffer 上の `atomic<u32>` に `atomicAdd` でヒストグラムを蓄積し（u32 加算が可換モノイドなので書き込み順が不定でも結果は同じ）、fragment パスで log トーンマップして表示。新概念は **compute pipeline / storage buffer / atomics / 自作 RNG（PCG 系の状態付きハッシュ）** の4点セット。制約: atomic は整数のみ（`atomic<f32>` は無い）・storage texture に atomic は撃てないので蓄積先は必ず buffer・軌道の序盤はアトラクタ未収束なので burn-in で捨てる
-  - [ ] fern（Barnsley Fern）— 4つのアフィン写像から確率で選んで反復する chaos game。scatter 入門に最適
-  - [ ] attractors（de Jong map）— `(x,y) ← (sin(a·y)−cos(b·x), sin(c·x)−cos(d·y))` を数百万回。パラメータで表情が激変
-  - [ ] buddhabrot — Mandelbrot の脱出軌道の通過密度。「密度は点 x での閉じた式を持たない」= per-pixel 化が本質的に不可能な scatter の代表例
-  - ※ 蛇足: IFS の「形（集合）だけ」なら逆写像の反復で per-pixel 判定に落とせる場合がある（Sierpiński は `p=fract(p*2)` の反復、mod 2 のビット判定はその極限形）。密度を描くなら scatter 一択
-- [ ] Inigo Quilez の記事で通読する価値があるもの（SDF一覧などの辞書系は引くときに見ればよい。iquilezles.org/articles）
-  - 単一パス編と直結:
-    - [ ] Continuous iteration count — `n−log₂(log|z|)` の縞消しの導出。Mandelbrot 直前に必読
-    - [ ] Domain warping — `fbm(p+fbm(p+fbm(p)))` の記事そのもの。plasma 回の副読本
-    - [ ] Voronoi edges — F1−F2 の境界は歪む、正しくは垂直二等分線への距離。BoS 12章で写経した `dot(中点, normalize(r−mr))` の種明かし
-    - [ ] FBM — fBm を自己相似=再帰の不動点として捉え直す。Hurst 指数など BoS 13章より一段深い。FP 的な読み方と一番相性がいい（ご褒美枠）
-    - [ ] Smooth voronoi / Voronoise — voronoi 回の副読本。Voronoise は noise と voronoi が1つのパラメータ空間の両端だと示す短編
-    - [ ] Introduction to the Mandelbrot set — 数学側の背景。カージオイドや周期バルブの構造。急ぎでなければ
-  - scatter / compute 編で:
-    - [ ] Budhabrot fractals — 蓄積・トーンマップの実際。README の buddhabrot 回の副読本
-    - [ ] IFS fractals — fern 回の副読本。短い
-  - 3D（raymarcher）編で:
-    - [ ] Raymarching SDFs — レイマーチングの事実上の standard text。3D 編の最初に
-    - [ ] Smooth minimum for SDFs — `min` 合成をなめらかにする smin の導出。短くて美しく 2D の距離場合成にも効く
-    - [ ] Domain Repetition — `fract`/`floor` 繰り返しを正しくやる話。「境界セルで形が切れる」問題の解決策、2D タイリングにも応用可
-  - 優先度: 直近は Continuous iteration count → Domain warping → Voronoi edges の3本で十分。texturing/lighting/size coding 系は今のロードマップ外なので必要時に辞書扱い
-- [ ] 書籍「幾何学パターンづくりのすべて — ファッション、建築、デザインのためのリピートパターン制作ガイド」— 座標変換の柱の体系化として読む。3章「平面対称」の17節はおそらく**壁紙群が17種類**あることに対応（平面充填リピートの対称性は並進・回転・鏡映・映進の組合せで厳密に17通り）。シェーダー的には各対称群 = 平面を基本領域に折りたたむ純関数で、**17個の壁紙群 = 17個の座標変換コンビネータ** — シェーダー生成言語の長期目標的にも群論がそのままコンポジションの API になる構造。既習との対応: 並進=`fract` / 鏡映=`abs`・三角波折り返し / 回転対称=極座標の角度 `mod` 扇形折りたたみ / 映進=並進∘鏡映（未実装の道具）。デザイナー向けでコードは無いので、Unity デッキと同じく「この対称操作は WGSL でどう書くか」を都度このリポジトリで再実装しながら読む。5章シームレス/エッシャー型リピートは truchet・タイリング題材の直後が効果的
+
+### jz examples を WGSL で描く（学習順）
+
+[dy/jz の examples](https://github.com/dy/jz/tree/main/examples) から、各ピクセルが `f(uv, time) → color` の純関数として独立に計算できる単一パス題材を選定。**ジャンル順 = 学習順**、原則は「新しい概念は一度にひとつ・前の題材の道具を次で再利用」。Inigo Quilez の記事（iquilezles.org/articles）は直結する3本をリストの該当位置に混ぜてある。残りは題材をやる日に辞書として引く。
+
+**場の重ね合わせ（ウォームアップ・新道具ゼロ）**
+
+数個のソースの場を足して色付けする `Σ field(p, sourceᵢ)` の型の3連発。
+
+- [ ] interference — 2波源の干渉。距離2つの sin の和、数行で書ける入門向き
+- [ ] chladni — 定在波のノード模様。sin 積の和。interference の「足すもの」が変わるだけ
+- [ ] metaballs — 逆二乗場の和 + しきい値。ボール数個なら uniform で渡してループ
+
+**BoS 総復習の大物（距離場・パターン・ノイズ、各章の卒業制作）**
+
+- [ ] IQ: Voronoi edges — F1−F2 の境界は歪む、正しくは垂直二等分線への距離。BoS 12章で写経した `dot(中点, normalize(r−mr))` の種明かし
+- [ ] voronoi — 最近傍サイト探索のブルートフォース版。セルラーノイズ章の復習
+- [ ] truchet — セル分割 + ハッシュ + 弧の SDF。パターン章の復習
+- [ ] IQ: Domain warping — `fbm(p+fbm(p+fbm(p)))` の記事そのもの
+- [ ] plasma — FBM ドメインワープの定番。fBm 章の総復習
+
+**複素数と反復（唯一の新しい数学・段階的に導入）**
+
+- [ ] domain-color — 複素関数 f(z) の偏角=色相・絶対値=明度で塗る。uv を複素数とみなすだけで**反復なし**。まず複素平面に慣れる。FP 的にも美しい
+- [ ] IQ: Continuous iteration count — `n−log₂(log|z|)` の縞消しの導出
+- [ ] mandelbrot / julia — エスケープ時間 `escape(c)=min{n:|zₙ|>2}, zₙ₊₁=zₙ²+c` を1ピクセルで反復するだけの純関数。domain-color の複素数に反復と脱出判定を足すだけで新しい道具ゼロ（複素2乗は `z²=(x²−y², 2xy)`）、Julia は c を定数化する1行差。縞消しは連続反復数 `n−log₂(log|z|)`
+- [ ] burningship / newton / lyapunov — escape-time 系の変奏3連発。コードの骨格は前項のまま写像だけ差し替え。Newton は z³−1 の求根の収束先で塗り分け
+- [ ] pascal-sierpinski — 二項係数 mod p。mod 2 なら `(x & y) == 0` の1行、ビット演算の箸休め。次の scatter 編の「逆写像で per-pixel 化」注記への伏線
+
+※ Game of Life / reaction-diffusion 等は前フレーム参照（ping-pong 型）なので単一パスでは書けず後回し
+
+**点蓄積（scatter 型）・compute shader 編**
+
+**Mandelbrot の反復の記憶が新しいうちに**（buddhabrot が同じ数式の scatter 視点なので）。chaos-game な IFS/アトラクタは「ピクセルが値を集める (gather)」でなく「点がピクセルへ書き込む (scatter)」なので fragment shader 単体では書けない。FP 的には gather=関数の引き戻し (pullback)・scatter=測度の押し出し (pushforward) の双対。WGSL では storage buffer 上の `atomic<u32>` に `atomicAdd` でヒストグラムを蓄積し（u32 加算が可換モノイドなので書き込み順が不定でも結果は同じ）、fragment パスで log トーンマップして表示。新概念は **compute pipeline / storage buffer / atomics / 自作 RNG（PCG 系の状態付きハッシュ）** の4点セット。制約: atomic は整数のみ（`atomic<f32>` は無い）・storage texture に atomic は撃てないので蓄積先は必ず buffer・軌道の序盤はアトラクタ未収束なので burn-in で捨てる。
+
+- [ ] fern（Barnsley Fern）— 4つのアフィン写像から確率で選んで反復する chaos game。scatter 入門に最適、ここで新概念4点セットを導入
+- [ ] attractors（de Jong map）— `(x,y) ← (sin(a·y)−cos(b·x), sin(c·x)−cos(d·y))` を数百万回。骨格は fern のまま写像差し替え、パラメータで表情が激変
+- [ ] buddhabrot — Mandelbrot の脱出軌道の通過密度。反復コードは mandelbrot 回のものがそのまま再利用できる。「密度は点 x での閉じた式を持たない」= per-pixel 化が本質的に不可能な scatter の代表例。同じ数式を gather で見たのが mandelbrot、scatter で見たのがこれ
+
+※ 蛇足: IFS の「形（集合）だけ」なら逆写像の反復で per-pixel 判定に落とせる場合がある（Sierpiński は `p=fract(p*2)` の反復、mod 2 のビット判定はその極限形）。密度を描くなら scatter 一択
+
+### 書籍「幾何学パターンづくりのすべて」（jz examples のあとで）
+
+- [ ] 「幾何学パターンづくりのすべて — ファッション、建築、デザインのためのリピートパターン制作ガイド」— 座標変換の柱の体系化として読む。3章「平面対称」の17節はおそらく**壁紙群が17種類**あることに対応（平面充填リピートの対称性は並進・回転・鏡映・映進の組合せで厳密に17通り）。シェーダー的には各対称群 = 平面を基本領域に折りたたむ純関数で、**17個の壁紙群 = 17個の座標変換コンビネータ** — シェーダー生成言語の長期目標的にも群論がそのままコンポジションの API になる構造。既習との対応: 並進=`fract` / 鏡映=`abs`・三角波折り返し / 回転対称=極座標の角度 `mod` 扇形折りたたみ / 映進=並進∘鏡映（未実装の道具）。デザイナー向けでコードは無いので、Unity デッキと同じく「この対称操作は WGSL でどう書くか」を都度このリポジトリで再実装しながら読む。5章シームレス/エッシャー型リピートは truchet・タイリングの記憶があるうちだと効果的
