@@ -132,3 +132,16 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 ### 書籍「幾何学パターンづくりのすべて」（jz examples のあとで）
 
 - [ ] 「幾何学パターンづくりのすべて — ファッション、建築、デザインのためのリピートパターン制作ガイド」— 座標変換の柱の体系化として読む。3章「平面対称」の17節はおそらく**壁紙群が17種類**あることに対応（平面充填リピートの対称性は並進・回転・鏡映・映進の組合せで厳密に17通り）。シェーダー的には各対称群 = 平面を基本領域に折りたたむ純関数で、**17個の壁紙群 = 17個の座標変換コンビネータ** — シェーダー生成言語の長期目標的にも群論がそのままコンポジションの API になる構造。既習との対応: 並進=`fract` / 鏡映=`abs`・三角波折り返し / 回転対称=極座標の角度 `mod` 扇形折りたたみ / 映進=並進∘鏡映（未実装の道具）。デザイナー向けでコードは無いので、Unity デッキと同じく「この対称操作は WGSL でどう書くか」を都度このリポジトリで再実装しながら読む。5章シームレス/エッシャー型リピートは truchet・タイリングの記憶があるうちだと効果的
+
+### Paper Shaders を WGSL に移植する（実戦編）
+
+[paper-design/shaders](https://github.com/paper-design/shaders)（ローカル: `~/ghq/github.com/paper-design/shaders`）— Paper が実際に出荷している production 品質の単一パス GLSL (ES 300) フラグメントシェーダー集（全29本、`packages/shaders/src/shaders/`）。既習の道具（ノイズ・距離場・パターン・domain warp）が製品コードでどう磨かれるか（`fwidth` によるAA・uniform 設計・アルファ合成）を読みながら GLSL→WGSL の方言変換を練習する。**既習トピックの焼き直し（waves・dot-grid・perlin/simplex-noise・voronoi・metaballs）とテクスチャ入力系は除外**。ただし grain-gradient / warp の `u_noiseTexture` は value noise の格子点乱数をテクスチャ参照に置き換えた高速化にすぎないので、既習の `fract(sin(dot))` ハッシュで代替すれば全部 `色 = 純関数(uv, time)` のまま今の道具だけで移植できる:
+
+- [ ] spiral / swirl — 極座標の渦2種。スパイラルの線と、ねじれる色帯
+- [ ] neuro-noise — 網目状に光る流線。ノイズの応用
+- [ ] static-radial-gradient / static-mesh-gradient — 最大10色のグラデーション合成（放射・メッシュ）
+- [ ] color-panels — 擬似3D の半透明パネル回転
+- [ ] dithering — ノイズ・波・渦など7種のパターン源を2色ディザに落とす。順序ディザ (Bayer 行列) が新道具
+- [ ] grain-gradient — 最大7色 + 粒子ノイズのグラデーション。wave/dots/truchet/ripple/blob/sphere の7形態、粒は `gl_FragCoord` 基準
+- [ ] warp — checks/stripes/edge の下地を noise + 多段 swirl で歪ませる流体・大理石。BoS 13 domain warp の実戦版（かっこいいので焼き直しでも残し）
+- [ ] mesh-gradient — 色スポットが軌道を流れる看板シェーダー（README の顔）
