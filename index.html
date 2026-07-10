@@ -1029,6 +1029,29 @@
           magenta↔cyan にグラデ。MVP
           行列・深度バッファ・頂点/インデックスバッファも初登場
         </li>
+        <li class="done">
+          <a href="/src/vertex-mesh/02-noise-displace/index.html"
+            >頂点 02 ノイズ変位 (その場でうねうねする板)</a
+          >
+          <code class="slug">02-noise-displace</code>
+          <span class="badge">作成済</span>
+          — 01 の <code>Σ sin</code> を <strong>3D simplex noise の fBm</strong>
+          に差し替え。3つ目の軸に時間を入れる (<code>snoise3(x, z, t)</code>)
+          ので模様が横に流れず<strong>その場でうねうね変形</strong>。BoS 11 の 2D
+          simplex を 3D 拡張して移植
+        </li>
+        <li class="done">
+          <a href="/src/vertex-mesh/03-blob/index.html"
+            >頂点 03 Blob (法線方向へノイズ変位する球)</a
+          >
+          <code class="slug">03-blob</code>
+          <span class="badge">作成済</span>
+          — Maxime Heckel の Blob を WGSL 移植。UV 球の各頂点を<strong>法線方向へ</strong
+          ><code>cnoise(position + 2t)</code> 分だけ押し出す
+          (<code>newPos = pos + normal * intensity * disp</code>)。変位量を Varying
+          で fs の色にも。hover で intensity が上がり膨らむ。cnoise は Stefan
+          Gustavson の Classic Perlin 3D を移植
+        </li>
       </ul>
     </details>
 
