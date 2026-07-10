@@ -568,6 +568,17 @@
       </ul>
     </details>
 
+    <details open>
+      <summary>頂点シェーダーで 3D メッシュを変形する</summary>
+      <ul>
+      <li class="done">
+        <a href="/src/vertex-mesh/01-wave-varying/index.html">頂点 01 波打つ板 + 高さでグラデ (Varying)</a> <code class="slug">01-wave-varying</code>
+        <span class="badge">作成済</span>
+        — 頂点シェーダー編の第1回。これまで置物だった頂点シェーダーが主役に。<code>位置 = g(頂点,t)</code> で板の各頂点の高さを <code>Σ sin</code> で持ち上げ (=変位)、その高さを <code>@location</code> の Varying でフラグメントへ。<strong>頂点で出した値が三角形内部で自動補間されて届く</strong>流れを体感。色は高さで magenta↔cyan にグラデ。MVP 行列・深度バッファ・頂点/インデックスバッファも初登場
+      </li>
+      </ul>
+    </details>
+
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
       新しいレッスンは <code>src/&lt;track&gt;/&lt;番号&gt;-&lt;名前&gt;/</code> に
       <code>index.html</code> と <code>main.ts</code> を置くだけで Vite が自動認識します。
