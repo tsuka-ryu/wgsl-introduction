@@ -95,16 +95,16 @@ async function main() {
       };
 
       // ── レイヤーの色定数 (Lamina では prop。ここは const。いじると惑星の色が変わる) ──
-      const COLOR_A     = vec3f(0.071, 0.302, 0.847); // #124dd8 濃青
-      const COLOR_B     = vec3f(0.169, 1.000, 0.906); // #2bffe7 アクア
-      const CLOUD_TINT  = vec3f(0.000, 0.090, 0.255); // #001741 影の藍
+      const COLOR_A     = vec3f(0.02, 0.05, 0.18);    // 雲の谷=ほぼ暗い紺 (コントラスト用に暗く)
+      const COLOR_B     = vec3f(0.35, 0.95, 1.00);    // 雲の峰=明るいシアン
+      const CLOUD_TINT  = vec3f(0.00, 0.03, 0.10);    // 影の藍 (暗め)
       const DEPTH_A     = vec3f(0.0, 0.0, 1.0);        // 手前=青
       const DEPTH_B     = vec3f(0.0, 1.0, 1.0);        // 奥=水色
-      const FRESNEL_COL = vec3f(0.996, 0.702, 0.851);  // #FEB3D9 ピンク
+      const FRESNEL_COL = vec3f(1.00, 0.35, 0.85);    // 縁光=鮮やかなマゼンタ (雲のシアンと差別化)
       const LIGHT_DIR   = normalize(vec3f(0.4, 0.3, 0.6));
-      const AMBIENT     = 0.30;
-      const LIGHT_INT   = 0.85;
-      const FRESNEL_POW = 3.0;
+      const AMBIENT     = 0.10;   // ↓夜側を暗く = 明暗の境をはっきり
+      const LIGHT_INT   = 1.40;   // ↑昼側を明るく
+      const FRESNEL_POW = 2.5;    // 少し下げて縁を太く
       const LACUNARITY  = 2.3;
       const GAIN        = 0.5;
       // Depth の near/far (camera z=4.2, R=1.5 に合わせた)
@@ -206,7 +206,7 @@ async function main() {
         // ② Depth: 距離でグラデを add
         let dist = length(u.cameraPos - in.vWorldPos);
         let dt = clamp((dist - NEAR) / (FAR - NEAR), 0.0, 1.0);
-        col += mix(DEPTH_A, DEPTH_B, dt) * 0.4;
+        col += mix(DEPTH_A, DEPTH_B, dt) * 0.15;  // 弱めて雲を潰さない
 
         // ③ Lambert 照明: ここまでの色に陰影 (光と反対側が暗く)
         let diffuse = max(dot(N, LIGHT_DIR), 0.0);
@@ -214,7 +214,7 @@ async function main() {
 
         // ④ Fresnel: 縁が光る。照明後に emissive として add (暗い側でも縁は光る)
         let fres = pow(1.0 - max(dot(N, viewDir), 0.0), FRESNEL_POW);
-        col += FRESNEL_COL * fres;
+        col += FRESNEL_COL * fres * 1.8;  // 強めて縁光をはっきり
 
         return vec4f(col, 1.0);
       }
