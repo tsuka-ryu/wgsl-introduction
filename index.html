@@ -1077,6 +1077,18 @@
           通りを実装し <code>USE_ANALYTIC</code>
           で切替（結果は同じ）。波が斜面の陰影で立体的に見える
         </li>
+        <li class="done">
+          <a href="/src/vertex-mesh/06-vaporwave/index.html"
+            >頂点 06 Vaporwave (卒業制作)</a
+          >
+          <code class="slug">06-vaporwave</code>
+          <span class="badge">作成済</span>
+          — §4 の総仕上げ。Maxime Heckel の Vaporwave を WGSL
+          で再構成。ノイズ変位の地形(中央=道/両脇=山・カメラへ流れる)＋<strong>数値的法線</strong>(05)で陰影＋<strong>ネオングリッド線</strong>(<code>fwidth</code>
+          で AA)＋フォグ＋夕日背景。仕上げに<strong>RGBShift
+          ポストプロセス</strong>。<strong>2パス(オフスクリーンに描く→サンプリングして色ずらし)・<code>textureSample</code>
+          が初登場</strong>。これまでの道具の集大成
+        </li>
       </ul>
     </details>
 
