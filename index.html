@@ -1064,6 +1064,19 @@
           (add)。<code>マテリアル = レイヤーの畳み込み</code> という Lamina
           の合成を手書きで再現。法線・視線方向を Varying で fs へ渡すのが新しい
         </li>
+        <li class="done">
+          <a href="/src/vertex-mesh/05-wave-normals/index.html"
+            >頂点 05 法線の再計算 (波打つ板を陰影で立体的に)</a
+          >
+          <code class="slug">05-wave-normals</code>
+          <span class="badge">作成済</span>
+          — 01 の波打つ板に<strong>変位後の法線</strong>を足して Lambert
+          照明。高さ場 <code>y=f(x,z)</code> の法線は
+          <code>N = normalize(-∂f/∂x, 1, -∂f/∂z)</code>。<strong>解析的</strong>(sin→cos
+          で手微分) と<strong>数値的</strong>(隣接点をサンプリングして外積) の 2
+          通りを実装し <code>USE_ANALYTIC</code>
+          で切替（結果は同じ）。波が斜面の陰影で立体的に見える
+        </li>
       </ul>
     </details>
 

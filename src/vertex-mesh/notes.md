@@ -209,6 +209,28 @@ vs の出力 `VSOut` は2種類を詰める箱。**詰めた2つは行き先が�
 
 <!-- 疑問が出たらここに 質問 → 回答 で積む -->
 
+## 法線の再計算 (§4) 〔読書メモ・これから〕
+
+変位すると元の法線がズレる → 作り直す。方法は3つ:
+
+| 方法 | 場所 | 手軽さ | 見た目 | 中身 |
+|---|---|---|---|---|
+| dpdx/dpdy + cross | フラグメント | ★タダ | **フラット(カクカク)** | `normalize(cross(dpdx(P), dpdy(P)))`。画面の隣ピクセル差の外積 |
+| 数値的 (finite diff) | 頂点 | 中 | なめらか | 隣接点の変位も計算 → 接ベクトル2本の外積 |
+| **解析的 (微分)** ←本命 | 頂点 | 式が要る | なめらか・正確 | `N = normalize(-∂f/∂x, 1, -∂f/∂z)`。波は sin→cos で手微分＝FP向き |
+
+- **dpdx/dpdy** は「画面の隣ピクセルとの差」= **微分の3つ目の顔（AA と同じ道具）**。タダだが三角形内で一定→1面1法線=カクカク。今回は**存在だけ知ればOK・不要**。後で AA でまた会う
+- **本命=解析的**: 波の高さ `Σ sin` を微分して頂点ごとに正確な法線 → 04 の Lambert 照明を乗せれば波が立体的に光る
+
+**掴んだ核心**: 法線は「面の傾き = 高さ関数の微分（勾配）」で決まる。平らなら真上 `(0,1,0)`、波打つと傾く。
+
+資料（Maxime Heckel 記事は法線再計算を扱わないので別途）:
+- [Cyanilux — Vertex Displacement](https://www.cyanilux.com/tutorials/vertex-displacement/) — 変位＋法線再計算を図で。Unity だが概念はそのまま
+- [three.js forum — 変位後の頂点法線](https://discourse.threejs.org/t/calculating-vertex-normals-after-displacement-in-the-vertex-shader/16989) — GLSL で自分のスタックに近い
+- [IQ — noise derivatives (morenoise)](https://iquilezles.org/articles/morenoise/) — ノイズ変位向けの解析的な奥の手（値と微分を一緒に返す）
+
+<!-- 読みながらここに追記。次にやる: 01 の波打つ板に解析的法線を足す (∂y/∂x,∂y/∂z を cos で) → Lambert 照明で立体的に -->
+
 ## 次回 (明日) やること
 
 - [ ] **03-blob を理解する**（法線方向へのノイズ変位）。新しいのは数点だけ: 球の生成 / `y`でなく**法線方向**へ押し出す / 頂点属性3つ+Varying2つ / hover。cnoise はおまじないでOK。※01・02 の骨格(MVP→変位→Varying)はそのまま
