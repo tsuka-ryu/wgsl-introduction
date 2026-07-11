@@ -1052,6 +1052,18 @@
           で fs の色にも。hover で intensity が上がり膨らむ。cnoise は Stefan
           Gustavson の Classic Perlin 3D を移植
         </li>
+        <li class="done">
+          <a href="/src/vertex-mesh/04-layered-planet/index.html"
+            >頂点 04 Layered Planet (Lamina 風レイヤー合成)</a
+          >
+          <code class="slug">04-layered-planet</code>
+          <span class="badge">作成済</span>
+          — Maxime Heckel の Lamina 版 Planet を WGSL 移植。<strong>4 レイヤーを1つの
+          fs で手合成</strong>: ①雲 (fbm ドメインワープ = BoS 13 の 2D 版) ②Depth
+          グラデ (add) ③Lambert 照明 (<code>dot(法線,光)</code>) ④Fresnel の縁光
+          (add)。<code>マテリアル = レイヤーの畳み込み</code> という Lamina
+          の合成を手書きで再現。法線・視線方向を Varying で fs へ渡すのが新しい
+        </li>
       </ul>
     </details>
 

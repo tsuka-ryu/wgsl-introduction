@@ -98,6 +98,7 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 - [x] 波打つ板 + 高さでグラデ（Varying）— 頂点の y を `sin`/ノイズで動かし、変位量を `@location` でフラグメントへ補間して色に。頂点シェーダーが主役になる感覚と Varying をここで掴む。ガウス `exp(-x²)` を波の formula に差し替えれば凸凹の重み付けも同じ枠で扱える（→ Maxime Heckel 記事）
 - [x] ノイズ変位（その場でうねうね）— `Σ sin` を **3D simplex noise の fBm** に差し替え。`snoise3(x, z, t)` と**3つ目の軸に時間**を入れると模様が流れずその場で morph（→ [Varun Vachhar「Noise in Creative Coding」](https://varun.ca/noise/)）。BoS 11 の 2D simplex を 3D 拡張
 - [x] Blob（法線方向へノイズ変位する球）— UV 球の各頂点を**法線方向へ** `cnoise(p + 2t)` 分だけ押し出す `newPos = p + normal·intensity·disp`。任意形状に効く変位の一般形。Maxime Heckel の Blob を WGSL 移植（cnoise = Stefan Gustavson の Classic Perlin 3D）。hover で膨らむ
+- [x] Layered Planet（Lamina 風レイヤー合成）— Maxime Heckel の Lamina 版 Planet を WGSL 移植。**4レイヤーを1つの fs で手合成**: ①雲（fbm ドメインワープ = BoS 13 の 2D 版）②Depth グラデ add ③Lambert 照明 `dot(法線,光)` ④Fresnel 縁光 add。`マテリアル = レイヤーの畳み込み` = Lamina/シェーダー生成言語の縮図。法線・視線を Varying で fs へ
 - [ ] 法線の再計算 — 変形すると元の法線がズレてライティングが破綻する。**解析的**（変形関数を微分して接ベクトル→外積、sin/ガウスなら手で解ける＝FP 向き）と**数値的**（隣接点を微小サンプリングして外積で近似）の2通り。まず解析で、変形関数とその導関数をペアで書く
 - [ ] ツイスト — 高さ `h` に応じて xz 平面を回転させる領域変形 `p ↦ rot(h)·p`。[Inigo Quilez の domain deformation](https://iquilezles.org/articles/)（「変形 = 座標への関数適用」の視点が一番クリア）
 - [ ] 🌴 **卒業制作: Vaporwave シーン** — [Maxime Heckel「Vaporwave 3D scene with Three.js」](https://blog.maximeheckel.com/posts/vaporwave-3d-scene-with-threejs/) を WGSL で再構成。波打つ板を地形に育て、グリッド線 + フォグ + RGBShift ポストプロセスで 80s 看板に。§4 の変位に、AA（グリッド線）・色空間（RGBShift/ガンマ）・ライティングを合流させる総仕上げ。※原典は Three の `displacementMap` 任せで頂点シェーダーを書いていないので、WGSL 版はむしろ本物の頂点変位に格上げできる
