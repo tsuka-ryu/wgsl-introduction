@@ -183,28 +183,6 @@ vs の出力 `VSOut` は2種類を詰める箱。**詰めた2つは行き先が�
 **頂点で疎に計算 → ラスタライザが補間 → 各ピクセルが「自分の位置での値」を受け取る**。
 何でも渡せる: UV座標 / ワールド位置 / **法線 (§4 次回、ライティング用に `@location(1) normal: vec3f`)**。`out.○○` で載せ `in.○○` で受け取るのが頂点シェーダーの基本パターン。
 
-## セクション別メモ (記事の流れ)
-
-### 1. Shader とは / vertex・fragment の役割
-
-<!-- 読みながら追記 -->
-
-### 2. Vertex shader — wobbling plane (頂点変位)
-
-<!-- 読みながら追記。自分の実装との対応: waveHeight() が記事の displacement に当たる -->
-
-### 3. Fragment shader — gradient / color mixing
-
-<!-- 読みながら追記 -->
-
-### 4. Uniforms と Varyings (動的なエフェクト)
-
-<!-- 読みながら追記 -->
-
-### 5. Noise (Perlin / Simplex) と応用 (blob hover 等)
-
-<!-- 読みながら追記。ノイズ本体は BoS 11 章で既習 -->
-
 ## Q&A
 
 <!-- 疑問が出たらここに 質問 → 回答 で積む -->
@@ -229,11 +207,16 @@ vs の出力 `VSOut` は2種類を詰める箱。**詰めた2つは行き先が�
 - [three.js forum — 変位後の頂点法線](https://discourse.threejs.org/t/calculating-vertex-normals-after-displacement-in-the-vertex-shader/16989) — GLSL で自分のスタックに近い
 - [IQ — noise derivatives (morenoise)](https://iquilezles.org/articles/morenoise/) — ノイズ変位向けの解析的な奥の手（値と微分を一緒に返す）
 
-<!-- 読みながらここに追記。次にやる: 01 の波打つ板に解析的法線を足す (∂y/∂x,∂y/∂z を cos で) → Lambert 照明で立体的に -->
+### 05-wave-normals の気づき（実装済み）
 
-## 次回 (明日) やること
+- 変位で平面 → **波打った曲面**になる。計算するのは**その曲面の法線**（波の斜面に応じて傾く）であって、平面の `(0,1,0)` ではない。これが「再計算」の意味＝元の（真上の）法線を捨てて、変形後の形から作り直す
+- ★05 では法線を**頂点入力にせず、vs 内で `(x,z,time)` から計算して出力**する（`out.vNormal`）。**03 blob は法線が入力**だった ↔ 05 は「平面の素の法線は真上で無意味なので保存せず作り直す」
+- 解析 ↔ 数値の違いは **if/else の2関数だけ**（`waveDeriv` / `waveNormalNumeric`）、あとは全部共通。だから見た目が一致（＝2手法は同じ結果の実証）
+- 流れ: 入力 `(x,z)+time` → 法線を計算 → `out.vNormal` → fs で `dot(N, 光)` の Lambert 照明
 
-- [ ] **03-blob を理解する**（法線方向へのノイズ変位）。新しいのは数点だけ: 球の生成 / `y`でなく**法線方向**へ押し出す / 頂点属性3つ+Varying2つ / hover。cnoise はおまじないでOK。※01・02 の骨格(MVP→変位→Varying)はそのまま
-- [ ] 記事の **Lamina** の節を読む（composable shader layers = マテリアルをレイヤーで合成するライブラリ。Three の shaderMaterial の一歩上の抽象）
-
-（今日ここまで: 01 完全理解。02=波を3Dノイズに差し替え / 03=球を法線変位、はコード実装済みで**理解はこれから**）
+**数値的 `waveNormalNumeric` の中身**（微分不要・直感的）:
+- ① 3点の高さを測る: `h=f(x,z)` / `hx=f(x+ε,z)` / `hz=f(x,z+ε)`（ε=0.01 のちょい動き）
+- ② 接ベクトル2本: `tx=(ε, hx−h, 0)` = 「x に一歩踏むと曲面上を実際どう動いたか」 / `tz=(0, hz−h, ε)`。どちらも曲面に貼りつく
+- ③ `normalize(cross(tz, tx))` = 両方に垂直 = 曲面の法線
+- **cross** = WGSL 組み込み（**vec3 専用**）。2ベクトル両方に垂直な向きを作る。机の上の2本の鉛筆に垂直＝真上、のイメージ。順番 `(tz,tx)` は**上向き**に出すため（逆にすると反転）。平ら（tx=x軸,tz=z軸）なら `(0,1,0)` に戻る
+- 対で覚える: **dot = 向きの一致度（スカラー）** / **cross = 両方に直角な向き（vec3）**。ベクトルのかけ算2種、両方組み込み（dot は任意次元・cross は vec3 のみ）
