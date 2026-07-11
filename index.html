@@ -1089,6 +1089,17 @@
           ポストプロセス</strong>。<strong>2パス(オフスクリーンに描く→サンプリングして色ずらし)・<code>textureSample</code>
           が初登場</strong>。これまでの道具の集大成
         </li>
+        <li class="done">
+          <a href="/src/vertex-mesh/07-twist/index.html"
+            >頂点 07 ツイスト (高さで xz を回す領域変形)</a
+          >
+          <code class="slug">07-twist</code>
+          <span class="badge">作成済</span>
+          — 高さ <code>y</code> に応じて <code>(x,z)</code> を回す
+          <code>p ↦ rot(a(y))·p</code>（IQ の domain
+          deformation）。下は0°・上ほど大きく回り、四角柱がらせんに捻れる（まっすぐな稜線が螺旋に）。回転は
+          BoS 08 の 2x2 回転行列、法線も同じ角度で回して陰影
+        </li>
       </ul>
     </details>
 
