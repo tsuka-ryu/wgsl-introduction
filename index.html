@@ -1119,6 +1119,26 @@
           は上が 0 なので反転。3D はこの器の中で始まる。読書メモ:
           <code>src/raymarching/notes.md</code> (第0回・全体像)
         </li>
+        <li class="done">
+          <a href="/src/raymarching/05-mandelbrot/index.html"
+            >レイマーチ 05 マンデルブロ集合 (エスケープ時間 z→z²+c)</a
+          >
+          <code class="slug">05-mandelbrot</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL 第5回を<strong>原典に忠実に</strong> WGSL 化。01 の <code>色 = f(uv)</code>
+          の器の中身を複素数の反復に差し替え。各ピクセルに複素数 <code>c</code> を割り当て、<code
+            >z₀=0</code
+          >
+          から <code>z→z²+c</code> を反復して <strong>|z|&gt;2 で脱出した回数</strong>を色にする(<strong>escape
+          time</strong>)。複素数は <code>vec2f</code>、<code>(x+iy)²=(x²−y², 2xy)</code>。座標は wgld
+          共通の<strong>中心原点・アスペクト補正</strong>
+          <code>(fragCoord*2−res)/min(res)</code>(08 の <code>rd</code> でも使う)。<strong>この回で
+          time/mouse を導入</strong>(02 スキップ分): 色相を <code>time</code> で周回・<code>mouse.x</code>
+          で拡大度。着色は原典の <code>hsv()</code> ×
+          脱出回数=輝度(集合内が明るい単一色相)。反復は Mandelbulb(3D)・buddhabrot
+          と同じ中核式で、<strong>1ピクセル内でループを回す</strong>点が 08 以降のマーチと地続き。02〜04
+          は BoS 既習でスキップ
+        </li>
       </ul>
     </details>
 
