@@ -1139,6 +1139,21 @@
           と同じ中核式で、<strong>1ピクセル内でループを回す</strong>点が 08 以降のマーチと地続き。02〜04
           は BoS 既習でスキップ
         </li>
+        <li class="done">
+          <a href="/src/raymarching/06-julia/index.html"
+            >レイマーチ 06 ジュリア集合 (z₀=ピクセル・c=固定)</a
+          >
+          <code class="slug">06-julia</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL 第6回。05 の<strong>双子</strong>で、反復式 <code>z→z²+c</code>
+          は同じ。違いは「誰がピクセルか」だけ: <strong>マンデルブロは z₀=0 固定・c=f(p)</strong> /
+          <strong>ジュリアは z₀=f(p)・c=画面全体で1個に固定</strong>。<code>c</code>
+          をマウスで動かすと画面全体のフラクタルが変形(<code>c</code>
+          =画像全体のたった1個のパラメータを体感)。選んだ <code>c</code>
+          は05のマンデルブロ平面上の1点で、集合の内なら繋がったジュリア・外なら砂粒状に分解(表裏一体)。構造・着色は
+          05 と同じ(1ピクセル内で fold して <code>j</code> を収穫)。原典 GLSL 未取得のため 05
+          の作りを踏襲した忠実版
+        </li>
       </ul>
     </details>
 

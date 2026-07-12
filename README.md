@@ -117,7 +117,7 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 
 **フラクタル・ノイズ（既習トピックの GLSL 版）**
 
-- [x] 05 マンデルブロ集合 ([`src/raymarching/05-mandelbrot`](src/raymarching/05-mandelbrot/main.ts)) / 06 ジュリア集合 / 07 フラグメントシェーダ ノイズ — フラクタルとノイズを GLSL で。エスケープ時間 `zₙ₊₁=zₙ²+c` の複素数フラクタルはここが初出（この反復は後の compute 編 buddhabrot で scatter 視点として再利用）、ノイズは BoS 11章の復習
+- [x] 05 マンデルブロ集合 ([`src/raymarching/05-mandelbrot`](src/raymarching/05-mandelbrot/main.ts)) / 06 ジュリア集合 ([`src/raymarching/06-julia`](src/raymarching/06-julia/main.ts)) / 07 フラグメントシェーダ ノイズ — フラクタルとノイズを GLSL で。エスケープ時間 `zₙ₊₁=zₙ²+c` の複素数フラクタルはここが初出（この反復は後の compute 編 buddhabrot で scatter 視点として再利用）、ノイズは BoS 11章の復習
 
 **レイマーチング本体（ここから3D・新概念）**
 
