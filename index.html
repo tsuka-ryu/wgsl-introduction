@@ -1010,7 +1010,7 @@
       </ul>
     </details>
 
-    <details open>
+    <details>
       <summary>頂点シェーダーで 3D メッシュを変形する</summary>
       <ul>
         <li class="done">
@@ -1099,6 +1099,25 @@
           <code>p ↦ rot(a(y))·p</code>（IQ の domain
           deformation）。下は0°・上ほど大きく回り、四角柱がらせんに捻れる（まっすぐな稜線が螺旋に）。回転は
           BoS 08 の 2x2 回転行列、法線も同じ角度で回して陰影
+        </li>
+      </ul>
+    </details>
+
+    <details open>
+      <summary>レイマーチングで 3D を描く (wgld.org GLSL)</summary>
+      <ul>
+        <li class="done">
+          <a href="/src/raymarching/01-gl-rendering/index.html"
+            >レイマーチ 01 フラグメントだけでレンダリング (色 = f(uv))</a
+          >
+          <code class="slug">01-gl-rendering</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL 第1回を WGSL に読み替え。レイもマーチもまだ無し。<strong>頂点データを一切使わずフラグメント1本で画面を塗る器</strong>を作る回
+          = これまでのフルスクリーン (BoS) と同じ <code>色 = f(uv)</code>。各ピクセルの正規化座標
+          <code>uv</code> をそのまま <code>vec3(uv.x, uv.y, 0)</code> にし、右へ赤・上へ緑のグラデで「色
+          = 座標の関数」を目視。<code>gl_FragCoord/resolution → position.xy/u.resolution</code>、<code>position.y</code>
+          は上が 0 なので反転。3D はこの器の中で始まる。読書メモ:
+          <code>src/raymarching/notes.md</code> (第0回・全体像)
         </li>
       </ul>
     </details>
