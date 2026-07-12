@@ -109,7 +109,7 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 
 **第0回・まず全体像を掴む（写経の前に地図を見る）**
 
-- [ ] [シェーダだけで世界を創る！three.js によるレイマーチング（gam0022）](https://www.slideshare.net/slideshow/threejs-58238484/58238484) — wgld.org と同じ内容を1本のスライドで俯瞰。ラスタライズ vs レイトレ → SDF → CSG合成 → 無限複製 → 陰影の流れを先に一望してから、下の全20回で写経する
+- [x] [シェーダだけで世界を創る！three.js によるレイマーチング（gam0022）](https://www.slideshare.net/slideshow/threejs-58238484/58238484) — wgld.org と同じ内容を1本のスライドで俯瞰。ラスタライズ vs レイトレ → SDF → CSG合成 → 無限複製 → 陰影の流れを先に一望してから、下の全20回で写経する。読書メモ: [`src/raymarching/notes.md`](src/raymarching/notes.md)
 
 **舞台づくり（フルスクリーン路線の復習・新道具ゼロ）**
 
