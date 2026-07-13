@@ -1154,6 +1154,21 @@
           05 と同じ(1ピクセル内で fold して <code>j</code> を収穫)。原典 GLSL 未取得のため 05
           の作りを踏襲した忠実版
         </li>
+        <li class="done">
+          <a href="/src/raymarching/08-ray-definition/index.html"
+            >レイマーチ 08 シェーダ内でレイを定義する (rd を色で可視化)</a
+          >
+          <code class="slug">08-ray-definition</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL 第8回。<strong>3D の入り口</strong>。まだ物体には当てず、各ピクセルから飛ぶ<strong>レイの向き
+          rd</strong> を計算して色で可視化(中心=前向き=青、右=赤、上=緑)。カメラを基底で組む: <code
+            >cDir</code
+          >(視線)・<code>cUp</code>(上)・<code>cSide=cross(cDir,cUp)</code>(横=外積)、<code
+            >ray = normalize(cSide·p.x + cUp·p.y + cDir·targetDepth)</code
+          >。<code>targetDepth</code>=目から板までの距離(小さいほど広角)。第0回 notes の
+          <code>normalize(vec3(uv,−1))</code> の一般形(カメラを回転・移動できる)。<code>cPos</code>=レイ出発点
+          <code>ro</code> は 09 のマーチ開始点。原典を忠実に WGSL 化
+        </li>
       </ul>
     </details>
 
