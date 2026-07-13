@@ -1169,6 +1169,19 @@
           <code>normalize(vec3(uv,−1))</code> の一般形(カメラを回転・移動できる)。<code>cPos</code>=レイ出発点
           <code>ro</code> は 09 のマーチ開始点。原典を忠実に WGSL 化
         </li>
+        <li class="done">
+          <a href="/src/raymarching/09-sphere/index.html"
+            >レイマーチ 09 球体を描く (SDF に沿ってマーチ)</a
+          >
+          <code class="slug">09-sphere</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL 第9回。<strong>3D の初出</strong>。08 の <code>ro</code>/<code>rd</code> + 05 の
+          fold + 第0回の距離関数が合流。距離関数 <code>length(p)−r</code>(球の SDF)に沿って
+          <code>rPos=cPos</code> から <strong>「距離を聞く→その分進む」を16回</strong>くり返し(スフィアトレーシング)、表面に貼り付いたら<strong>当たり</strong>(白)・届かなければ黒。08
+          の「色=向きのデバッグ」を「色=当たり先」に置換 → 黒背景に白い球のシルエット(陰影は 10 で)。マーチは
+          05 の fold と同型(hit条件 <code>|dist|&lt;0.001</code> ↔ escape <code>|z|&gt;2</code>)。原典を忠実に
+          WGSL 化
+        </li>
       </ul>
     </details>
 
