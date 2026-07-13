@@ -1182,6 +1182,19 @@
           05 の fold と同型(hit条件 <code>|dist|&lt;0.001</code> ↔ escape <code>|z|&gt;2</code>)。原典を忠実に
           WGSL 化
         </li>
+        <li class="done">
+          <a href="/src/raymarching/10-normal-lighting/index.html"
+            >レイマーチ 10 法線の算出とライティング (∇f で陰影)</a
+          >
+          <code class="slug">10-normal-lighting</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL 第10回。09 の<strong>白い円が立体的な球に見える</strong>回。マーチ本体は
+          09 と同じで、当たった後に<strong>法線</strong>を出して陰影を付ける。法線 = <strong>距離場の勾配
+          ∇f</strong>を各軸 ±d の差分で数値微分(<code>getNormal</code>、どんな形でも同じ計算・全形共通)。<strong>Lambert
+          拡散</strong> <code>diff = clamp(dot(lightDir, normal), 0.1, 1.0)</code>
+          で明るさ(下限0.1=環境光)。第0回 notes「値 f=マーチ / 勾配 ∇f=法線」の後半、§4 頂点05
+          の数値的法線と同発想(対象が頂点→距離場)。原典を忠実に WGSL 化
+        </li>
       </ul>
     </details>
 

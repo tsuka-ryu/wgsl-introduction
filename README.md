@@ -123,7 +123,7 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 
 - [x] 08 シェーダ内でレイを定義する ([`src/raymarching/08-ray-definition`](src/raymarching/08-ray-definition/main.ts)) — 各ピクセルからレイを飛ばす。3Dの入り口。カメラ基底(cDir/cUp/cSide=外積)で `ray = normalize(cSide·p.x + cUp·p.y + cDir·targetDepth)`、rd を色で可視化
 - [x] 09 レイマーチングで球体を描く ([`src/raymarching/09-sphere`](src/raymarching/09-sphere/main.ts)) — SDF `length(p)−r` に沿ってレイを進める中核アルゴリズム。3D の初出(ro/rd + fold + 距離関数が合流、黒背景に白い球)
-- [ ] 10 法線の算出と簡単なライティング — **法線 = 距離場の勾配 `∇f`** を近傍サンプリングの数値微分で。頂点シェーダー節の「法線＝変形関数の導関数」と発想が同じ（対象が頂点→距離場）
+- [x] 10 法線の算出と簡単なライティング ([`src/raymarching/10-normal-lighting`](src/raymarching/10-normal-lighting/main.ts)) — **法線 = 距離場の勾配 `∇f`** を近傍サンプリングの数値微分で。頂点シェーダー節の「法線＝変形関数の導関数」と発想が同じ（対象が頂点→距離場）。09 の白い円が Lambert 陰影で立体的な球に
 - [ ] 11 視野角を考慮したレイの定義 — カメラの FOV
 
 **距離場の合成・変形（BoS の距離場・パターン・行列が3Dへ昇格）**
