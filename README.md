@@ -129,7 +129,7 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 **距離場の合成・変形（BoS の距離場・パターン・行列が3Dへ昇格）**
 
 - [x] 12 オブジェクトの複製 repetition ([`src/raymarching/12-repetition`](src/raymarching/12-repetition/main.ts)) — `fract`/`mod` で空間を折って無限複製。BoS 9章パターンの3D版。`trans(p)=mod(p,4)−2` を距離関数の前に。※WGSL の `%` は負で GLSL `mod` と違うので `p−n·floor(p/n)` で明示
-- [ ] 13 箱型のボックスモデル / 14 異なる形状 — 各種プリミティブ SDF
+- [x] 13 箱型のボックスモデル ([`src/raymarching/13-box`](src/raymarching/13-box/main.ts)) / 14 異なる形状 — 各種プリミティブ SDF。13 は距離関数を球→箱 `length(max(abs(q)−0.5,0))−0.1` に差し替えただけ(形の部品カタログの実演)
 - [ ] 15 重なりを考慮した描画（`min` 合成）/ 16 補間して結合（smooth min）— BoS 12章の距離場 `min`/`max` 合成が3Dに
 - [ ] 17 行列で回転 / 18 行列で捻じる（ツイスト）— レイ座標への領域変形。BoS 8章の `mat` と上の頂点シェーダー節ツイストの距離場版
 - [ ] 19 テクスチャなどを投影する — SDF 表面への投影

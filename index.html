@@ -1219,6 +1219,17 @@
           は負で挙動が違う → <code>p−n·floor(p/n)</code> で明示(負座標のタイルズレ回避)。多数のセルを貫くのでマーチを
           16→64 に。原典を忠実に WGSL 化
         </li>
+        <li class="done">
+          <a href="/src/raymarching/13-box/index.html"
+            >レイマーチ 13 箱型のボックスモデル (box SDF)</a
+          >
+          <code class="slug">13-box</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL 第13回。12 との違いは<strong>距離関数を「球」から「箱」に差し替えただけ</strong>(マーチ・法線・陰影・無限複製は不変)。丸み付きボックス
+          SDF <code>length(max(abs(q)−0.5, 0)) − 0.1</code>:
+          <code>max(…,0)</code>=箱からのはみ出し量、<code>length</code>=表面までの距離、<code>−0.1</code>=角の丸め。<strong>notes「距離関数=形の部品カタログ/形を変える=距離関数を差し替えるだけ」の実演</strong>。原典を忠実に
+          WGSL 化
+        </li>
       </ul>
     </details>
 
