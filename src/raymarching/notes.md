@@ -290,6 +290,7 @@ let ray = normalize(cSide*p.x + cUp*p.y + cDir*targetDepth);
 | `gl_FragCoord.xy` | `@builtin(position).xy` | WebGPU は y が上→下。GLSL に合わせ反転 |
 | `(gl_FragCoord.xy*2-resolution)/min(res.x,res.y)` | 同式 | 中心原点・アスペクト補正。wgld 共通、08 の `rd` でも使う |
 | `uniform float time / vec2 mouse` | `struct Uniforms{...}` + `@group/@binding` | vec2f は16B境界。05 で導入(02スキップ分) |
-| `mod(a, m)` | `a % m`(f32可)/ `fract(a/m)` | |
+| `mod(a, m)`(値の周回) | `a % m`(f32可)/ `fract(a/m)` | 05 の色相など**正の値**なら OK |
+| `mod(p, n)`(空間の折り畳み) | **`p - n*floor(p/n)`** で明示 | ★WGSL `%` は剰余(符号=被除数)。**負座標でタイルがズレる**ので floor 版必須。12 の無限複製 `trans` で使用 |
 | `for(int i…){ if(cond)break; }` | `for(var i…){ if(cond){break;} }` | 1ピクセル内の fold |
 | `length(z)` / `vec2(...)` | 同名 / `vec2f(...)` | |

@@ -1207,6 +1207,18 @@
           <code>fov</code> 傾く(全体の視野角=2·fov)。<code>targetDepth=1/tan(fov)</code>
           の対応。絵は 10 と同じ立体球。マーチ・法線・陰影は 10 のまま。原典を忠実に WGSL 化
         </li>
+        <li class="done">
+          <a href="/src/raymarching/12-repetition/index.html"
+            >レイマーチ 12 オブジェクトの複製 (mod で無限複製)</a
+          >
+          <code class="slug">12-repetition</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL 第12回。第0回で掴んだ<strong>「関数なら1行で無限」</strong>がついに動く。球の距離関数は1個のまま、レイ座標を折り畳む
+          <code>trans(p)=mod(p,4)−2</code>(domain warp)を距離関数の前に噛ませるだけで<strong>球が空間いっぱいに無限複製</strong>。BoS
+          9章タイルの3D版。<strong>WGSL 落とし穴</strong>: GLSL <code>mod</code> と WGSL <code>%</code>
+          は負で挙動が違う → <code>p−n·floor(p/n)</code> で明示(負座標のタイルズレ回避)。多数のセルを貫くのでマーチを
+          16→64 に。原典を忠実に WGSL 化
+        </li>
       </ul>
     </details>
 
