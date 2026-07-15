@@ -1195,6 +1195,18 @@
           で明るさ(下限0.1=環境光)。第0回 notes「値 f=マーチ / 勾配 ∇f=法線」の後半、§4 頂点05
           の数値的法線と同発想(対象が頂点→距離場)。原典を忠実に WGSL 化
         </li>
+        <li class="done">
+          <a href="/src/raymarching/11-fov/index.html"
+            >レイマーチ 11 視野角を考慮したレイの定義 (FOV)</a
+          >
+          <code class="slug">11-fov</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL 第11回。08 の <code>targetDepth</code>(遠近の強さ)を、<strong>画角(FOV)を角度で明示</strong>する版に。<code
+            >angle=60°</code
+          > → <code>fov=半画角</code>、<code>ray = normalize(vec3(sin(fov)·p.x, sin(fov)·p.y, −cos(fov)))</code>。カメラ基底(cSide/cUp/cDir)を省き正面固定で、画面端のレイが前方から
+          <code>fov</code> 傾く(全体の視野角=2·fov)。<code>targetDepth=1/tan(fov)</code>
+          の対応。絵は 10 と同じ立体球。マーチ・法線・陰影は 10 のまま。原典を忠実に WGSL 化
+        </li>
       </ul>
     </details>
 
