@@ -1244,6 +1244,18 @@
           min で合成するだけ(座標リスト0個)。notes「CSG合成 min=和」の実演。カメラは 08
           基底形に戻る、床が遠いのでマーチ 256 回。原典を忠実に WGSL 化
         </li>
+        <li class="done">
+          <a href="/src/raymarching/16-intersection/index.html"
+            >レイマーチ 16 距離関数の合成 (max で積集合・パネル球)</a
+          >
+          <code class="slug">16-intersection</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL 第16回相当。<strong>サッカーボール状のパネル球</strong>: 球体1個(複製なし)と
+          <strong>repetition で無限複製した箱</strong>を <code>max(d1,d2)</code> =
+          <strong>積集合(AND)</strong>で合成 → 両方に重なる部分だけ残る = 球が箱グリッドで切られてパネルに(隙間=溝)。CSG
+          は距離関数の min/max だけ: <code>min</code>=和 / <code>max</code>=積 / <code>max(d,−d)</code>=差(3バリアントをコメントで併記)。物体=関数だから形の組み方は式の合成だけ。パラメータで
+          パネル数/溝幅が変わる
+        </li>
       </ul>
     </details>
 
