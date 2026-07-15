@@ -1230,6 +1230,20 @@
           <code>max(…,0)</code>=箱からのはみ出し量、<code>length</code>=表面までの距離、<code>−0.1</code>=角の丸め。<strong>notes「距離関数=形の部品カタログ/形を変える=距離関数を差し替えるだけ」の実演</strong>。原典を忠実に
           WGSL 化
         </li>
+        <li class="done">
+          <a href="/src/raymarching/15-union/index.html"
+            >レイマーチ 15 重なりを考慮した描画 (min で和集合)</a
+          >
+          <code class="slug">15-union</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL 第15回(+14 のトーラス初出)。<strong>ついに CSG(集合演算)</strong>: 2つの距離関数を
+          <code>min</code> で組んで<strong>和集合(union)</strong>。トーラス <code
+            >length(vec2(length(p.xy)−0.75, p.z))−0.25</code
+          > + 床 <code>p.y+1</code> を <code>distFunc = min(d1,d2)</code> で合成 →
+          両方が1シーンに共存。「一番近い方まで=min」だからマーチがどちらにも当たれる。物体=関数だから複数物体=距離関数を
+          min で合成するだけ(座標リスト0個)。notes「CSG合成 min=和」の実演。カメラは 08
+          基底形に戻る、床が遠いのでマーチ 256 回。原典を忠実に WGSL 化
+        </li>
       </ul>
     </details>
 
