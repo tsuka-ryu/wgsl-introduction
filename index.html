@@ -1256,6 +1256,19 @@
           は距離関数の min/max だけ: <code>min</code>=和 / <code>max</code>=積 / <code>max(d,−d)</code>=差(3バリアントをコメントで併記)。物体=関数だから形の組み方は式の合成だけ。パラメータで
           パネル数/溝幅が変わる
         </li>
+        <li class="done">
+          <a href="/src/raymarching/17-smooth-min/index.html"
+            >レイマーチ 17 補間して結合 (smooth min でぬるっと融合)</a
+          >
+          <code class="slug">17-smooth-min</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL「補間して結合」。15 の <code>min</code> は近い方をカクッと選ぶ→境界に角が立つ。<strong>smooth
+          min</strong> は指数で境界をなめらかに補間 →
+          トーラスと平たい箱が<strong>水滴のようにぬるっと融合</strong>(メタボール的)。<code
+            >h=exp(−k·d1)+exp(−k·d2); return −log(h)/k</code
+          >、<code>k</code>=なめらかさの逆数(大=鋭い/小=大きく融合、ここ8.0)。CSG の花形、BoS 12章
+          距離場合成の発展。カメラは斜め上視点。原典を忠実に WGSL 化
+        </li>
       </ul>
     </details>
 
