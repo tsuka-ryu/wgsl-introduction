@@ -1281,6 +1281,19 @@
           でアニメ、トーラス+箱+シリンダーを2段 smooth min で融合したブロブが軸(1,0.5,0)回りに回転。§4
           頂点07 ツイストと同発想(対象が頂点→距離場)。原典を忠実に WGSL 化
         </li>
+        <li class="done">
+          <a href="/src/raymarching/19-twist/index.html"
+            >レイマーチ 19 行列で捻じる (ツイスト・高さで回転量が変わる)</a
+          >
+          <code class="slug">19-twist</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL「行列で捻じる」。18 の <code>rotate</code> を <code>twist</code>
+          に差し替え: Y軸回転だが<strong>回転角 = power·p.y(高さに比例)</strong>→ 高い所ほど大きく回る =
+          螺旋に捻れる。§4 頂点07 ツイストの距離場版。<strong>レイマーチ特有の補正2つ</strong>: ①貫通対策=継ぎ足しを
+          <code>*0.75</code> に縮小(薄い形の突き抜け防止) ②つぶつぶ(法線ノイズ)対策=<code>genNormal</code>
+          の <code>d</code> を 0.0001→0.001 に(大雑把に測る方が綺麗)。小さな誤差が大きく効くレイマーチの機微。原典を忠実に
+          WGSL 化
+        </li>
       </ul>
     </details>
 

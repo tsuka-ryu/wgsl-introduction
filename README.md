@@ -131,7 +131,7 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 - [x] 12 オブジェクトの複製 repetition ([`src/raymarching/12-repetition`](src/raymarching/12-repetition/main.ts)) — `fract`/`mod` で空間を折って無限複製。BoS 9章パターンの3D版。`trans(p)=mod(p,4)−2` を距離関数の前に。※WGSL の `%` は負で GLSL `mod` と違うので `p−n·floor(p/n)` で明示
 - [x] 13 箱型のボックスモデル ([`src/raymarching/13-box`](src/raymarching/13-box/main.ts)) / [x] 14 異なる形状(トーラス、15 で初出) — 各種プリミティブ SDF。13 は距離関数を球→箱 `length(max(abs(q)−0.5,0))−0.1` に差し替えただけ(形の部品カタログの実演)
 - [x] 15 重なりを考慮した描画（`min` 合成）([`src/raymarching/15-union`](src/raymarching/15-union/main.ts)) / [x] 16 距離関数の合成（`max` 積集合・差集合）([`src/raymarching/16-intersection`](src/raymarching/16-intersection/main.ts)) / [x] smooth min（補間して結合）([`src/raymarching/17-smooth-min`](src/raymarching/17-smooth-min/main.ts)) — BoS 12章の距離場 `min`/`max` 合成が3Dに。15=`min` 和集合。16=`max` 積集合で球∩複製箱=パネル球(min=和/max=積/max(d,-d)=差)。smooth min=`−log(exp(−kd1)+exp(−kd2))/k` で境界をなめらかに補間しぬるっと融合
-- [x] 17 行列で回転 ([`src/raymarching/18-rotate`](src/raymarching/18-rotate/main.ts)) / 18 行列で捻じる（ツイスト）— レイ座標への領域変形。BoS 8章の `mat` と上の頂点シェーダー節ツイストの距離場版。17=`q=rotate(p,θ,axis)` を距離関数の頭に噛ませてシーンごと回転(time アニメ)。※dir は連番 18(smooth min が 17 を使用)
+- [x] 17 行列で回転 ([`src/raymarching/18-rotate`](src/raymarching/18-rotate/main.ts)) / [x] 18 行列で捻じる（ツイスト）([`src/raymarching/19-twist`](src/raymarching/19-twist/main.ts)) — レイ座標への領域変形。BoS 8章の `mat` と上の頂点シェーダー節ツイストの距離場版。17=`q=rotate(p,θ,axis)` でシーンごと回転。18=`twist`(Y軸回転だが角度=power·p.y で高さごとに回転量が変わり螺旋に捻れる)+ 貫通対策(継ぎ足し*0.75)/法線ノイズ対策(d=0.001)。※dir は連番 18/19(smooth min が 17 を使用)
 - [ ] 19 テクスチャなどを投影する — SDF 表面への投影
 - [ ] 20 レイマーチングソフトシャドウ — 卒業制作
 
