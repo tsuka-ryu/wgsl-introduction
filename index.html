@@ -1269,6 +1269,18 @@
           >、<code>k</code>=なめらかさの逆数(大=鋭い/小=大きく融合、ここ8.0)。CSG の花形、BoS 12章
           距離場合成の発展。カメラは斜め上視点。原典を忠実に WGSL 化
         </li>
+        <li class="done">
+          <a href="/src/raymarching/18-rotate/index.html"
+            >レイマーチ 18 行列で回転 (レイ座標の領域変形・アニメ)</a
+          >
+          <code class="slug">18-rotate</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL「行列で回転」。<strong>座標変換=領域変形の本番</strong>: 距離関数に渡す前に
+          <code>p</code> を回転行列で回す(<code>q=rotate(p,θ,axis)</code>、ロドリゲス)→
+          シーン全体が回る。<strong>物体データでなく「座標を回す関数」を1個挟むだけ</strong>(物体=関数だからできる合成)。<code>time</code>
+          でアニメ、トーラス+箱+シリンダーを2段 smooth min で融合したブロブが軸(1,0.5,0)回りに回転。§4
+          頂点07 ツイストと同発想(対象が頂点→距離場)。原典を忠実に WGSL 化
+        </li>
       </ul>
     </details>
 
