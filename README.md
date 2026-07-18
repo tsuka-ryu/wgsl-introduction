@@ -132,8 +132,8 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 - [x] 13 箱型のボックスモデル ([`src/raymarching/13-box`](src/raymarching/13-box/main.ts)) / [x] 14 異なる形状(トーラス、15 で初出) — 各種プリミティブ SDF。13 は距離関数を球→箱 `length(max(abs(q)−0.5,0))−0.1` に差し替えただけ(形の部品カタログの実演)
 - [x] 15 重なりを考慮した描画（`min` 合成）([`src/raymarching/15-union`](src/raymarching/15-union/main.ts)) / [x] 16 距離関数の合成（`max` 積集合・差集合）([`src/raymarching/16-intersection`](src/raymarching/16-intersection/main.ts)) / [x] smooth min（補間して結合）([`src/raymarching/17-smooth-min`](src/raymarching/17-smooth-min/main.ts)) — BoS 12章の距離場 `min`/`max` 合成が3Dに。15=`min` 和集合。16=`max` 積集合で球∩複製箱=パネル球(min=和/max=積/max(d,-d)=差)。smooth min=`−log(exp(−kd1)+exp(−kd2))/k` で境界をなめらかに補間しぬるっと融合
 - [x] 17 行列で回転 ([`src/raymarching/18-rotate`](src/raymarching/18-rotate/main.ts)) / [x] 18 行列で捻じる（ツイスト）([`src/raymarching/19-twist`](src/raymarching/19-twist/main.ts)) — レイ座標への領域変形。BoS 8章の `mat` と上の頂点シェーダー節ツイストの距離場版。17=`q=rotate(p,θ,axis)` でシーンごと回転。18=`twist`(Y軸回転だが角度=power·p.y で高さごとに回転量が変わり螺旋に捻れる)+ 貫通対策(継ぎ足し*0.75)/法線ノイズ対策(d=0.001)。※dir は連番 18/19(smooth min が 17 を使用)
-- [ ] 19 テクスチャなどを投影する — SDF 表面への投影
-- [ ] 20 レイマーチングソフトシャドウ — 卒業制作
+- [x] 19 テクスチャなどを投影する ([`src/raymarching/20-projection`](src/raymarching/20-projection/main.ts)) — SDF 表面への投影。当たった点の world 座標 `dPos.x/z` で市松模様=ワールド空間テクスチャ(床にもトーラスにも回り込む)。マーチに早期 break 初登場。※dir 連番 20
+- [x] 20 レイマーチングソフトシャドウ ([`src/raymarching/21-soft-shadow`](src/raymarching/21-soft-shadow/main.ts)) — 卒業制作 🎓。当たった点から光源へ2本目のレイ(シャドウレイ)を飛ばす。遮蔽物にヒット=影、掠めただけ=半影(`r=min(r,h·16/c)`)で柔らかい影。+ スペキュラ(Blinn-Phong)+ 光アニメ。※genShadow は wgld 標準実装で再構成。dir 連番 21。**全20回完走**
 
 > **📖 ここで AA / 微分を読む** — [FrostKiwi「Analytical Anti-Aliasing」](https://blog.frost.kiwi/analytical-anti-aliasing/)。§4 の解析微分（頂点の法線）・§5 の ∇f（距離場の法線）を通った今、**微分の三つ目の顔＝画面の `dFdx`/`fwidth`** が一撃で繋がる。`smoothstep` + `fwidth` で SDF の輪郭を 1px 幅だけボカすと、これまで描いた形・パターン・3D が一掃でプロ品質に（先に読むと三つ目だけ浮くので、ここがベスト）
 

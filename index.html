@@ -1035,10 +1035,11 @@
           >
           <code class="slug">02-noise-displace</code>
           <span class="badge">作成済</span>
-          — 01 の <code>Σ sin</code> を <strong>3D simplex noise の fBm</strong>
+          — 01 の <code>Σ sin</code> を
+          <strong>3D simplex noise の fBm</strong>
           に差し替え。3つ目の軸に時間を入れる (<code>snoise3(x, z, t)</code>)
-          ので模様が横に流れず<strong>その場でうねうね変形</strong>。BoS 11 の 2D
-          simplex を 3D 拡張して移植
+          ので模様が横に流れず<strong>その場でうねうね変形</strong>。BoS 11 の
+          2D simplex を 3D 拡張して移植
         </li>
         <li class="done">
           <a href="/src/vertex-mesh/03-blob/index.html"
@@ -1046,11 +1047,12 @@
           >
           <code class="slug">03-blob</code>
           <span class="badge">作成済</span>
-          — Maxime Heckel の Blob を WGSL 移植。UV 球の各頂点を<strong>法線方向へ</strong
-          ><code>cnoise(position + 2t)</code> 分だけ押し出す
-          (<code>newPos = pos + normal * intensity * disp</code>)。変位量を Varying
-          で fs の色にも。hover で intensity が上がり膨らむ。cnoise は Stefan
-          Gustavson の Classic Perlin 3D を移植
+          — Maxime Heckel の Blob を WGSL 移植。UV 球の各頂点を<strong
+            >法線方向へ</strong
+          ><code>cnoise(position + 2t)</code> 分だけ押し出す (<code
+            >newPos = pos + normal * intensity * disp</code
+          >)。変位量を Varying で fs の色にも。hover で intensity
+          が上がり膨らむ。cnoise は Stefan Gustavson の Classic Perlin 3D を移植
         </li>
         <li class="done">
           <a href="/src/vertex-mesh/04-layered-planet/index.html"
@@ -1058,11 +1060,14 @@
           >
           <code class="slug">04-layered-planet</code>
           <span class="badge">作成済</span>
-          — Maxime Heckel の Lamina 版 Planet を WGSL 移植。<strong>4 レイヤーを1つの
-          fs で手合成</strong>: ①雲 (fbm ドメインワープ = BoS 13 の 2D 版) ②Depth
-          グラデ (add) ③Lambert 照明 (<code>dot(法線,光)</code>) ④Fresnel の縁光
-          (add)。<code>マテリアル = レイヤーの畳み込み</code> という Lamina
-          の合成を手書きで再現。法線・視線方向を Varying で fs へ渡すのが新しい
+          — Maxime Heckel の Lamina 版 Planet を WGSL 移植。<strong
+            >4 レイヤーを1つの fs で手合成</strong
+          >: ①雲 (fbm ドメインワープ = BoS 13 の 2D 版) ②Depth グラデ (add)
+          ③Lambert 照明 (<code>dot(法線,光)</code>) ④Fresnel の縁光 (add)。<code
+            >マテリアル = レイヤーの畳み込み</code
+          >
+          という Lamina の合成を手書きで再現。法線・視線方向を Varying で fs
+          へ渡すのが新しい
         </li>
         <li class="done">
           <a href="/src/vertex-mesh/05-wave-normals/index.html"
@@ -1072,8 +1077,9 @@
           <span class="badge">作成済</span>
           — 01 の波打つ板に<strong>変位後の法線</strong>を足して Lambert
           照明。高さ場 <code>y=f(x,z)</code> の法線は
-          <code>N = normalize(-∂f/∂x, 1, -∂f/∂z)</code>。<strong>解析的</strong>(sin→cos
-          で手微分) と<strong>数値的</strong>(隣接点をサンプリングして外積) の 2
+          <code>N = normalize(-∂f/∂x, 1, -∂f/∂z)</code
+          >。<strong>解析的</strong>(sin→cos で手微分)
+          と<strong>数値的</strong>(隣接点をサンプリングして外積) の 2
           通りを実装し <code>USE_ANALYTIC</code>
           で切替（結果は同じ）。波が斜面の陰影で立体的に見える
         </li>
@@ -1084,10 +1090,17 @@
           <code class="slug">06-vaporwave</code>
           <span class="badge">作成済</span>
           — §4 の総仕上げ。Maxime Heckel の Vaporwave を WGSL
-          で再構成。ノイズ変位の地形(中央=道/両脇=山・カメラへ流れる)＋<strong>数値的法線</strong>(05)で陰影＋<strong>ネオングリッド線</strong>(<code>fwidth</code>
-          で AA)＋フォグ＋夕日背景。仕上げに<strong>RGBShift
-          ポストプロセス</strong>。<strong>2パス(オフスクリーンに描く→サンプリングして色ずらし)・<code>textureSample</code>
-          が初登場</strong>。これまでの道具の集大成
+          で再構成。ノイズ変位の地形(中央=道/両脇=山・カメラへ流れる)＋<strong>数値的法線</strong>(05)で陰影＋<strong>ネオングリッド線</strong>(<code
+            >fwidth</code
+          >
+          で AA)＋フォグ＋夕日背景。仕上げに<strong
+            >RGBShift ポストプロセス</strong
+          >。<strong
+            >2パス(オフスクリーンに描く→サンプリングして色ずらし)・<code
+              >textureSample</code
+            >
+            が初登場</strong
+          >。これまでの道具の集大成
         </li>
         <li class="done">
           <a href="/src/vertex-mesh/07-twist/index.html"
@@ -1103,7 +1116,7 @@
       </ul>
     </details>
 
-    <details open>
+    <details>
       <summary>レイマーチングで 3D を描く (wgld.org GLSL)</summary>
       <ul>
         <li class="done">
@@ -1112,10 +1125,15 @@
           >
           <code class="slug">01-gl-rendering</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL 第1回を WGSL に読み替え。レイもマーチもまだ無し。<strong>頂点データを一切使わずフラグメント1本で画面を塗る器</strong>を作る回
-          = これまでのフルスクリーン (BoS) と同じ <code>色 = f(uv)</code>。各ピクセルの正規化座標
-          <code>uv</code> をそのまま <code>vec3(uv.x, uv.y, 0)</code> にし、右へ赤・上へ緑のグラデで「色
-          = 座標の関数」を目視。<code>gl_FragCoord/resolution → position.xy/u.resolution</code>、<code>position.y</code>
+          — wgld.org GLSL 第1回を WGSL
+          に読み替え。レイもマーチもまだ無し。<strong>頂点データを一切使わずフラグメント1本で画面を塗る器</strong>を作る回
+          = これまでのフルスクリーン (BoS) と同じ
+          <code>色 = f(uv)</code>。各ピクセルの正規化座標
+          <code>uv</code> をそのまま
+          <code>vec3(uv.x, uv.y, 0)</code> にし、右へ赤・上へ緑のグラデで「色 =
+          座標の関数」を目視。<code
+            >gl_FragCoord/resolution → position.xy/u.resolution</code
+          >、<code>position.y</code>
           は上が 0 なので反転。3D はこの器の中で始まる。読書メモ:
           <code>src/raymarching/notes.md</code> (第0回・全体像)
         </li>
@@ -1125,19 +1143,25 @@
           >
           <code class="slug">05-mandelbrot</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL 第5回を<strong>原典に忠実に</strong> WGSL 化。01 の <code>色 = f(uv)</code>
-          の器の中身を複素数の反復に差し替え。各ピクセルに複素数 <code>c</code> を割り当て、<code
-            >z₀=0</code
+          — wgld.org GLSL 第5回を<strong>原典に忠実に</strong> WGSL 化。01 の
+          <code>色 = f(uv)</code>
+          の器の中身を複素数の反復に差し替え。各ピクセルに複素数
+          <code>c</code> を割り当て、<code>z₀=0</code> から
+          <code>z→z²+c</code> を反復して
+          <strong>|z|&gt;2 で脱出した回数</strong>を色にする(<strong
+            >escape time</strong
+          >)。複素数は <code>vec2f</code>、<code>(x+iy)²=(x²−y², 2xy)</code
+          >。座標は wgld 共通の<strong>中心原点・アスペクト補正</strong>
+          <code>(fragCoord*2−res)/min(res)</code>(08 の
+          <code>rd</code> でも使う)。<strong>この回で time/mouse を導入</strong
+          >(02 スキップ分): 色相を <code>time</code> で周回・<code
+            >mouse.x</code
           >
-          から <code>z→z²+c</code> を反復して <strong>|z|&gt;2 で脱出した回数</strong>を色にする(<strong>escape
-          time</strong>)。複素数は <code>vec2f</code>、<code>(x+iy)²=(x²−y², 2xy)</code>。座標は wgld
-          共通の<strong>中心原点・アスペクト補正</strong>
-          <code>(fragCoord*2−res)/min(res)</code>(08 の <code>rd</code> でも使う)。<strong>この回で
-          time/mouse を導入</strong>(02 スキップ分): 色相を <code>time</code> で周回・<code>mouse.x</code>
           で拡大度。着色は原典の <code>hsv()</code> ×
-          脱出回数=輝度(集合内が明るい単一色相)。反復は Mandelbulb(3D)・buddhabrot
-          と同じ中核式で、<strong>1ピクセル内でループを回す</strong>点が 08 以降のマーチと地続き。02〜04
-          は BoS 既習でスキップ
+          脱出回数=輝度(集合内が明るい単一色相)。反復は
+          Mandelbulb(3D)・buddhabrot
+          と同じ中核式で、<strong>1ピクセル内でループを回す</strong>点が 08
+          以降のマーチと地続き。02〜04 は BoS 既習でスキップ
         </li>
         <li class="done">
           <a href="/src/raymarching/06-julia/index.html"
@@ -1145,14 +1169,18 @@
           >
           <code class="slug">06-julia</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL 第6回。05 の<strong>双子</strong>で、反復式 <code>z→z²+c</code>
-          は同じ。違いは「誰がピクセルか」だけ: <strong>マンデルブロは z₀=0 固定・c=f(p)</strong> /
-          <strong>ジュリアは z₀=f(p)・c=画面全体で1個に固定</strong>。<code>c</code>
+          — wgld.org GLSL 第6回。05 の<strong>双子</strong>で、反復式
+          <code>z→z²+c</code> は同じ。違いは「誰がピクセルか」だけ:
+          <strong>マンデルブロは z₀=0 固定・c=f(p)</strong> /
+          <strong>ジュリアは z₀=f(p)・c=画面全体で1個に固定</strong>。<code
+            >c</code
+          >
           をマウスで動かすと画面全体のフラクタルが変形(<code>c</code>
-          =画像全体のたった1個のパラメータを体感)。選んだ <code>c</code>
+          =画像全体のたった1個のパラメータを体感)。選んだ
+          <code>c</code>
           は05のマンデルブロ平面上の1点で、集合の内なら繋がったジュリア・外なら砂粒状に分解(表裏一体)。構造・着色は
-          05 と同じ(1ピクセル内で fold して <code>j</code> を収穫)。原典 GLSL 未取得のため 05
-          の作りを踏襲した忠実版
+          05 と同じ(1ピクセル内で fold して <code>j</code> を収穫)。原典 GLSL
+          未取得のため 05 の作りを踏襲した忠実版
         </li>
         <li class="done">
           <a href="/src/raymarching/08-ray-definition/index.html"
@@ -1160,13 +1188,18 @@
           >
           <code class="slug">08-ray-definition</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL 第8回。<strong>3D の入り口</strong>。まだ物体には当てず、各ピクセルから飛ぶ<strong>レイの向き
-          rd</strong> を計算して色で可視化(中心=前向き=青、右=赤、上=緑)。カメラを基底で組む: <code
-            >cDir</code
+          — wgld.org GLSL 第8回。<strong>3D の入り口</strong
+          >。まだ物体には当てず、各ピクセルから飛ぶ<strong
+            >レイの向き rd</strong
+          >
+          を計算して色で可視化(中心=前向き=青、右=赤、上=緑)。カメラを基底で組む:
+          <code>cDir</code
           >(視線)・<code>cUp</code>(上)・<code>cSide=cross(cDir,cUp)</code>(横=外積)、<code
             >ray = normalize(cSide·p.x + cUp·p.y + cDir·targetDepth)</code
-          >。<code>targetDepth</code>=目から板までの距離(小さいほど広角)。第0回 notes の
-          <code>normalize(vec3(uv,−1))</code> の一般形(カメラを回転・移動できる)。<code>cPos</code>=レイ出発点
+          >。<code>targetDepth</code>=目から板までの距離(小さいほど広角)。第0回
+          notes の
+          <code>normalize(vec3(uv,−1))</code>
+          の一般形(カメラを回転・移動できる)。<code>cPos</code>=レイ出発点
           <code>ro</code> は 09 のマーチ開始点。原典を忠実に WGSL 化
         </li>
         <li class="done">
@@ -1175,12 +1208,16 @@
           >
           <code class="slug">09-sphere</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL 第9回。<strong>3D の初出</strong>。08 の <code>ro</code>/<code>rd</code> + 05 の
-          fold + 第0回の距離関数が合流。距離関数 <code>length(p)−r</code>(球の SDF)に沿って
-          <code>rPos=cPos</code> から <strong>「距離を聞く→その分進む」を16回</strong>くり返し(スフィアトレーシング)、表面に貼り付いたら<strong>当たり</strong>(白)・届かなければ黒。08
-          の「色=向きのデバッグ」を「色=当たり先」に置換 → 黒背景に白い球のシルエット(陰影は 10 で)。マーチは
-          05 の fold と同型(hit条件 <code>|dist|&lt;0.001</code> ↔ escape <code>|z|&gt;2</code>)。原典を忠実に
-          WGSL 化
+          — wgld.org GLSL 第9回。<strong>3D の初出</strong>。08 の
+          <code>ro</code>/<code>rd</code> + 05 の fold +
+          第0回の距離関数が合流。距離関数 <code>length(p)−r</code>(球の
+          SDF)に沿って <code>rPos=cPos</code> から
+          <strong>「距離を聞く→その分進む」を16回</strong
+          >くり返し(スフィアトレーシング)、表面に貼り付いたら<strong>当たり</strong>(白)・届かなければ黒。08
+          の「色=向きのデバッグ」を「色=当たり先」に置換 →
+          黒背景に白い球のシルエット(陰影は 10 で)。マーチは 05 の fold
+          と同型(hit条件 <code>|dist|&lt;0.001</code> ↔ escape
+          <code>|z|&gt;2</code>)。原典を忠実に WGSL 化
         </li>
         <li class="done">
           <a href="/src/raymarching/10-normal-lighting/index.html"
@@ -1188,11 +1225,16 @@
           >
           <code class="slug">10-normal-lighting</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL 第10回。09 の<strong>白い円が立体的な球に見える</strong>回。マーチ本体は
-          09 と同じで、当たった後に<strong>法線</strong>を出して陰影を付ける。法線 = <strong>距離場の勾配
-          ∇f</strong>を各軸 ±d の差分で数値微分(<code>getNormal</code>、どんな形でも同じ計算・全形共通)。<strong>Lambert
-          拡散</strong> <code>diff = clamp(dot(lightDir, normal), 0.1, 1.0)</code>
-          で明るさ(下限0.1=環境光)。第0回 notes「値 f=マーチ / 勾配 ∇f=法線」の後半、§4 頂点05
+          — wgld.org GLSL 第10回。09
+          の<strong>白い円が立体的な球に見える</strong>回。マーチ本体は 09
+          と同じで、当たった後に<strong>法線</strong>を出して陰影を付ける。法線
+          = <strong>距離場の勾配 ∇f</strong>を各軸 ±d
+          の差分で数値微分(<code>getNormal</code>、どんな形でも同じ計算・全形共通)。<strong
+            >Lambert 拡散</strong
+          >
+          <code>diff = clamp(dot(lightDir, normal), 0.1, 1.0)</code>
+          で明るさ(下限0.1=環境光)。第0回 notes「値 f=マーチ / 勾配
+          ∇f=法線」の後半、§4 頂点05
           の数値的法線と同発想(対象が頂点→距離場)。原典を忠実に WGSL 化
         </li>
         <li class="done">
@@ -1201,11 +1243,19 @@
           >
           <code class="slug">11-fov</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL 第11回。08 の <code>targetDepth</code>(遠近の強さ)を、<strong>画角(FOV)を角度で明示</strong>する版に。<code
+          — wgld.org GLSL 第11回。08 の
+          <code>targetDepth</code
+          >(遠近の強さ)を、<strong>画角(FOV)を角度で明示</strong>する版に。<code
             >angle=60°</code
-          > → <code>fov=半画角</code>、<code>ray = normalize(vec3(sin(fov)·p.x, sin(fov)·p.y, −cos(fov)))</code>。カメラ基底(cSide/cUp/cDir)を省き正面固定で、画面端のレイが前方から
-          <code>fov</code> 傾く(全体の視野角=2·fov)。<code>targetDepth=1/tan(fov)</code>
-          の対応。絵は 10 と同じ立体球。マーチ・法線・陰影は 10 のまま。原典を忠実に WGSL 化
+          >
+          → <code>fov=半画角</code>、<code
+            >ray = normalize(vec3(sin(fov)·p.x, sin(fov)·p.y, −cos(fov)))</code
+          >。カメラ基底(cSide/cUp/cDir)を省き正面固定で、画面端のレイが前方から
+          <code>fov</code> 傾く(全体の視野角=2·fov)。<code
+            >targetDepth=1/tan(fov)</code
+          >
+          の対応。絵は 10 と同じ立体球。マーチ・法線・陰影は 10
+          のまま。原典を忠実に WGSL 化
         </li>
         <li class="done">
           <a href="/src/raymarching/12-repetition/index.html"
@@ -1213,11 +1263,15 @@
           >
           <code class="slug">12-repetition</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL 第12回。第0回で掴んだ<strong>「関数なら1行で無限」</strong>がついに動く。球の距離関数は1個のまま、レイ座標を折り畳む
-          <code>trans(p)=mod(p,4)−2</code>(domain warp)を距離関数の前に噛ませるだけで<strong>球が空間いっぱいに無限複製</strong>。BoS
-          9章タイルの3D版。<strong>WGSL 落とし穴</strong>: GLSL <code>mod</code> と WGSL <code>%</code>
-          は負で挙動が違う → <code>p−n·floor(p/n)</code> で明示(負座標のタイルズレ回避)。多数のセルを貫くのでマーチを
-          16→64 に。原典を忠実に WGSL 化
+          — wgld.org GLSL
+          第12回。第0回で掴んだ<strong>「関数なら1行で無限」</strong>がついに動く。球の距離関数は1個のまま、レイ座標を折り畳む
+          <code>trans(p)=mod(p,4)−2</code>(domain
+          warp)を距離関数の前に噛ませるだけで<strong>球が空間いっぱいに無限複製</strong>。BoS
+          9章タイルの3D版。<strong>WGSL 落とし穴</strong>: GLSL
+          <code>mod</code> と WGSL <code>%</code> は負で挙動が違う →
+          <code>p−n·floor(p/n)</code>
+          で明示(負座標のタイルズレ回避)。多数のセルを貫くのでマーチを 16→64
+          に。原典を忠実に WGSL 化
         </li>
         <li class="done">
           <a href="/src/raymarching/13-box/index.html"
@@ -1225,9 +1279,11 @@
           >
           <code class="slug">13-box</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL 第13回。12 との違いは<strong>距離関数を「球」から「箱」に差し替えただけ</strong>(マーチ・法線・陰影・無限複製は不変)。丸み付きボックス
+          — wgld.org GLSL 第13回。12
+          との違いは<strong>距離関数を「球」から「箱」に差し替えただけ</strong>(マーチ・法線・陰影・無限複製は不変)。丸み付きボックス
           SDF <code>length(max(abs(q)−0.5, 0)) − 0.1</code>:
-          <code>max(…,0)</code>=箱からのはみ出し量、<code>length</code>=表面までの距離、<code>−0.1</code>=角の丸め。<strong>notes「距離関数=形の部品カタログ/形を変える=距離関数を差し替えるだけ」の実演</strong>。原典を忠実に
+          <code>max(…,0)</code
+          >=箱からのはみ出し量、<code>length</code>=表面までの距離、<code>−0.1</code>=角の丸め。<strong>notes「距離関数=形の部品カタログ/形を変える=距離関数を差し替えるだけ」の実演</strong>。原典を忠実に
           WGSL 化
         </li>
         <li class="done">
@@ -1236,13 +1292,16 @@
           >
           <code class="slug">15-union</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL 第15回(+14 のトーラス初出)。<strong>ついに CSG(集合演算)</strong>: 2つの距離関数を
-          <code>min</code> で組んで<strong>和集合(union)</strong>。トーラス <code
-            >length(vec2(length(p.xy)−0.75, p.z))−0.25</code
-          > + 床 <code>p.y+1</code> を <code>distFunc = min(d1,d2)</code> で合成 →
+          — wgld.org GLSL 第15回(+14 のトーラス初出)。<strong
+            >ついに CSG(集合演算)</strong
+          >: 2つの距離関数を
+          <code>min</code> で組んで<strong>和集合(union)</strong>。トーラス
+          <code>length(vec2(length(p.xy)−0.75, p.z))−0.25</code> + 床
+          <code>p.y+1</code> を <code>distFunc = min(d1,d2)</code> で合成 →
           両方が1シーンに共存。「一番近い方まで=min」だからマーチがどちらにも当たれる。物体=関数だから複数物体=距離関数を
-          min で合成するだけ(座標リスト0個)。notes「CSG合成 min=和」の実演。カメラは 08
-          基底形に戻る、床が遠いのでマーチ 256 回。原典を忠実に WGSL 化
+          min で合成するだけ(座標リスト0個)。notes「CSG合成
+          min=和」の実演。カメラは 08 基底形に戻る、床が遠いのでマーチ 256
+          回。原典を忠実に WGSL 化
         </li>
         <li class="done">
           <a href="/src/raymarching/16-intersection/index.html"
@@ -1250,10 +1309,16 @@
           >
           <code class="slug">16-intersection</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL 第16回相当。<strong>サッカーボール状のパネル球</strong>: 球体1個(複製なし)と
-          <strong>repetition で無限複製した箱</strong>を <code>max(d1,d2)</code> =
-          <strong>積集合(AND)</strong>で合成 → 両方に重なる部分だけ残る = 球が箱グリッドで切られてパネルに(隙間=溝)。CSG
-          は距離関数の min/max だけ: <code>min</code>=和 / <code>max</code>=積 / <code>max(d,−d)</code>=差(3バリアントをコメントで併記)。物体=関数だから形の組み方は式の合成だけ。パラメータで
+          — wgld.org GLSL
+          第16回相当。<strong>サッカーボール状のパネル球</strong>:
+          球体1個(複製なし)と
+          <strong>repetition で無限複製した箱</strong>を
+          <code>max(d1,d2)</code> = <strong>積集合(AND)</strong>で合成 →
+          両方に重なる部分だけ残る =
+          球が箱グリッドで切られてパネルに(隙間=溝)。CSG は距離関数の min/max
+          だけ: <code>min</code>=和 / <code>max</code>=積 /
+          <code>max(d,−d)</code
+          >=差(3バリアントをコメントで併記)。物体=関数だから形の組み方は式の合成だけ。パラメータで
           パネル数/溝幅が変わる
         </li>
         <li class="done">
@@ -1262,12 +1327,16 @@
           >
           <code class="slug">17-smooth-min</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL「補間して結合」。15 の <code>min</code> は近い方をカクッと選ぶ→境界に角が立つ。<strong>smooth
-          min</strong> は指数で境界をなめらかに補間 →
+          — wgld.org GLSL「補間して結合」。15 の
+          <code>min</code> は近い方をカクッと選ぶ→境界に角が立つ。<strong
+            >smooth min</strong
+          >
+          は指数で境界をなめらかに補間 →
           トーラスと平たい箱が<strong>水滴のようにぬるっと融合</strong>(メタボール的)。<code
             >h=exp(−k·d1)+exp(−k·d2); return −log(h)/k</code
-          >、<code>k</code>=なめらかさの逆数(大=鋭い/小=大きく融合、ここ8.0)。CSG の花形、BoS 12章
-          距離場合成の発展。カメラは斜め上視点。原典を忠実に WGSL 化
+          >、<code>k</code>=なめらかさの逆数(大=鋭い/小=大きく融合、ここ8.0)。CSG
+          の花形、BoS 12章 距離場合成の発展。カメラは斜め上視点。原典を忠実に
+          WGSL 化
         </li>
         <li class="done">
           <a href="/src/raymarching/18-rotate/index.html"
@@ -1275,11 +1344,17 @@
           >
           <code class="slug">18-rotate</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL「行列で回転」。<strong>座標変換=領域変形の本番</strong>: 距離関数に渡す前に
-          <code>p</code> を回転行列で回す(<code>q=rotate(p,θ,axis)</code>、ロドリゲス)→
-          シーン全体が回る。<strong>物体データでなく「座標を回す関数」を1個挟むだけ</strong>(物体=関数だからできる合成)。<code>time</code>
-          でアニメ、トーラス+箱+シリンダーを2段 smooth min で融合したブロブが軸(1,0.5,0)回りに回転。§4
-          頂点07 ツイストと同発想(対象が頂点→距離場)。原典を忠実に WGSL 化
+          — wgld.org
+          GLSL「行列で回転」。<strong>座標変換=領域変形の本番</strong>:
+          距離関数に渡す前に
+          <code>p</code>
+          を回転行列で回す(<code>q=rotate(p,θ,axis)</code>、ロドリゲス)→
+          シーン全体が回る。<strong>物体データでなく「座標を回す関数」を1個挟むだけ</strong>(物体=関数だからできる合成)。<code
+            >time</code
+          >
+          でアニメ、トーラス+箱+シリンダーを2段 smooth min
+          で融合したブロブが軸(1,0.5,0)回りに回転。§4 頂点07
+          ツイストと同発想(対象が頂点→距離場)。原典を忠実に WGSL 化
         </li>
         <li class="done">
           <a href="/src/raymarching/19-twist/index.html"
@@ -1287,12 +1362,43 @@
           >
           <code class="slug">19-twist</code>
           <span class="badge">作成済</span>
-          — wgld.org GLSL「行列で捻じる」。18 の <code>rotate</code> を <code>twist</code>
-          に差し替え: Y軸回転だが<strong>回転角 = power·p.y(高さに比例)</strong>→ 高い所ほど大きく回る =
-          螺旋に捻れる。§4 頂点07 ツイストの距離場版。<strong>レイマーチ特有の補正2つ</strong>: ①貫通対策=継ぎ足しを
-          <code>*0.75</code> に縮小(薄い形の突き抜け防止) ②つぶつぶ(法線ノイズ)対策=<code>genNormal</code>
-          の <code>d</code> を 0.0001→0.001 に(大雑把に測る方が綺麗)。小さな誤差が大きく効くレイマーチの機微。原典を忠実に
+          — wgld.org GLSL「行列で捻じる」。18 の <code>rotate</code> を
+          <code>twist</code> に差し替え: Y軸回転だが<strong
+            >回転角 = power·p.y(高さに比例)</strong
+          >→ 高い所ほど大きく回る = 螺旋に捻れる。§4 頂点07
+          ツイストの距離場版。<strong>レイマーチ特有の補正2つ</strong>:
+          ①貫通対策=継ぎ足しを <code>*0.75</code> に縮小(薄い形の突き抜け防止)
+          ②つぶつぶ(法線ノイズ)対策=<code>genNormal</code> の <code>d</code> を
+          0.0001→0.001
+          に(大雑把に測る方が綺麗)。小さな誤差が大きく効くレイマーチの機微。原典を忠実に
           WGSL 化
+        </li>
+        <li class="done">
+          <a href="/src/raymarching/20-projection/index.html"
+            >レイマーチ 20 テクスチャなどを投影する (world 座標で市松模様)</a
+          >
+          <code class="slug">20-projection</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL「テクスチャなどを投影する」。当たった点の
+          <strong>world 座標 (dPos.x/z)</strong> から市松模様を計算 =
+          <strong>ワールド空間テクスチャ投影</strong
+          >(床にもトーラスにも同じ格子が回り込む)。新要素: ①マーチに<strong
+            >早期 break</strong
+          >(初登場、当たったら即脱出) ②<code>u=1−floor(mod(dPos.x,2))</code>
+          の市松 ③マウスでトーラス移動 ④アスペクト正規化が min→max。色=表面
+          world 座標の関数、が投影の本質。原典を忠実に WGSL 化
+        </li>
+        <li class="done">
+          <a href="/src/raymarching/21-soft-shadow/index.html"
+            >レイマーチ 21 ソフトシャドウ (卒業制作・全20回完走)</a
+          >
+          <code class="slug">21-soft-shadow</code>
+          <span class="badge">作成済</span>
+          — wgld.org GLSL 最終回。<strong>集大成</strong>: 20
+          のトーラス+床+市松に影・スペキュラ・光アニメを追加。影の核心=当たった点から<strong>光源へ2本目のレイ(シャドウレイ)</strong>を飛ばす。遮蔽物にヒット=完全な影、掠めただけ=<strong>半影(ぼかし)</strong>で柔らかい影に(<code
+            >r=min(r, h·16/c)</code
+          >)。スペキュラ=Blinn-Phong 半ベクトル、光は time で揺れる。※genShadow
+          本体は wgld 標準実装で再構成。全20回完走 🎓
         </li>
       </ul>
     </details>
