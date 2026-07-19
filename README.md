@@ -137,27 +137,31 @@ Vite が自動認識します（トップページの一覧リンクは手動で
 
 > **📖 ここで AA / 微分を読む** — [FrostKiwi「Analytical Anti-Aliasing」](https://blog.frost.kiwi/analytical-anti-aliasing/)。§4 の解析微分（頂点の法線）・§5 の ∇f（距離場の法線）を通った今、**微分の三つ目の顔＝画面の `dFdx`/`fwidth`** が一撃で繋がる。`smoothstep` + `fwidth` で SDF の輪郭を 1px 幅だけボカすと、これまで描いた形・パターン・3D が一掃でプロ品質に（先に読むと三つ目だけ浮くので、ここがベスト）
 
-### Compute shader 入門（scatter で描く）
+### ~~Compute shader 入門（scatter で描く）~~ 【セクションごとスキップ】
+
+> **スキップ理由**: このリポジトリの主目的は `色 = f(uv)` の視覚表現なので、gather で書けない scatter / 状態系（compute・ping-pong）は当面見送る。fragment で書けない絵に出会って「必要性を体で感じた」ときに、その題材から拾い直す方針。gather = pullback / scatter = pushforward の双対は将来のシェーダー生成言語のテーマとして回収予定。以下は再開時のための設計メモとして残す。
 
 fragment shader はここまで一貫して「各ピクセルが自分の色を計算しにいく」**gather 型** `色 = f(uv)` だった。この節で初めて逆向きの **scatter 型**を扱う — 「**点がピクセルへ書き込む**」。chaos game な IFS・アトラクタ・buddhabrot は各ピクセルの閉じた式を持たず、点を大量に飛ばして到達先を数え上げるしかないので、fragment 単体では原理的に書けず **compute shader** が要る。FP 的には gather = 関数の引き戻し (pullback)・scatter = 測度の押し出し (pushforward) の双対。WGSL では storage buffer 上の `atomic<u32>` に `atomicAdd` でヒストグラムを蓄積し（u32 加算が可換モノイドなので書き込み順が不定でも結果は同じ）、fragment パスで log トーンマップして表示。新概念は **compute pipeline / storage buffer / atomics / 自作 RNG（PCG 系の状態付きハッシュ）** の4点セット。制約: atomic は整数のみ（`atomic<f32>` は無い）・storage texture に atomic は撃てないので蓄積先は必ず buffer・軌道の序盤はアトラクタ未収束なので burn-in で捨てる。題材は [dy/jz の examples](https://github.com/dy/jz/tree/main/examples) から。
 
-- [ ] fern（Barnsley Fern）— 4つのアフィン写像から確率で選んで反復する chaos game。scatter 入門に最適、ここで新概念4点セットを導入
-- [ ] attractors（de Jong map）— `(x,y) ← (sin(a·y)−cos(b·x), sin(c·x)−cos(d·y))` を数百万回。骨格は fern のまま写像差し替え、パラメータで表情が激変
-- [ ] buddhabrot — Mandelbrot の脱出軌道の通過密度。エスケープ反復 `zₙ₊₁=zₙ²+c` はレイマーチ 05 のマンデルブロと同じ式（今度は脱出**する**軌道の通過点を数える）。「密度は点 x での閉じた式を持たない」= per-pixel 化が本質的に不可能な scatter の代表例。同じ数式を gather で見たのがマンデルブロ、scatter で見たのがこれ
+- [ ] ~~fern（Barnsley Fern）~~ — 4つのアフィン写像から確率で選んで反復する chaos game。scatter 入門に最適、ここで新概念4点セットを導入
+- [ ] ~~attractors（de Jong map）~~ — `(x,y) ← (sin(a·y)−cos(b·x), sin(c·x)−cos(d·y))` を数百万回。骨格は fern のまま写像差し替え、パラメータで表情が激変
+- [ ] ~~buddhabrot~~ — Mandelbrot の脱出軌道の通過密度。エスケープ反復 `zₙ₊₁=zₙ²+c` はレイマーチ 05 のマンデルブロと同じ式（今度は脱出**する**軌道の通過点を数える）。「密度は点 x での閉じた式を持たない」= per-pixel 化が本質的に不可能な scatter の代表例。同じ数式を gather で見たのがマンデルブロ、scatter で見たのがこれ
 
 ※ 蛇足: IFS の「形（集合）だけ」なら逆写像の反復で per-pixel 判定に落とせる場合がある（Sierpiński は `p=fract(p*2)` の反復、mod 2 の `(x & y)==0` ビット判定はその極限形）。密度を描くなら scatter 一択
-**状態を持つシェーダー（ping-pong・時間方向に畳む）**
+**~~状態を持つシェーダー（ping-pong・時間方向に畳む）~~**（同上スキップ）
 
 fragment も scatter も1フレーム完結だった。前フレームを入力に次を作る `状態(t+1) = step(状態(t))` は fragment 単体では書けず（2枚のテクスチャを交互に読み書き＝ping-pong）、FP 的には **unfold / 余代数（coalgebra）** そのもの。
 
-- [ ] reaction-diffusion（Gray-Scott）— [Karl Sims「Reaction-Diffusion Tutorial」](https://karlsims.com/rd.html) が決定版。ラプラシアン畳み込み + 反応項でチューリング模様のうねうね、`DA/DB/f/k` の4値で表情が激変。うねうね美学のど真ん中
-- [ ] Game of Life — 同じ ping-pong 骨格の離散版（近傍8マスの生死ルール）。状態機械の最小例
+- [ ] ~~reaction-diffusion（Gray-Scott）~~ — [Karl Sims「Reaction-Diffusion Tutorial」](https://karlsims.com/rd.html) が決定版。ラプラシアン畳み込み + 反応項でチューリング模様のうねうね、`DA/DB/f/k` の4値で表情が激変。うねうね美学のど真ん中
+- [ ] ~~Game of Life~~ — 同じ ping-pong 骨格の離散版（近傍8マスの生死ルール）。状態機械の最小例
 
-### 順序ディザ（Paper Shaders から1本だけ）
+### ~~順序ディザ（Paper Shaders から1本だけ）~~ 【スキップ】
+
+> **スキップ理由**: 新道具が順序ディザ（Bayer 行列）1つだけで、しかも `色 = f(uv)` の枠内に収まる小粒なので今回は見送り。必要になれば下メモから単発で拾える。
 
 [paper-design/shaders](https://github.com/paper-design/shaders)（ローカル: `~/ghq/github.com/paper-design/shaders`）の production シェーダー集（全29本）は大半が既習の道具の応用なので、**唯一の新道具である順序ディザだけ**を取る。
 
-- [ ] dithering — ノイズ・波・渦など複数のパターン源を2色に落とす。**順序ディザ（Bayer 行列）**が新道具：ピクセル座標で引く閾値マトリクスと画素値を比較し、少ない色数で階調を錯覚させる。`色 = f(uv)` の枠のまま、閾値が座標の周期関数になるだけ（テクスチャ入力は `fract(sin(dot))` ハッシュで代替すれば今の道具だけで書ける）
+- [ ] ~~dithering~~ — ノイズ・波・渦など複数のパターン源を2色に落とす。**順序ディザ（Bayer 行列）**が新道具：ピクセル座標で引く閾値マトリクスと画素値を比較し、少ない色数で階調を錯覚させる。`色 = f(uv)` の枠のまま、閾値が座標の周期関数になるだけ（テクスチャ入力は `fract(sin(dot))` ハッシュで代替すれば今の道具だけで書ける）
 
 ### 書籍「幾何学パターンづくりのすべて」（総仕上げ・座標変換の体系化）
 

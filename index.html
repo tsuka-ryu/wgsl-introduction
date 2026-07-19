@@ -1403,6 +1403,32 @@
       </ul>
     </details>
 
+    <details>
+      <summary>Compute シェーダー入門 (スキップ・01 のみ参考として残置)</summary>
+      <ul>
+        <li class="done">
+          <a href="/src/compute/01-first-image/index.html"
+            >compute 01 いきなり絵を出す (compute が直接 canvas に書く)</a
+          >
+          <code class="slug">01-first-image</code>
+          <span class="badge">参考 / compute はスキップ</span>
+          — compute 編は見送りにしたが、この 01 だけ<strong
+            >描く主体が GPU(ラスタライザ) から こちら側 に入れ替わる</strong
+          >のを見た単発メモとして残す。fragment は
+          <code>fs(gl_FragCoord)-&gt;vec4f</code> で「GPU
+          が各ピクセルを勝手に呼ぶ・こちらは色を <code>return</code>
+          するだけ」だったが、compute は <code>@workgroup_size(8,8)</code> +
+          <code>dispatchWorkgroups(⌈W/8⌉,⌈H/8⌉)</code>
+          で<strong>呼び出しグリッドを自分で切って</strong>ばらまき、色は return せず
+          <code>textureStore(tex, id.xy, color)</code>
+          で<strong>自分の番地 id を見て自分で書く</strong>。1 invocation の中身
+          <code>色 = f(id.xy, t)</code> は fs と同じ純関数。canvas を
+          <code>STORAGE_BINDING</code> で構成し (<code>bgra8unorm-storage</code>)、fragment
+          shader も render pass も無しで<strong>compute パスを submit するだけ</strong>で描く
+        </li>
+      </ul>
+    </details>
+
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
       新しいレッスンは
       <code>src/&lt;track&gt;/&lt;番号&gt;-&lt;名前&gt;/</code> に
