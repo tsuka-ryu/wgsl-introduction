@@ -1450,6 +1450,14 @@
           <span class="badge">作成済</span>
           — 01 の対になる<strong>「角度で折りたたむ」派</strong>。モチーフは絵柄ではなく<strong>中心から伸びる扇形の1切れ</strong>で、回転コピーを手で並べる代わりに各ピクセルの角度を1切れぶんに畳んで一発。<code>色(p)=塗り(セル(p))</code>、<code>セル(p)=(floor(角度→SECT分割), floor(半径→RINGS分割))</code>:極座標 (r,a) を <code>floor</code> で畳むと平面が<strong>扇形×リングの格子</strong>に割れる。塗りは <code>sector+ring の偶奇</code>の市松で白/地を選ぶだけ(地は輪ごとに赤/暗赤)。偶数リングは扇形を半分ずらしてマスをひし形に見せる。中心の星は SECT/2 本のとがり。簡易版
         </li>
+        <li class="done">
+          <a href="/src/geometric-patterns/03-rune-generator/index.html"
+            >幾何学パターン 03 ルーン文字ジェネレータ (鏡映 × タイリング)</a
+          >
+          <code class="slug">03-rune-generator</code>
+          <span class="badge">作成済</span>
+          — 1.3「鏡映対称」の <code>abs</code> 軸折り × 並進タイリング。本 p33 のルーン記号は<strong>1個の非対称要素 (h型) を θ 回して軸で鏡映し2つ並べた創発物</strong>で、それをタイルごとにランダムな角度でやると毎マス違うルーン文字になる。<code>色(p)=背景とインクを字画濃度で混ぜる</code>、<code>字画=min(element(右), element(左=x反転))</code>の鏡映ペア、<code>element(q)</code>=θ回した h 型ストローク(線分SDFのmin)までの距離。<code>セル=fract(p·GRID)−0.5</code>で並進、<code>θ=hash(セル番号)を45°刻みに量子化</code>してマスごとに固定。★x を反転して評価することで必ず左右対称=ルーンらしさが出る。3本目で 並進=<code>fract</code>/鏡映=<code>abs</code>/回転=極座標 が実装で揃った
+        </li>
       </ul>
     </details>
 
