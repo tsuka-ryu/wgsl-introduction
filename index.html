@@ -1429,6 +1429,30 @@
       </ul>
     </details>
 
+    <details>
+      <summary>幾何学パターン (回転対称からの作図)</summary>
+      <ul>
+        <li class="done">
+          <a href="/src/geometric-patterns/01-rosette-outline/index.html"
+            >幾何学パターン 01 ロゼット (円の輪郭を n 個リング状に並べる)</a
+          >
+          <code class="slug">01-rosette-outline</code>
+          <span class="badge">作成済</span>
+          — 本の「回転対称 / 高い次数」の第一歩。<code
+            >色(p)=背景とインクを ストローク濃度 で混ぜる</code
+          >、<code>ストローク濃度(p)=max_k stroke_k(p)</code>:<strong>同じ半径 R の円を n 個、原点まわり半径 D のリング上に等間隔</strong>(<code>c_k=D·(cosθ_k,sinθ_k), θ_k=2πk/N</code>)に置き、各円の<strong>輪郭までの距離</strong><code>d_k=||p−c_k|−R|</code>の最小で塗る。円がかぶさり重なりが花びらになる=ロゼット。★<strong>「角度で折りたたむ」ではなく中心を n 個ループで置く</strong>のがミソ(花びらが隣に食い込んで重なるため、折りたたむと境界で切れる)。回るのは全体の位相 phase だけで形は座標の純関数。次はステップ2で重なりの白黒スワール
+        </li>
+        <li class="done">
+          <a href="/src/geometric-patterns/02-mandala-fold/index.html"
+            >幾何学パターン 02 万華鏡 (簡易版・扇形×リングに折りたたんで市松)</a
+          >
+          <code class="slug">02-mandala-fold</code>
+          <span class="badge">作成済</span>
+          — 01 の対になる<strong>「角度で折りたたむ」派</strong>。モチーフは絵柄ではなく<strong>中心から伸びる扇形の1切れ</strong>で、回転コピーを手で並べる代わりに各ピクセルの角度を1切れぶんに畳んで一発。<code>色(p)=塗り(セル(p))</code>、<code>セル(p)=(floor(角度→SECT分割), floor(半径→RINGS分割))</code>:極座標 (r,a) を <code>floor</code> で畳むと平面が<strong>扇形×リングの格子</strong>に割れる。塗りは <code>sector+ring の偶奇</code>の市松で白/地を選ぶだけ(地は輪ごとに赤/暗赤)。偶数リングは扇形を半分ずらしてマスをひし形に見せる。中心の星は SECT/2 本のとがり。簡易版
+        </li>
+      </ul>
+    </details>
+
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
       新しいレッスンは
       <code>src/&lt;track&gt;/&lt;番号&gt;-&lt;名前&gt;/</code> に
