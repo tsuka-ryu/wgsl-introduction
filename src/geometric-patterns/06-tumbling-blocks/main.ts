@@ -1,20 +1,22 @@
-// 幾何学パターン — 06 シェブロン (平面の映進): 三角波でジグザグに折る
-// 参考: 幾何学パターンの本 3.2「平面対称・映進」
+// 幾何学パターン — 06 タンブリングブロック: 菱形格子×3色で立方体の錯覚
+// 参考: 幾何学パターンの本 3.3「二重鏡映」フルページ (寄木/キルトの定番柄)
 //
-// ── 映進 = 並進してから鏡映。シェブロン(矢羽)がその典型 ────
-//   上り坂の帯と下り坂の帯は、互いに鏡像を横にずらしたもの = 映進。
-//   目がザワつく(図地反転・斜めグルーピング)のは平面映進の性質そのもの。
+// ── 形ではなく「3色シェーディング」が立体を作る ────────────
+//   同じ菱形を3枚、明・中・暗の3色で並べると、脳が「光の当たった箱」と解釈して
+//   立方体が積み上がって見える。菱形格子 (rhombille tiling) = 六角形を中心から
+//   3枚の菱形に割ったもの。前バージョン(三角波チェブロン)は二重鏡映ではあったが
+//   平ら2色で立体にならなかったので、こちらへ修正。
 //
 // ── 全体を関数合成で読む ──────────────────────────────────
-//   色(p) = 帯の色(帯番号)
-//   帯番号 = floor( y + ジグザグ(x) )               … 横方向に折れた縞
-//   ジグザグ(x) = 三角波(x) · 振幅                    … 上り下りを交互に繰り返す鏡映
-//   帯の色 = 帯番号 を4色巡回                          … 時間に依らない座標の純関数
+//   色(p) = 面の色(菱形の向き)
+//   菱形の向き = 最寄り六角の中心から見た角度を 120°ごとに3分割
+//   最寄り六角 = 六角タイリング (2つの候補中心の近い方)
+//   面の色 = 上面/左面/右面 の3色。時間に依らない座標の純関数。
 //
 // ── 1ピクセルのトレース ──────────────────────────────────
-//   ピクセルの x から三角波で上下オフセットを作り、y に足す。折れた y を
-//   floor して何番目の帯か決め、その帯の色で塗る。三角波の山と谷で縞が V 字に
-//   折れ、上り区間と下り区間が鏡像ペア = 映進のシェブロンになる。
+//   p が属する六角セルの中心を求め、中心からの角度を測る。角度を 120°ずつ
+//   3つの菱形(=立方体の3面)に振り分け、面ごとの色で塗る。六角がびっしり
+//   並ぶことで、3面セットの立方体が空間充填して見える。
 
 import { fail } from "../../webgpu-fundamentals/util";
 
@@ -32,7 +34,7 @@ async function main() {
   context.configure({ device, format: presentationFormat });
 
   const module = device.createShaderModule({
-    label: "geometric-patterns 06 - chevron glide",
+    label: "geometric-patterns 06 - tumbling blocks",
     code: /* wgsl */ `
       struct Uniforms {
         resolution: vec2f,
@@ -40,9 +42,23 @@ async function main() {
       };
       @group(0) @binding(0) var<uniform> u: Uniforms;
 
-      const SCALE: f32 = 11.0;   // 画面短辺あたりの帯の数めやす
-      const PERIOD: f32 = 2.0;   // ジグザグ1往復の横幅 (小さいほど細かい矢羽)
-      const AMP: f32 = 1.0;      // 折れの振幅 (帯の傾き。1 で約45°)
+      const SCALE: f32 = 5.0;        // 画面短辺あたりの六角(立方体)の数めやす
+      const TAU: f32 = 6.2831853;
+      // 3色の境界を回して、菱形の割れ目を六角の頂点に合わせる調整 (立方体に見えないとき触る)
+      const ANGLE_OFF: f32 = 1.5707963;  // = π/2 (頂点が上の pointy-top 六角に合わせる)
+
+      // 六角タイリング: p の最寄り六角中心からの局所座標 (.xy) と中心id (.zw)
+      // (Shane の getHex、pointy-top。s=(1,√3))
+      fn getHex(p: vec2f) -> vec4f {
+        let s = vec2f(1.0, 1.7320508);
+        let hC = floor(vec4f(p, p - vec2f(0.5, 1.0)) / vec4f(s, s)) + 0.5;
+        let a = p - hC.xy * s;
+        let b = p - (hC.zw + 0.5) * s;
+        if (dot(a, a) < dot(b, b)) {
+          return vec4f(a, hC.xy);
+        }
+        return vec4f(b, hC.zw + 0.5);
+      }
 
       @vertex fn vs(@builtin(vertex_index) vertexIndex : u32) -> @builtin(position) vec4f {
         let pos = array(vec2f(-1.0, 3.0), vec2f(3.0, -1.0), vec2f(-1.0, -1.0));
@@ -53,30 +69,28 @@ async function main() {
         let res = u.resolution;
         let st = position.xy / min(res.x, res.y) * SCALE;
 
-        // 三角波: 0→1→0 を PERIOD ごとに繰り返す (上り区間と下り区間が鏡像=映進)
-        let tri = abs(fract(st.x / PERIOD) - 0.5) * 2.0;
-        let yy = st.y + tri * AMP;      // y をジグザグに折る
+        let hex = getHex(st);
+        let local = hex.xy;                        // 六角中心からの位置
 
-        // 折れた y を floor → 何番目の帯か。4色を巡回
-        let band = i32(floor(yy));
-        let k = ((band % 4) + 4) % 4;
+        // 中心からの角度を 120°ずつ3分割 = 3枚の菱形(立方体の3面)
+        let ang = atan2(local.y, local.x);
+        let sector = ((i32(floor((ang - ANGLE_OFF) / (TAU / 3.0))) % 3) + 3) % 3;
 
-        let red    = vec3f(0.85, 0.22, 0.16);
-        let blue   = vec3f(0.13, 0.34, 0.55);
-        let purple = vec3f(0.48, 0.45, 0.72);
-        let gray   = vec3f(0.86, 0.86, 0.83);
+        // 上面=明, 左面=中, 右面=暗 で立体に見せる (色は本の赤/青/紫寄り)
+        let topFace   = vec3f(0.86, 0.86, 0.83);  // 明 (上面)
+        let leftFace  = vec3f(0.13, 0.34, 0.55);  // 中 (青)
+        let rightFace = vec3f(0.85, 0.22, 0.16);  // 暗め (赤)
 
-        var col = red;
-        if (k == 1) { col = blue; }
-        if (k == 2) { col = purple; }
-        if (k == 3) { col = gray; }
+        var col = topFace;
+        if (sector == 1) { col = leftFace; }
+        if (sector == 2) { col = rightFace; }
         return vec4f(col, 1.0);
       }
     `,
   });
 
   const pipeline = device.createRenderPipeline({
-    label: "chevron pipeline",
+    label: "tumbling blocks pipeline",
     layout: "auto",
     vertex: { module, entryPoint: "vs" },
     fragment: { module, entryPoint: "fs", targets: [{ format: presentationFormat }] },
