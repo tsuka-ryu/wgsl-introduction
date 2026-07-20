@@ -1458,6 +1458,14 @@
           <span class="badge">作成済</span>
           — 1.3「鏡映対称」の <code>abs</code> 軸折り × 並進タイリング。本 p33 のルーン記号は<strong>1個の非対称要素 (h型) を θ 回して軸で鏡映し2つ並べた創発物</strong>で、それをタイルごとにランダムな角度でやると毎マス違うルーン文字になる。<code>色(p)=背景とインクを字画濃度で混ぜる</code>、<code>字画=min(element(右), element(左=x反転))</code>の鏡映ペア、<code>element(q)</code>=θ回した h 型ストローク(線分SDFのmin)までの距離。<code>セル=fract(p·GRID)−0.5</code>で並進、<code>θ=hash(セル番号)を45°刻みに量子化</code>してマスごとに固定。★x を反転して評価することで必ず左右対称=ルーンらしさが出る。3本目で 並進=<code>fract</code>/鏡映=<code>abs</code>/回転=極座標 が実装で揃った
         </li>
+        <li class="done">
+          <a href="/src/geometric-patterns/04-frieze-groups/index.html"
+            >幾何学パターン 04 フリーズ群ジェネレータ (7つの線形対称を1本で切替)</a
+          >
+          <code class="slug">04-frieze-groups</code>
+          <span class="badge">作成済</span>
+          — Part 2「線形対称」の総仕上げ。<strong>7つのフリーズ群を1本のシェーダーで切替</strong>(<code>MODE=-1</code>で time 自動巡回)。全群共通で<strong>横並進 <code>fract(x)</code> が背骨</strong>、モードごとに <code>abs(c)</code>(縦鏡)/<code>abs(y)</code>(横鏡)/奇数セル <code>-p</code>(180°回転=点対称)/奇数セル <code>-y</code>(映進=交互上下反転) を足すだけ。<code>2.1</code>並進=そのまま・<code>2.2</code>=abs(c)・<code>2.3</code>=交互(-c,-y)・<code>2.4</code>=交互(c,-y)・<code>2.5</code>=abs(y)・<code>2.6</code>=abs(c)+abs(y)(最も秩序)・<code>2.7</code>=abs(c)+交互-y。モチーフは非対称な大文字 F (左右にも上下にも非対称なので群の差=鏡か回転かの手性が見える)。★<code>abs</code>は鏡像2枚を1回の評価に畳み、回転/映進はセルの偶奇で1枚ずつ反転。note の7群一覧表がそのまま設計図
+        </li>
       </ul>
     </details>
 
