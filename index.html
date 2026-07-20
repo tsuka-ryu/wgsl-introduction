@@ -1466,6 +1466,22 @@
           <span class="badge">作成済</span>
           — Part 2「線形対称」の総仕上げ。<strong>7つのフリーズ群を1本のシェーダーで切替</strong>(<code>MODE=-1</code>で time 自動巡回)。全群共通で<strong>横並進 <code>fract(x)</code> が背骨</strong>、モードごとに <code>abs(c)</code>(縦鏡)/<code>abs(y)</code>(横鏡)/奇数セル <code>-p</code>(180°回転=点対称)/奇数セル <code>-y</code>(映進=交互上下反転) を足すだけ。<code>2.1</code>並進=そのまま・<code>2.2</code>=abs(c)・<code>2.3</code>=交互(-c,-y)・<code>2.4</code>=交互(c,-y)・<code>2.5</code>=abs(y)・<code>2.6</code>=abs(c)+abs(y)(最も秩序)・<code>2.7</code>=abs(c)+交互-y。モチーフは非対称な大文字 F (左右にも上下にも非対称なので群の差=鏡か回転かの手性が見える)。★<code>abs</code>は鏡像2枚を1回の評価に畳み、回転/映進はセルの偶奇で1枚ずつ反転。note の7群一覧表がそのまま設計図
         </li>
+        <li class="done">
+          <a href="/src/geometric-patterns/05-dot-lattice/index.html"
+            >幾何学パターン 05 ドット格子 (平面 p1・ハーフドロップ)</a
+          >
+          <code class="slug">05-dot-lattice</code>
+          <span class="badge">作成済</span>
+          — Part 3「平面対称」へ。フリーズ(横 <code>fract</code> だけ)を縦にも広げた最小の平面 p1。<code>色(p)=丸(セル内座標)</code>を縦横タイリング、<code>セル=fract(p·GRID+ドロップ)−0.5</code>。★<strong>ハーフドロップ</strong>=奇数列だけ y を半分ずらす(<code>drop=DROP·(col&1)</code>)→ 碁盤の目が崩れて有機的に=<strong>斜方格子</strong>(並進2方向が直角でなくなる)。分類は p1 のままだが基底ベクトルの取り方で激変。既習 09-brick のレンガずらしをモチーフ全体でやっただけ。色は (列+行)%3 で3色巡回
+        </li>
+        <li class="done">
+          <a href="/src/geometric-patterns/06-chevron-glide/index.html"
+            >幾何学パターン 06 シェブロン (平面の映進・矢羽)</a
+          >
+          <code class="slug">06-chevron-glide</code>
+          <span class="badge">作成済</span>
+          — 3.2「平面の映進」。シェブロン(矢羽)は<strong>上り坂の帯と下り坂の帯が鏡像を横ずらしした映進</strong>そのもの。<code>色(p)=帯の色(帯番号)</code>、<code>帯番号=floor(y+ジグザグ(x))</code>、<code>ジグザグ(x)=三角波 abs(fract(x/PERIOD)−0.5)·2·AMP</code> で y を折ると縞が V 字に。三角波の上り区間と下り区間が鏡像ペア=映進。<code>PERIOD</code>で矢羽の細かさ・<code>AMP</code>で傾き。目がザワつく(図地反転・斜めグルーピング・centered格子)のは平面映進の性質そのもの。4色を帯番号で巡回
+        </li>
       </ul>
     </details>
 
