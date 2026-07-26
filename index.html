@@ -1496,6 +1496,14 @@
           <span class="badge">作成済</span>
           — 本 3.1「並進」。対称操作は<strong>並進だけ (p1)</strong>だが、繰り返しの1単位が円1個ではなく<strong>円 2×2 個ぶん</strong>で、そこに4色を割り当てる。<code>色(p)=mix(地, パレット(セル番号), 円の内側マスク(セル内座標))</code>:<code>st=p·SCALE</code>／<code>id=floor(st)</code>(セル番号)／<code>local=fract(st)−0.5</code>(セル内座標)／<code>d=length(local)</code>。★<code>st=floor(st)+fract(st)</code> の<strong>両側を使う</strong>のがミソで、<strong>形は畳んだ側 (fract)、色は捨てた側 (floor) に依存</strong>する分業(<code>k=(id.x%2)+2·(id.y%2)</code> の 0〜3 でパレットを引く)。全マス同じ色にすれば 05-dot-lattice と同じただの p1 で、<strong>floor を色に使った瞬間に繰り返しの単位が 2×2 に広がる</strong>。<code>RADIUS=0.5</code>で隣の円と接し、4円のすきま(星形)に地が残る=ネガティブスペース。境界は<code>fwidth(d)</code>をぼかし幅にした<code>smoothstep</code>で解像度に依らず1px相当のアンチエイリアス。時間に依存しない純関数なので rAF ループを持たずリサイズ時だけ描画
         </li>
+        <li class="done">
+          <a href="/src/repeat-patterns/02-glide-chevron/index.html"
+            >平面リピートパターン 02 映進 (せん断菱形のシェブロン)</a
+          >
+          <code class="slug">02-glide-chevron</code>
+          <span class="badge">作成済</span>
+          — 本 3.2「映進」。★<strong>菱形は「描く形」ではなく「マスの形」</strong>: すきまが無く全面がどれかの菱形に属するので、必要なのは形でなく<strong>平面の分割</strong>。座標を<strong>せん断</strong>すれば(<code>row=floor(st.y+SLOPE*lx)</code>)同じ <code>floor</code> でも境界線が斜めになり平行四辺形の格子が勝手にできる = 菱形のSDFは1つも要らない(4.6「タイル⇔線の双対」の実践)。列ごとに <code>lx=1−lx</code> で<strong>せん断の向きを反転(縦軸で鏡映)</strong>すると＼と／が向かい合ってシェブロンに。★<strong>映進は「形」でなく「色の並び」に入っている</strong>: 折れ線自体は列をまたいで連続していてずれておらず、繰り返しの1単位は本の赤枠どおり<strong>1列×2段</strong> — 1列の中では2色が交互、隣列が別の2色ペアなので4色になる(<code>k=(col%2)+2·(row%2)</code>)。★<strong>鏡映があるおかげで角度と高さが独立</strong>: 鏡なし格子だと「1列で1段」ぴったりでないと線が繋がらないが、列ごとに反転していると境界が必ず折り返し点(Vの頂点)になるので <code>SLOPE</code> は任意 → 太さ=<code>ROWS</code>／角度=<code>SLOPE</code> と分離できる。<code>floor</code>の塗り分けは距離場が無く <code>fwidth</code> が使えないのでアンチエイリアスは掛けていない(やるならスーパーサンプリング)
+        </li>
       </ul>
     </details>
 
