@@ -1504,6 +1504,14 @@
           <span class="badge">作成済</span>
           — 本 3.2「映進」。★<strong>菱形は「描く形」ではなく「マスの形」</strong>: すきまが無く全面がどれかの菱形に属するので、必要なのは形でなく<strong>平面の分割</strong>。座標を<strong>せん断</strong>すれば(<code>row=floor(st.y+SLOPE*lx)</code>)同じ <code>floor</code> でも境界線が斜めになり平行四辺形の格子が勝手にできる = 菱形のSDFは1つも要らない(4.6「タイル⇔線の双対」の実践)。列ごとに <code>lx=1−lx</code> で<strong>せん断の向きを反転(縦軸で鏡映)</strong>すると＼と／が向かい合ってシェブロンに。★<strong>名前に反して映進は入っていない</strong>: 折れ線が列をまたいで連続し列の境目に縦の鏡線が生きているので、骨格は<strong>二重鏡映(3.3)</strong>。本物の映進は <code>+0.5*(col%2)</code> を足して頂点をずらした pg で、そちらは本の図版と違って見えたので見た目を採った。★さらに<strong>色まで含めると残る対称操作は並進だけ(p1)</strong> — 鏡で写すと偶数列が奇数列に移るが別の色ペアなので色が保たれない。<strong>本が言う対称操作は「モチーフの配置=骨格」の話で、全部違う色に塗ると どの図も p1 に落ちる</strong>(色は対称性を壊す道具。01/02 が並進だけなのに単純に見えない理由)。繰り返しの1単位は本の赤枠どおり<strong>1列×2段</strong> — 1列の中では2色が交互、隣列が別の2色ペアで4色(<code>k=(col%2)+2·(row%2)</code>)。★<strong>鏡映があるおかげで角度と高さが独立</strong>: 鏡なし格子だと「1列で1段」ぴったりでないと線が繋がらないが、列ごとに反転していると境界が必ず折り返し点(Vの頂点)になるので <code>SLOPE</code> は任意 → 太さ=<code>ROWS</code>／角度=<code>SLOPE</code> と分離できる。<code>floor</code>の塗り分けは距離場が無く <code>fwidth</code> が使えないのでアンチエイリアスは掛けていない(やるならスーパーサンプリング)
         </li>
+        <li class="done">
+          <a href="/src/repeat-patterns/03-rounded-honeycomb/index.html"
+            >平面リピートパターン 03 鏡映+平行映進 (角丸ハニカム)</a
+          >
+          <code class="slug">03-rounded-honeycomb</code>
+          <span class="badge">作成済</span>
+          — 本 3.4「鏡映 + 平行映進」。★<strong>格子は 02 の使い回し</strong>(せん断 + 列ごとの鏡映で平行四辺形のセル)で、違いは<strong>ベタ塗りの代わりにセル内の距離場を作って角を丸め、縮んだ分を地(白)で埋めた</strong>こと。02 は分割だったので AA が効かなかったが、<strong>距離場を持たせた瞬間に効く = 分割と形は行き来できる</strong>。★<strong>角丸 = 縮めて→太らせる</strong>: 距離場から定数を引くとその距離だけ外へ膨らみ、尖った角は<strong>頂点を中心とする円弧</strong>になる。ただし太らせる前の距離場が角の外側で「頂点までの距離」になっている必要があり、<code>max(d1,d2)</code>のままだと辺の距離なので何度太らせても角が丸くならない。★<strong>非直交な2辺の頂点距離</strong>: セルは縦の帯と斜めの帯の交差で2辺が直交しないため <code>roundedBox</code> の <code>length(max(q,0))</code> が使えず、法線の内積 <code>cs</code> から <code>√(d1²+d2²−2·cs·d1·d2)/√(1−cs²)</code> で復元(直交 <code>cs=0</code> で <code>length(max(q,0))</code> に退化する一般化)。切り替え条件は「両方正」ではなく<strong>法線コーンの中</strong> <code>d1&gt;cs·d2 &amp;&amp; d2&gt;cs·d1</code> — 両方正で切ると値が飛んで輪郭に折れ目が出る。★<code>fwidth</code>はセル境界で <code>d</code> が飛ぶため誤検出して地にゴミが乗るので、<code>aa</code> は <code>st</code> の作り方から自前計算。ResizeObserver は <code>device-pixel-content-box</code> で<strong>実ピクセル描画</strong>。★★<strong>また対称操作は名前ほど実装に入っていない (02 に続き2回目)</strong> — 入ったのは鏡映(<code>lx=1−lx</code>)と並進だけで、「平行映進」は色の並び(<code>k=(col+2·row)%4</code> の列ごと半周期ずらし)に吸収。4色とも違うので色込みの対称群はまた p1 = <strong>本の分類は骨格の話で、塗り分けると p1 に落ちる</strong>の2例目
+        </li>
       </ul>
     </details>
 
