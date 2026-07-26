@@ -1485,6 +1485,20 @@
       </ul>
     </details>
 
+    <details>
+      <summary>平面リピートパターン (壁紙群を1枚ずつ)</summary>
+      <ul>
+        <li class="done">
+          <a href="/src/repeat-patterns/01-translation-dots/index.html"
+            >平面リピートパターン 01 並進 (4色ドットの2×2セル)</a
+          >
+          <code class="slug">01-translation-dots</code>
+          <span class="badge">作成済</span>
+          — 本 3.1「並進」。対称操作は<strong>並進だけ (p1)</strong>だが、繰り返しの1単位が円1個ではなく<strong>円 2×2 個ぶん</strong>で、そこに4色を割り当てる。<code>色(p)=mix(地, パレット(セル番号), 円の内側マスク(セル内座標))</code>:<code>st=p·SCALE</code>／<code>id=floor(st)</code>(セル番号)／<code>local=fract(st)−0.5</code>(セル内座標)／<code>d=length(local)</code>。★<code>st=floor(st)+fract(st)</code> の<strong>両側を使う</strong>のがミソで、<strong>形は畳んだ側 (fract)、色は捨てた側 (floor) に依存</strong>する分業(<code>k=(id.x%2)+2·(id.y%2)</code> の 0〜3 でパレットを引く)。全マス同じ色にすれば 05-dot-lattice と同じただの p1 で、<strong>floor を色に使った瞬間に繰り返しの単位が 2×2 に広がる</strong>。<code>RADIUS=0.5</code>で隣の円と接し、4円のすきま(星形)に地が残る=ネガティブスペース。境界は<code>fwidth(d)</code>をぼかし幅にした<code>smoothstep</code>で解像度に依らず1px相当のアンチエイリアス。時間に依存しない純関数なので rAF ループを持たずリサイズ時だけ描画
+        </li>
+      </ul>
+    </details>
+
     <p style="margin-top: 2rem; color: #888; font-size: 0.9rem">
       新しいレッスンは
       <code>src/&lt;track&gt;/&lt;番号&gt;-&lt;名前&gt;/</code> に
