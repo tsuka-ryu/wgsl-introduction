@@ -1520,6 +1520,14 @@
           <span class="badge">作成済</span>
           — 本 3.5「180度回転」。★<strong>セル番号 (<code>floor</code>) をいっさい使わない初めての回</strong>で、全セルが同じ絵。判定は<strong>半径 = 1辺の円を対角の2隅に置いて内外を見るだけ</strong>(<code>d0=length(f)−1</code> / <code>d1=length(f−1)−1</code>) — 三角関数も角度も出てこない。★<strong>新しい道具: SDF の集合演算</strong>。<code>葉 = 円板A ∩ 円板B ⇔ max(dA,dB)</code>(<code>max</code>=積集合 / <code>min</code>=和集合)で、<strong>距離場が集合の言葉で書けて合成が max/min という代数になる</strong> = DSL のコンビネータそのもの。葉 (vesica) の先端が必ず<strong>90度</strong>になるのは、接線が中心方向と直交するので縦と横になるから。★<strong>3択に穴が開かない証明</strong>: <code>|f|²+|f−(1,1)|² = (x²+(1−x)²)+(y²+(1−y)²) ≤ 2</code> なので「両方の円板の外」は不可能(等号は4隅=葉の先端のみ)。だから2円板がセルを覆い尽くし、格子点のまわりは<strong>[葉の先端 / 対角の葉の先端 / 青 / 赤]</strong> の4象限で埋まる。★★<strong>180度回転は「生きているが色を入れ替える」</strong> — セル中心の回転は 2隅 <code>(0,0)↔(1,1)</code> を入れ替えるので図形は完全に自分に重なるが、青と赤が入れ替わる = <strong>白黒対称群(反対称) p2'</strong>。01〜03 の「色を入れると全部 p1 に落ちる」に対して、<strong>色を入れ替える操作まで許すと対称性が復活する</strong>のが今回の新しさ(全部同じ色なら対角線の鏡映まで生きて cmm、全部違う色なら p1)。★青と赤が接する直線には AA を掛けていない — <strong>画面の x軸/y軸 と完全に平行な境界はズレても半画素動くだけでギザギザにならない</strong>ので、AA が要るのは斜めか曲線のときだけ
         </li>
+        <li class="done">
+          <a href="/src/repeat-patterns/05-crescent-chain/index.html"
+            >平面リピートパターン 05 重ね順で出る三日月 (円板の鎖)</a
+          >
+          <code class="slug">05-crescent-chain</code>
+          <span class="badge">作成済</span>
+          — 本 3.5「180度回転」の2枚目の図版。★<strong>描いている形は「円」1種類だけ</strong> — 月・ひょうたん・S字が並んで見えるが SDF は <code>length(p−c)−R</code> しか無く、<strong>三日月は「円−円」で作ったのではなく隣の円板を後から上に描いた結果として勝手に出る</strong>。同色の2枚は境目が見えないので融合してひょうたんになり、1枚だけ色を変えると三日月が現れる = <strong>形を定義せずに形を出す / モチーフの違いは色の置き方だけ</strong>。★<strong>これまでと違うのは近傍ループ</strong>: 円板は自分のセルからはみ出すので座標を畳めない。代わりに<code>色(p) = p を含む円板のうち一番後に描かれたものの色</code>とし、<strong>格子番号を <code>round</code> で出して 5×5 の近傍を重ね順に合成</strong>する(ペインタのアルゴリズムを画素ごとに)。1点→色の純関数のままでループが中に入っただけ。★<strong>重ね順は格子番号の1次式でよい</strong>: <code>|A|=0.68 &lt; 2R</code>(よく重なる=鎖)／<code>|B|=|B−A|=1.0</code>(ちょうど接するだけ)に取ると<strong>重なるのは A 方向の隣だけ</strong>なので、重ね順は <code>i</code> の大小だけで決まり、同じ <code>i</code> どうしは順序不問 → <strong>ループを <code>di</code> 昇順で回せばそれが正しい重ね順</strong>。接する向きが2つあるので3枚のすきまに小さな星形の地が残る。★<code>argmax</code> でハードに選ぶと AA が掛けられないが、<code>col = mix(col, 円の色, 被覆率)</code> の<strong>アルファ合成の形にすると重ね合わせの AA が各輪郭で正しく出る</strong>。★★<strong>180度回転は「原理的に」入らない</strong> — 重ね順は <code>dot(中心, A)</code> の大小で向きを持ち、180度回転すると符号が反転するので、<strong>重なりが見えている限り2回対称は絶対に成立しない</strong>(同色どうしの重なりは順序が見えないので赤2枚のペアの内部だけは生きる)。01〜03 の「色を入れると p1 に落ちる」に続き、<strong>重ね順という絵に直接は写らない情報も対称性を壊す</strong>。裏返すと DSL 的に <code>over</code>(重ね)は<strong>非可換で向きを持つコンビネータ</strong>で、<code>fract</code>/<code>abs</code> のような座標の畳み方とは別の軸になる
+        </li>
       </ul>
     </details>
 
