@@ -1512,6 +1512,14 @@
           <span class="badge">作成済</span>
           — 本 3.4「鏡映 + 平行映進」。★<strong>格子は 02 の使い回し</strong>(せん断 + 列ごとの鏡映で平行四辺形のセル)で、違いは<strong>ベタ塗りの代わりにセル内の距離場を作って角を丸め、縮んだ分を地(白)で埋めた</strong>こと。02 は分割だったので AA が効かなかったが、<strong>距離場を持たせた瞬間に効く = 分割と形は行き来できる</strong>。★<strong>角丸 = 縮めて→太らせる</strong>: 距離場から定数を引くとその距離だけ外へ膨らみ、尖った角は<strong>頂点を中心とする円弧</strong>になる。ただし太らせる前の距離場が角の外側で「頂点までの距離」になっている必要があり、<code>max(d1,d2)</code>のままだと辺の距離なので何度太らせても角が丸くならない。★<strong>非直交な2辺の頂点距離</strong>: セルは縦の帯と斜めの帯の交差で2辺が直交しないため <code>roundedBox</code> の <code>length(max(q,0))</code> が使えず、法線の内積 <code>cs</code> から <code>√(d1²+d2²−2·cs·d1·d2)/√(1−cs²)</code> で復元(直交 <code>cs=0</code> で <code>length(max(q,0))</code> に退化する一般化)。切り替え条件は「両方正」ではなく<strong>法線コーンの中</strong> <code>d1&gt;cs·d2 &amp;&amp; d2&gt;cs·d1</code> — 両方正で切ると値が飛んで輪郭に折れ目が出る。★<code>fwidth</code>はセル境界で <code>d</code> が飛ぶため誤検出して地にゴミが乗るので、<code>aa</code> は <code>st</code> の作り方から自前計算。ResizeObserver は <code>device-pixel-content-box</code> で<strong>実ピクセル描画</strong>。★★<strong>また対称操作は名前ほど実装に入っていない (02 に続き2回目)</strong> — 入ったのは鏡映(<code>lx=1−lx</code>)と並進だけで、「平行映進」は色の並び(<code>k=(col+2·row)%4</code> の列ごと半周期ずらし)に吸収。4色とも違うので色込みの対称群はまた p1 = <strong>本の分類は骨格の話で、塗り分けると p1 に落ちる</strong>の2例目
         </li>
+        <li class="done">
+          <a href="/src/repeat-patterns/04-halfturn-leaf/index.html"
+            >平面リピートパターン 04 180度回転 (2円の交差でできる葉)</a
+          >
+          <code class="slug">04-halfturn-leaf</code>
+          <span class="badge">作成済</span>
+          — 本 3.5「180度回転」。★<strong>セル番号 (<code>floor</code>) をいっさい使わない初めての回</strong>で、全セルが同じ絵。判定は<strong>半径 = 1辺の円を対角の2隅に置いて内外を見るだけ</strong>(<code>d0=length(f)−1</code> / <code>d1=length(f−1)−1</code>) — 三角関数も角度も出てこない。★<strong>新しい道具: SDF の集合演算</strong>。<code>葉 = 円板A ∩ 円板B ⇔ max(dA,dB)</code>(<code>max</code>=積集合 / <code>min</code>=和集合)で、<strong>距離場が集合の言葉で書けて合成が max/min という代数になる</strong> = DSL のコンビネータそのもの。葉 (vesica) の先端が必ず<strong>90度</strong>になるのは、接線が中心方向と直交するので縦と横になるから。★<strong>3択に穴が開かない証明</strong>: <code>|f|²+|f−(1,1)|² = (x²+(1−x)²)+(y²+(1−y)²) ≤ 2</code> なので「両方の円板の外」は不可能(等号は4隅=葉の先端のみ)。だから2円板がセルを覆い尽くし、格子点のまわりは<strong>[葉の先端 / 対角の葉の先端 / 青 / 赤]</strong> の4象限で埋まる。★★<strong>180度回転は「生きているが色を入れ替える」</strong> — セル中心の回転は 2隅 <code>(0,0)↔(1,1)</code> を入れ替えるので図形は完全に自分に重なるが、青と赤が入れ替わる = <strong>白黒対称群(反対称) p2'</strong>。01〜03 の「色を入れると全部 p1 に落ちる」に対して、<strong>色を入れ替える操作まで許すと対称性が復活する</strong>のが今回の新しさ(全部同じ色なら対角線の鏡映まで生きて cmm、全部違う色なら p1)。★青と赤が接する直線には AA を掛けていない — <strong>画面の x軸/y軸 と完全に平行な境界はズレても半画素動くだけでギザギザにならない</strong>ので、AA が要るのは斜めか曲線のときだけ
+        </li>
       </ul>
     </details>
 
